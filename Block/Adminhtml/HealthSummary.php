@@ -7,6 +7,7 @@ use Magento\Backend\Block\Template;
 use Magento\Backend\Block\Template\Context;
 use Softaware\CronManager\Model\Config;
 use Softaware\CronManager\Model\Health;
+use Softaware\CronManager\Model\JobConfig;
 use Softaware\CronManager\Model\OverrideStorage;
 use Softaware\CronManager\Model\ScheduleManager;
 
@@ -23,6 +24,7 @@ class HealthSummary extends Template
         private readonly ScheduleManager $scheduleManager,
         private readonly OverrideStorage $overrides,
         private readonly Config $config,
+        private readonly JobConfig $jobConfig,
         array $data = []
     ) {
         parent::__construct($context, $data);
@@ -59,11 +61,18 @@ class HealthSummary extends Template
     {
         $disabled = 0;
         $rescheduled = 0;
-        foreach ($this->overrides->getAll() as $override) {
+        // Only jobs that still exist (overrides of removed modules stay stored but do nothing).
+        $known = $this->jobConfig->getJobs(false);
+        foreach (array_intersect_key($this->overrides->getAll(), $known) as $override) {
             $disabled += empty($override['disabled']) ? 0 : 1;
             $rescheduled += empty($override['schedule']) ? 0 : 1;
         }
         return ['disabled' => $disabled, 'rescheduled' => $rescheduled];
+    }
+
+    public function isReadOnly(): bool
+    {
+        return $this->overrides->isReadOnly();
     }
 
     public function isModuleEnabled(): bool

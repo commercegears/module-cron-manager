@@ -22,20 +22,20 @@ class JobStateManager
      */
     public function setEnabled(array $codes, bool $enabled, ?string $user): int
     {
-        $count = 0;
-        foreach ($codes as $code) {
-            if ($this->jobConfig->getDefinition($code) === null) {
-                continue;
-            }
-            $this->overrides->setDisabled($code, !$enabled, $user);
-            if (!$enabled) {
+        $known = array_values(array_filter(
+            array_unique(array_map('strval', $codes)),
+            fn (string $code) => $this->jobConfig->getDefinition($code) !== null
+        ));
+        // One configuration save for all jobs (each save cleans and reloads the configuration).
+        $this->overrides->setDisabledMany($known, !$enabled, $user);
+        if (!$enabled) {
+            foreach ($known as $code) {
                 // Remove what is already queued so it does not run.
                 $this->scheduleManager->removeQueued(['pending'], $code);
             }
-            $count++;
         }
         $this->health->clearCache();
-        return $count;
+        return count($known);
     }
 
     /**
@@ -43,15 +43,18 @@ class JobStateManager
      */
     public function reset(array $codes): int
     {
-        $count = 0;
-        foreach ($codes as $code) {
-            if (!$this->overrides->get($code)) {
-                continue;
-            }
-            $this->overrides->reset($code);
-            $this->scheduleManager->removeQueued(['pending'], $code);
-            $count++;
+        $changed = array_values(array_filter(
+            array_unique(array_map('strval', $codes)),
+            fn (string $code) => (bool) $this->overrides->get($code)
+        ));
+        if (!$changed) {
+            return 0;
         }
-        return $count;
+        $this->overrides->resetMany($changed);
+        foreach ($changed as $code) {
+            $this->scheduleManager->removeQueued(['pending'], $code);
+        }
+        $this->health->clearCache();
+        return count($changed);
     }
 }

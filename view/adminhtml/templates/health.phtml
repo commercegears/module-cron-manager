@@ -48,9 +48,13 @@ $cronOk = !$report['not_running'];
         <span class="softaware-cron-health-label"><?= $escaper->escapeHtml(__('Changed here')) ?></span>
         <strong><?= $escaper->escapeHtml(__('%1 disabled, %2 rescheduled', $overrides['disabled'], $overrides['rescheduled'])) ?></strong>
         <span class="softaware-cron-health-sub">
-            <?= $block->isModuleEnabled()
-                ? $escaper->escapeHtml(__('applied'))
-                : '<span class="softaware-cron-warn">' . $escaper->escapeHtml(__('not applied: module switched off in the settings')) . '</span>' ?>
+            <?php if (!$block->isModuleEnabled()): ?>
+                <span class="softaware-cron-warn"><?= $escaper->escapeHtml(__('not applied: module switched off in the settings')) ?></span>
+            <?php elseif ($block->isReadOnly()): ?>
+                <span class="softaware-cron-warn"><?= $escaper->escapeHtml(__('set in app/etc/config.php or env.php: read-only here')) ?></span>
+            <?php else: ?>
+                <?= $escaper->escapeHtml(__('applied')) ?>
+            <?php endif; ?>
         </span>
     </div>
 </div>
