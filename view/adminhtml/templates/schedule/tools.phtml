@@ -1,0 +1,60 @@
+<?php
+/**
+ * @var \Softaware\CronManager\Block\Adminhtml\Schedule\Tools $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+$code = $block->getJobCode();
+$formKey = $escaper->escapeHtmlAttr($block->getFormKey());
+$action = $escaper->escapeUrl($block->getActionUrl());
+?>
+<?php if ($code !== ''): ?>
+    <div class="message message-info softaware-cron-filter-note">
+        <?= $escaper->escapeHtml(__('Showing only entries of %1.', $code)) ?>
+        <a href="<?= $escaper->escapeUrl($block->getShowAllUrl()) ?>"><?= $escaper->escapeHtml(__('Show all jobs')) ?></a>
+    </div>
+<?php endif; ?>
+<?php if ($block->canManage()): ?>
+<details class="softaware-cron-tools">
+    <summary><?= $escaper->escapeHtml(__('Clean up the schedule')) ?></summary>
+    <div class="softaware-cron-tools-grid">
+        <form method="post" action="<?= $action ?>" class="softaware-cron-tool">
+            <input type="hidden" name="form_key" value="<?= $formKey ?>"/>
+            <input type="hidden" name="operation" value="remove_queued"/>
+            <h3><?= $escaper->escapeHtml(__('Remove queued entries')) ?></h3>
+            <p><?= $escaper->escapeHtml(__('Deletes waiting (pending) and/or missed entries. Cron queues upcoming runs of enabled jobs again on its next run.')) ?></p>
+            <label><input type="checkbox" name="statuses[]" value="pending" checked/> <?= $escaper->escapeHtml(__('Pending')) ?></label>
+            <label><input type="checkbox" name="statuses[]" value="missed" checked/> <?= $escaper->escapeHtml(__('Missed')) ?></label>
+            <input type="text" name="job_code" class="admin__control-text" value="<?= $escaper->escapeHtmlAttr($code) ?>"
+                   placeholder="<?= $escaper->escapeHtmlAttr(__('Job code (empty = all jobs)')) ?>"/>
+            <button type="submit" class="action-secondary"><?= $escaper->escapeHtml(__('Remove')) ?></button>
+        </form>
+        <form method="post" action="<?= $action ?>" class="softaware-cron-tool">
+            <input type="hidden" name="form_key" value="<?= $formKey ?>"/>
+            <input type="hidden" name="operation" value="mark_stuck"/>
+            <h3><?= $escaper->escapeHtml(__('Mark stuck jobs as failed')) ?></h3>
+            <p><?= $escaper->escapeHtml(__('Entries still "running" after this many minutes are set to error, so the job can run again.')) ?></p>
+            <label><?= $escaper->escapeHtml(__('Running longer than')) ?>
+                <input type="number" name="minutes" min="1" class="admin__control-text softaware-cron-small" value="<?= (int) $block->getMaxRuntime() ?>"/>
+                <?= $escaper->escapeHtml(__('minutes')) ?></label>
+            <input type="text" name="job_code" class="admin__control-text" value="<?= $escaper->escapeHtmlAttr($code) ?>"
+                   placeholder="<?= $escaper->escapeHtmlAttr(__('Job code (empty = all jobs)')) ?>"/>
+            <button type="submit" class="action-secondary"><?= $escaper->escapeHtml(__('Mark as failed')) ?></button>
+        </form>
+        <form method="post" action="<?= $action ?>" class="softaware-cron-tool">
+            <input type="hidden" name="form_key" value="<?= $formKey ?>"/>
+            <input type="hidden" name="operation" value="clean_history"/>
+            <h3><?= $escaper->escapeHtml(__('Clean history')) ?></h3>
+            <p><?= $escaper->escapeHtml(__('Deletes finished entries. Magento also cleans history itself (Stores > Configuration > Advanced > System > Cron).')) ?></p>
+            <label><input type="checkbox" name="statuses[]" value="success" checked/> <?= $escaper->escapeHtml(__('Success')) ?></label>
+            <label><input type="checkbox" name="statuses[]" value="error"/> <?= $escaper->escapeHtml(__('Error')) ?></label>
+            <label><input type="checkbox" name="statuses[]" value="missed" checked/> <?= $escaper->escapeHtml(__('Missed')) ?></label>
+            <label><?= $escaper->escapeHtml(__('Older than')) ?>
+                <input type="number" name="hours" min="0" class="admin__control-text softaware-cron-small" value="24"/>
+                <?= $escaper->escapeHtml(__('hours (0 = all)')) ?></label>
+            <input type="text" name="job_code" class="admin__control-text" value="<?= $escaper->escapeHtmlAttr($code) ?>"
+                   placeholder="<?= $escaper->escapeHtmlAttr(__('Job code (empty = all jobs)')) ?>"/>
+            <button type="submit" class="action-secondary"><?= $escaper->escapeHtml(__('Delete')) ?></button>
+        </form>
+    </div>
+</details>
+<?php endif; ?>

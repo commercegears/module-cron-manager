@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Softaware_Base::base" title="Softaware" translate="title" sortOrder="50">
+                    <resource id="Softaware_CronManager::main" title="Cron Manager" translate="title" sortOrder="45">
+                        <resource id="Softaware_CronManager::jobs" title="View Cron Jobs" translate="title" sortOrder="10">
+                            <resource id="Softaware_CronManager::jobs_run" title="Run Jobs Now" translate="title" sortOrder="10"/>
+                            <resource id="Softaware_CronManager::jobs_manage" title="Enable, Disable and Reschedule Jobs" translate="title" sortOrder="20"/>
+                        </resource>
+                        <resource id="Softaware_CronManager::schedule" title="View Schedule and Timeline" translate="title" sortOrder="20">
+                            <resource id="Softaware_CronManager::schedule_manage" title="Clean Up Schedule" translate="title" sortOrder="10"/>
+                        </resource>
+                        <resource id="Softaware_CronManager::config" title="Cron Manager Settings" translate="title" sortOrder="30"/>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

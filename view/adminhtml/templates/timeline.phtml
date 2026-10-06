@@ -1,0 +1,91 @@
+<?php
+/**
+ * @var \Softaware\CronManager\Block\Adminhtml\Timeline $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+$chart = $block->getChart();
+$start = $block->getStart();
+$end = $block->getEnd();
+$span = $block->getSpan();
+?>
+<div class="softaware-cron-timeline">
+    <form method="get" action="<?= $escaper->escapeUrl($block->getUrl('*/*/index')) ?>" class="softaware-cron-timeline-filters">
+        <label><?= $escaper->escapeHtml(__('Up to')) ?>
+            <input type="datetime-local" name="end" class="admin__control-text" value="<?= $escaper->escapeHtmlAttr($end->format('Y-m-d\TH:i')) ?>"/>
+        </label>
+        <label><?= $escaper->escapeHtml(__('Show')) ?>
+            <select name="span" class="admin__control-select">
+                <?php foreach (\Softaware\CronManager\Block\Adminhtml\Timeline::SPANS as $hours): ?>
+                    <option value="<?= (int) $hours ?>"<?= $hours === $span ? ' selected' : '' ?>><?= $escaper->escapeHtml(__('%1 h', $hours)) ?></option>
+                <?php endforeach; ?>
+            </select>
+        </label>
+        <label><?= $escaper->escapeHtml(__('Group')) ?>
+            <select name="group" class="admin__control-select">
+                <option value=""><?= $escaper->escapeHtml(__('All')) ?></option>
+                <?php foreach ($block->getGroups() as $group): ?>
+                    <option value="<?= $escaper->escapeHtmlAttr($group) ?>"<?= $group === $block->getGroup() ? ' selected' : '' ?>><?= $escaper->escapeHtml($group) ?></option>
+                <?php endforeach; ?>
+            </select>
+        </label>
+        <label><?= $escaper->escapeHtml(__('Job code contains')) ?>
+            <input type="text" name="q" class="admin__control-text" value="<?= $escaper->escapeHtmlAttr($block->getSearch()) ?>"/>
+        </label>
+        <label class="softaware-cron-check"><input type="checkbox" name="problems" value="1"<?= $block->onlyProblems() ? ' checked' : '' ?>/> <?= $escaper->escapeHtml(__('Only jobs with errors, missed or running entries')) ?></label>
+        <button type="submit" class="action-primary"><?= $escaper->escapeHtml(__('Show')) ?></button>
+        <span class="softaware-cron-nav">
+            <a class="action-default" href="<?= $escaper->escapeUrl($block->getUrlFor(['end' => $start->format('Y-m-d\TH:i')])) ?>">&larr; <?= $escaper->escapeHtml(__('Earlier')) ?></a>
+            <a class="action-default" href="<?= $escaper->escapeUrl($block->getUrlFor(['end' => $end->modify('+' . $span . ' hours')->format('Y-m-d\TH:i')])) ?>"><?= $escaper->escapeHtml(__('Later')) ?> &rarr;</a>
+            <a class="action-default" href="<?= $escaper->escapeUrl($block->getUrlFor(['end' => null])) ?>"><?= $escaper->escapeHtml(__('Now')) ?></a>
+        </span>
+    </form>
+
+    <div class="softaware-cron-legend">
+        <strong><?= $escaper->escapeHtml($start->format('D j M Y, H:i')) ?> – <?= $escaper->escapeHtml($end->format('H:i')) ?></strong>
+        <span class="softaware-cron-muted">(<?= $escaper->escapeHtml($start->getTimezone()->getName()) ?>)</span>
+        <span class="softaware-cron-legend-item"><i class="softaware-cron-bar-success"></i><?= $escaper->escapeHtml(__('Success')) ?></span>
+        <span class="softaware-cron-legend-item"><i class="softaware-cron-bar-error"></i><?= $escaper->escapeHtml(__('Error')) ?></span>
+        <span class="softaware-cron-legend-item"><i class="softaware-cron-bar-running"></i><?= $escaper->escapeHtml(__('Running')) ?></span>
+        <span class="softaware-cron-legend-item"><i class="softaware-cron-bar-missed"></i><?= $escaper->escapeHtml(__('Missed')) ?></span>
+        <span class="softaware-cron-legend-item"><i class="softaware-cron-bar-pending"></i><?= $escaper->escapeHtml(__('Pending')) ?></span>
+        <span class="softaware-cron-muted"><?= $escaper->escapeHtml(__('%1 entries; hover a bar for details.', $chart['count'])) ?></span>
+    </div>
+    <?php if ($chart['truncated']): ?>
+        <div class="message message-warning"><?= $escaper->escapeHtml(__('Only the most recent entries are shown. Choose a shorter period or a group.')) ?></div>
+    <?php endif; ?>
+
+    <?php if (!$chart['rows']): ?>
+        <div class="message message-info"><?= $escaper->escapeHtml(__('No cron entries in this period. Magento keeps successful runs only for a short time (Stores > Configuration > Advanced > System > Cron, "Success History Lifetime").')) ?></div>
+    <?php else: ?>
+        <div class="softaware-cron-chart" role="img" aria-label="<?= $escaper->escapeHtmlAttr(__('Cron timeline')) ?>">
+            <div class="softaware-cron-row softaware-cron-axis">
+                <div class="softaware-cron-label"></div>
+                <div class="softaware-cron-track">
+                    <?php foreach ($chart['ticks'] as $tick): ?>
+                        <span class="softaware-cron-tick<?= $tick['major'] ? ' _major' : '' ?><?= $tick['left'] > 97 ? ' _end' : '' ?>" style="left: <?= (float) $tick['left'] ?>%"><?= $escaper->escapeHtml($tick['label']) ?></span>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <?php foreach ($chart['rows'] as $code => $bars): ?>
+                <div class="softaware-cron-row">
+                    <div class="softaware-cron-label" title="<?= $escaper->escapeHtmlAttr($code) ?>">
+                        <a href="<?= $escaper->escapeUrl($block->getUrl('softaware_cron/schedule/index', ['job_code' => $code])) ?>"><?= $escaper->escapeHtml($code) ?></a>
+                    </div>
+                    <div class="softaware-cron-track">
+                        <?php foreach ($chart['ticks'] as $tick): ?>
+                            <span class="softaware-cron-grid<?= $tick['major'] ? ' _major' : '' ?>" style="left: <?= (float) $tick['left'] ?>%"></span>
+                        <?php endforeach; ?>
+                        <?php if ($chart['now'] !== null): ?>
+                            <span class="softaware-cron-now" style="left: <?= (float) $chart['now'] ?>%"></span>
+                        <?php endif; ?>
+                        <?php foreach ($bars as $bar): ?>
+                            <span class="softaware-cron-bar softaware-cron-bar-<?= $escaper->escapeHtmlAttr($bar['status']) ?>"
+                                  style="left: <?= (float) $bar['left'] ?>%; width: <?= (float) $bar['width'] ?>%"
+                                  title="<?= $escaper->escapeHtmlAttr($bar['title']) ?>"></span>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+</div>

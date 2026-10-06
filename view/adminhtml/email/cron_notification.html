@@ -1,0 +1,12 @@
+<!--@subject {{trans "Cron jobs failed on %store" store=$store_name}} @-->
+<!--@vars {
+"var store_name":"Store name",
+"var summary":"Summary",
+"var rows_html|raw":"Failed jobs",
+"var url":"Cron Manager URL"
+} @-->
+<p>{{trans "Hello,"}}</p>
+<p>{{var summary}}</p>
+{{var rows_html|raw}}
+<p>{{trans "Open the Cron Manager for details:"}} <a href="{{var url}}">{{var url}}</a></p>
+<p style="color:#666;font-size:12px">{{trans "Sent by Softaware Cron Manager. You can change or switch off these e-mails under Stores > Configuration > Softaware > Cron Manager."}}</p>

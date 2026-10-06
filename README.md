@@ -1,0 +1,68 @@
+# Softaware Cron Manager
+
+See and control Magento's cron from the admin: every job with its schedule and run statistics, the schedule
+(cron_schedule) as a grid and as a timeline, run jobs now, enable/disable and reschedule jobs, clean up the queue,
+and get warned when cron stops or a job keeps failing.
+
+Admin: **Softaware > Cron Manager** — Cron Jobs, Schedule, Timeline, Settings.
+
+## Features
+
+* **Cron Jobs grid:** all jobs from `crontab.xml` and config-based schedules — code, group, effective and default
+  schedule, enabled/disabled, schedule changed, last run, last status, average duration, errors in history, module,
+  class::method. Filters, keyword search, sorting, column chooser.
+  Row actions: Run now, Enable/Disable, Change schedule, History. Mass actions: Run now (up to 20), Enable, Disable,
+  Restore default schedule.
+* **Change schedule:** cron expression validated with Magento's parser, presets, preview of the next runs (store
+  timezone). Overrides are stored in the configuration (`softaware_cron_manager/overrides/jobs`, JSON), so they can
+  be exported with `app:config:dump`. A plugin on `Magento\Cron\Model\ConfigInterface::getJobs()` applies them:
+  a disabled job keeps its definition but has no schedule (nothing new is queued; its pending entries are removed);
+  a rescheduled job gets the new expression (also replacing a config-path schedule).
+* **Run now:** starts `bin/magento softaware:cron:run <job>` in the background (no admin request waits for a job).
+  The run takes the same lock as Magento's cron, is recorded in `cron_schedule` (status, start/finish, message,
+  who started it) and logged to `var/log/softaware_cron_manager.log`. Disabled jobs can be run manually.
+* **Schedule grid:** cron_schedule with filters (job, status, dates, message), duration column, coloured statuses,
+  mass delete, and a clean-up panel: remove pending/missed entries, mark stuck "running" jobs as failed (configurable
+  max runtime), clean history (by status and age, optionally for one job).
+* **Timeline:** Gantt-like chart per job for 1–24 hours (earlier/later/now navigation, group and job filters,
+  "only problems"), bars coloured by status with details on hover, a "now" line.
+* **Health:** a status bar on the Cron Manager pages, and admin system messages when cron has not run for N minutes,
+  a job failed N times in a row, or a job runs longer than the max runtime. Cached for 3 minutes.
+* **Failure e-mails** (off by default): a cron job (`softaware_cron_manager_health`, every 5 minutes) e-mails new
+  failures, at most once per interval (failures in between are collected), and reports gaps when cron itself did
+  not run. It can also mark stuck jobs as failed automatically. Template: "Cron Manager: Failed Cron Jobs".
+
+## Configuration
+
+Stores > Configuration > Softaware > Cron Manager (`softaware_cron_manager/...`): Enabled, PHP binary for "Run now"
+(auto-detected when empty), stuck jobs (max runtime, mark automatically), health warnings (minutes without cron,
+failures in a row), failure e-mails (on/off, recipients, sender, template, minimum interval).
+
+When the module is switched off, overrides are not applied (all jobs use their default schedule) and health checks
+and e-mails stop; the pages remain available.
+
+## CLI
+
+```
+bin/magento softaware:cron:list [--group=] [--search=] [--disabled] [--overridden] [--failed]
+bin/magento softaware:cron:run <job_code> [--trigger=cli] [--user=]
+bin/magento softaware:cron:status
+```
+
+## ACL
+
+View Cron Jobs (Run Jobs Now; Enable, Disable and Reschedule Jobs), View Schedule and Timeline (Clean Up Schedule),
+Settings.
+
+## Compatibility
+
+Magento Open Source / Adobe Commerce 2.4.x (developed on 2.4.9), PHP 8.2–8.5, MySQL 8 / MariaDB 10.4+ (window
+functions are used for the "failing in a row" check). Admin only.
+
+## Limitations
+
+* "Run now" needs `exec`-style process start (Magento's `Shell`) and a PHP CLI binary; set it in the settings if it
+  is not found.
+* Schedule history only goes back as far as Magento keeps it (Stores > Configuration > Advanced > System > Cron);
+  averages and the timeline are based on that history.
+* The "cron not running" e-mail can only be sent once cron runs again; the admin warning covers the time in between.

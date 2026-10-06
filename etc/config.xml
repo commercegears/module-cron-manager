@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <softaware_cron_manager>
+            <general>
+                <enabled>1</enabled>
+                <php_binary/>
+            </general>
+            <stuck>
+                <max_runtime>120</max_runtime>
+                <auto_mark>1</auto_mark>
+            </stuck>
+            <health>
+                <not_running_minutes>15</not_running_minutes>
+                <failure_threshold>3</failure_threshold>
+            </health>
+            <notify>
+                <enabled>0</enabled>
+                <identity>general</identity>
+                <template>softaware_cron_manager_notify_template</template>
+                <interval>60</interval>
+            </notify>
+        </softaware_cron_manager>
+    </default>
+</config>

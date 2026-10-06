@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">softaware_cron_job_listing.softaware_cron_job_listing_data_source</item>
+        </item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="schedule">
+                <url path="softaware_cron/schedule/index"/>
+                <label translate="true">Schedule</label>
+            </button>
+            <button name="timeline">
+                <url path="softaware_cron/timeline/index"/>
+                <class>primary</class>
+                <label translate="true">Timeline</label>
+            </button>
+        </buttons>
+        <spinner>softaware_cron_job_columns</spinner>
+        <deps>
+            <dep>softaware_cron_job_listing.softaware_cron_job_listing_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="softaware_cron_job_listing_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">job_code</param>
+            </storageConfig>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <aclResource>Softaware_CronManager::jobs</aclResource>
+        <dataProvider class="Softaware\CronManager\Ui\DataProvider\JobDataProvider" name="softaware_cron_job_listing_data_source">
+            <settings>
+                <requestFieldName>code</requestFieldName>
+                <primaryFieldName>job_code</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <listingToolbar name="listing_top">
+        <settings>
+            <sticky>true</sticky>
+        </settings>
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <filterSearch name="fulltext"/>
+        <filters name="listing_filters"/>
+        <massaction name="listing_massaction">
+            <action name="run">
+                <settings>
+                    <confirm>
+                        <message translate="true">Start the selected jobs now, one after the other, in the background?</message>
+                        <title translate="true">Run now</title>
+                    </confirm>
+                    <url path="softaware_cron/job/massAction">
+                        <param name="operation">run</param>
+                    </url>
+                    <type>run</type>
+                    <label translate="true">Run now</label>
+                </settings>
+            </action>
+            <action name="enable">
+                <settings>
+                    <url path="softaware_cron/job/massAction">
+                        <param name="operation">enable</param>
+                    </url>
+                    <type>enable</type>
+                    <label translate="true">Enable</label>
+                </settings>
+            </action>
+            <action name="disable">
+                <settings>
+                    <confirm>
+                        <message translate="true">Disable the selected jobs? They are no longer queued and their pending entries are removed.</message>
+                        <title translate="true">Disable jobs</title>
+                    </confirm>
+                    <url path="softaware_cron/job/massAction">
+                        <param name="operation">disable</param>
+                    </url>
+                    <type>disable</type>
+                    <label translate="true">Disable</label>
+                </settings>
+            </action>
+            <action name="reset">
+                <settings>
+                    <confirm>
+                        <message translate="true">Undo all Cron Manager changes (disabled state and schedule) for the selected jobs?</message>
+                        <title translate="true">Restore defaults</title>
+                    </confirm>
+                    <url path="softaware_cron/job/massAction">
+                        <param name="operation">reset</param>
+                    </url>
+                    <type>reset</type>
+                    <label translate="true">Restore default schedule</label>
+                </settings>
+            </action>
+        </massaction>
+        <paging name="listing_paging">
+            <settings>
+                <pageSize>50</pageSize>
+            </settings>
+        </paging>
+    </listingToolbar>
+    <columns name="softaware_cron_job_columns">
+        <selectionsColumn name="ids">
+            <settings>
+                <indexField>job_code</indexField>
+            </settings>
+        </selectionsColumn>
+        <column name="job_code" sortOrder="10">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Job Code</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+        <column name="group" component="Magento_Ui/js/grid/columns/select" sortOrder="20">
+            <settings>
+                <options class="Softaware\CronManager\Model\Source\JobGroup"/>
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <label translate="true">Group</label>
+            </settings>
+        </column>
+        <column name="schedule" sortOrder="30">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Schedule</label>
+            </settings>
+        </column>
+        <column name="original_schedule" sortOrder="35">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Default Schedule</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="is_enabled" class="Softaware\CronManager\Ui\Component\Listing\Column\StatusBadge" component="Magento_Ui/js/grid/columns/column" sortOrder="40">
+            <settings>
+                <options class="Softaware\CronManager\Model\Source\JobState"/>
+                <filter>select</filter>
+                <bodyTmpl>ui/grid/cells/html</bodyTmpl>
+                <label translate="true">State</label>
+            </settings>
+        </column>
+        <column name="is_overridden" component="Magento_Ui/js/grid/columns/select" sortOrder="45">
+            <settings>
+                <options class="Magento\Config\Model\Config\Source\Yesno"/>
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <label translate="true">Schedule Changed</label>
+            </settings>
+        </column>
+        <column name="last_run" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date" sortOrder="50">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Last Run</label>
+            </settings>
+        </column>
+        <column name="last_status" class="Softaware\CronManager\Ui\Component\Listing\Column\StatusBadge" component="Magento_Ui/js/grid/columns/column" sortOrder="60">
+            <settings>
+                <options class="Softaware\CronManager\Model\Source\ScheduleStatus"/>
+                <filter>select</filter>
+                <bodyTmpl>ui/grid/cells/html</bodyTmpl>
+                <label translate="true">Last Status</label>
+            </settings>
+        </column>
+        <column name="avg_duration" class="Softaware\CronManager\Ui\Component\Listing\Column\Duration" sortOrder="70">
+            <settings>
+                <label translate="true">Avg. Duration</label>
+            </settings>
+        </column>
+        <column name="error_count" sortOrder="80">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">Errors in History</label>
+            </settings>
+        </column>
+        <column name="pending_count" sortOrder="85">
+            <settings>
+                <label translate="true">Pending</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="module" sortOrder="90">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Module</label>
+            </settings>
+        </column>
+        <column name="callback" sortOrder="100">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Class::Method</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="last_message" class="Softaware\CronManager\Ui\Component\Listing\Column\Message" sortOrder="110">
+            <settings>
+                <label translate="true">Last Message</label>
+                <sortable>false</sortable>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <actionsColumn name="actions" class="Softaware\CronManager\Ui\Component\Listing\Column\JobActions" sortOrder="200">
+            <settings>
+                <indexField>job_code</indexField>
+            </settings>
+        </actionsColumn>
+    </columns>
+</listing>

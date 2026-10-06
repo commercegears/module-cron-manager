@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="softaware_cron_manager_notify_template" label="Cron Manager: Failed Cron Jobs" file="cron_notification.html" type="html" module="Softaware_CronManager" area="adminhtml"/>
+</config>

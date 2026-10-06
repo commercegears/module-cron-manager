@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Disabled jobs and schedule changes made in the Cron Manager -->
+    <type name="Magento\Cron\Model\ConfigInterface">
+        <plugin name="softaware_cron_manager_overrides" type="Softaware\CronManager\Plugin\ApplyJobOverrides"/>
+    </type>
+
+    <!-- Own log file: var/log/softaware_cron_manager.log -->
+    <virtualType name="Softaware\CronManager\Logger\Handler" type="Magento\Framework\Logger\Handler\Base">
+        <arguments>
+            <argument name="fileName" xsi:type="string">/var/log/softaware_cron_manager.log</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Softaware\CronManager\Logger" type="Magento\Framework\Logger\Monolog">
+        <arguments>
+            <argument name="name" xsi:type="string">softaware_cron_manager</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="file" xsi:type="object">Softaware\CronManager\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Softaware\CronManager\Model\Runner">
+        <arguments>
+            <argument name="logger" xsi:type="object">Softaware\CronManager\Logger</argument>
+        </arguments>
+    </type>
+    <type name="Softaware\CronManager\Model\Notifier">
+        <arguments>
+            <argument name="logger" xsi:type="object">Softaware\CronManager\Logger</argument>
+        </arguments>
+    </type>
+    <type name="Softaware\CronManager\Cron\HealthCheck">
+        <arguments>
+            <argument name="logger" xsi:type="object">Softaware\CronManager\Logger</argument>
+        </arguments>
+    </type>
+
+    <!-- "Run now" starts the CLI command in the background -->
+    <virtualType name="Softaware\CronManager\Shell\Background" type="Magento\Framework\Shell">
+        <arguments>
+            <argument name="commandRenderer" xsi:type="object">Magento\Framework\Shell\CommandRendererBackground</argument>
+        </arguments>
+    </virtualType>
+    <type name="Softaware\CronManager\Model\BackgroundLauncher">
+        <arguments>
+            <argument name="shell" xsi:type="object">Softaware\CronManager\Shell\Background</argument>
+            <argument name="logger" xsi:type="object">Softaware\CronManager\Logger</argument>
+        </arguments>
+    </type>
+
+    <!-- CLI -->
+    <type name="Softaware\CronManager\Console\Command\RunCommand">
+        <arguments>
+            <argument name="runner" xsi:type="object">Softaware\CronManager\Model\Runner\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="softaware_cron_list" xsi:type="object">Softaware\CronManager\Console\Command\ListCommand</item>
+                <item name="softaware_cron_run" xsi:type="object">Softaware\CronManager\Console\Command\RunCommand</item>
+                <item name="softaware_cron_status" xsi:type="object">Softaware\CronManager\Console\Command\StatusCommand</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!-- Schedule grid -->
+    <type name="Softaware\CronManager\Model\ResourceModel\Schedule\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">cron_schedule</argument>
+            <argument name="resourceModel" xsi:type="string">Magento\Cron\Model\ResourceModel\Schedule</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="softaware_cron_schedule_listing_data_source" xsi:type="string">Softaware\CronManager\Model\ResourceModel\Schedule\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

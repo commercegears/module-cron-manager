@@ -1,0 +1,26 @@
+{
+    "name": "softaware/module-cron-manager",
+    "description": "Cron Manager for Magento 2: list, run, enable, disable and reschedule cron jobs, schedule grid and timeline, health warnings and failure e-mails.",
+    "type": "magento2-module",
+    "license": "proprietary",
+    "require": {
+        "php": "~8.2.0||~8.3.0||~8.4.0||~8.5.0",
+        "magento/framework": "~103.0.7",
+        "softaware/module-base": "^1.2",
+        "magento/module-admin-notification": "*",
+        "magento/module-backend": "*",
+        "magento/module-config": "*",
+        "magento/module-cron": "*",
+        "magento/module-email": "*",
+        "magento/module-store": "*",
+        "magento/module-ui": "*"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Softaware\\CronManager\\": ""
+        }
+    }
+}

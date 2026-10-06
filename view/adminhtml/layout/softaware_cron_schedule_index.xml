@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Softaware_CronManager::css/cron-manager.css"/>
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <block class="Softaware\CronManager\Block\Adminhtml\HealthSummary" name="softaware.cron.health"/>
+            <block class="Softaware\CronManager\Block\Adminhtml\Schedule\Tools" name="softaware.cron.schedule.tools"/>
+            <uiComponent name="softaware_cron_schedule_listing"/>
+        </referenceContainer>
+    </body>
+</page>
