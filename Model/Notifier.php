@@ -22,6 +22,7 @@ class Notifier
     private const FLAG_LAST_SENT = 'softaware_cron_manager_last_email_at';
     private const FLAG_LAST_CHECK = 'softaware_cron_manager_last_check_at';
     private const LOOKBACK = 172800;
+    private const GAP_WINDOW = 3300;
 
     public function __construct(
         private readonly Config $config,
@@ -43,7 +44,7 @@ class Notifier
         $now = time();
         $lastCheck = (int) $this->flagManager->getFlagData(self::FLAG_LAST_CHECK);
         if (!$dryRun) {
-            $this->flagManager->saveFlag(self::FLAG_LAST_CHECK, $now);
+            $this->recordCheck($now);
         }
         if (!$this->config->isNotifyEnabled() && !$dryRun) {
             return 'E-mails are switched off.';
@@ -59,11 +60,26 @@ class Notifier
 
         $notified = (array) ($this->flagManager->getFlagData(self::FLAG_NOTIFIED) ?: []);
         $errors = $this->scheduleManager->getErrorsSince(gmdate('Y-m-d H:i:s', $now - self::LOOKBACK), $notified);
-        // A gap since the previous check means cron itself was not running.
-        $gapMinutes = $lastCheck ? (int) floor(($now - $lastCheck) / 60) : 0;
+        $ignoredIds = [];
+        $errors = array_values(array_filter($errors, function (array $row) use (&$ignoredIds) {
+            if ($this->config->isIgnored((string) $row['job_code'])) {
+                $ignoredIds[] = (int) $row['schedule_id'];
+                return false;
+            }
+            return true;
+        }));
+        // A long gap without any cron activity since the previous check means cron itself was not running.
+        // Only the recent history is looked at (Magento deletes successful entries after about an hour), and
+        // gaps are measured in cron_schedule, so running this check less often does not look like an outage.
+        $gapMinutes = $lastCheck
+            ? $this->scheduleManager->getLongestGapMinutes(max($lastCheck, $now - self::GAP_WINDOW), $now)
+            : 0;
         $threshold = $this->config->getNotRunningMinutes();
         $gap = $threshold > 0 && $gapMinutes >= max($threshold, 10) ? $gapMinutes : 0;
         if (!$errors && !$gap) {
+            if ($ignoredIds && !$dryRun) {
+                $this->saveNotified(array_merge($notified, $ignoredIds));
+            }
             return 'Nothing to report.';
         }
 
@@ -80,7 +96,8 @@ class Notifier
             'store_name' => $storeName,
             'summary' => $this->getSummary(count($errors), $gap),
             'rows_html' => $this->renderRows($errors),
-            'url' => $this->backendUrl->getUrl('softaware_cron/schedule/index'),
+            // No secret key: it would belong to this (cron) process and be rejected when the link is opened.
+            'url' => $this->backendUrl->getUrl('softaware_cron/schedule/index', ['_nosecret' => true]),
         ];
         if ($dryRun) {
             return 'Would send to ' . (implode(', ', $recipients) ?: '(no recipient)') . ': ' . $vars['summary'];
@@ -99,10 +116,29 @@ class Notifier
             $this->logger->error('Cron Manager: failure e-mail could not be sent: ' . $e->getMessage());
             return 'Sending failed: ' . $e->getMessage();
         }
-        $ids = array_merge($notified, array_map(static fn ($row) => (int) $row['schedule_id'], $errors));
-        $this->flagManager->saveFlag(self::FLAG_NOTIFIED, array_slice(array_values(array_unique($ids)), -1000));
+        $this->saveNotified(array_merge(
+            $notified,
+            $ignoredIds,
+            array_map(static fn ($row) => (int) $row['schedule_id'], $errors)
+        ));
         $this->flagManager->saveFlag(self::FLAG_LAST_SENT, $now);
         return 'Sent to ' . implode(', ', $recipients) . ': ' . $vars['summary'];
+    }
+
+    /**
+     * Records that the health check ran (also when the module is switched off).
+     */
+    public function recordCheck(?int $time = null): void
+    {
+        $this->flagManager->saveFlag(self::FLAG_LAST_CHECK, $time ?? time());
+    }
+
+    /**
+     * @param int[] $ids
+     */
+    private function saveNotified(array $ids): void
+    {
+        $this->flagManager->saveFlag(self::FLAG_NOTIFIED, array_slice(array_values(array_unique($ids)), -1000));
     }
 
     private function getSummary(int $errors, int $gap): string

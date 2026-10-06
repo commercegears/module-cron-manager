@@ -43,6 +43,10 @@
                     <validate>validate-digits validate-zero-or-greater</validate>
                     <comment>0 turns this warning off.</comment>
                 </field>
+                <field id="ignore_jobs" translate="label comment" type="textarea" sortOrder="30" showInDefault="1">
+                    <label>Ignore These Jobs</label>
+                    <comment><![CDATA[Job codes separated by commas or new lines; * matches any text (e.g. <code>amazon_*</code>). These jobs are left out of the warnings and the failure e-mails, and are not marked as failed when they run longer than the maximum runtime.]]></comment>
+                </field>
             </group>
             <group id="notify" translate="label" type="text" sortOrder="40" showInDefault="1">
                 <label>Failure E-mails</label>

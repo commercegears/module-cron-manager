@@ -41,6 +41,31 @@ class Config
         return max(0, (int) $this->scopeConfig->getValue('softaware_cron_manager/health/failure_threshold'));
     }
 
+    /**
+     * Job codes (or patterns with *) that are left out of the health warnings, the failure e-mails and the
+     * automatic marking of stuck jobs.
+     *
+     * @return string[]
+     */
+    public function getIgnoredJobs(): array
+    {
+        $value = (string) $this->scopeConfig->getValue('softaware_cron_manager/health/ignore_jobs');
+        return array_values(array_unique(array_filter(
+            array_map('trim', preg_split('/[\s,]+/', $value) ?: []),
+            static fn ($code) => $code !== ''
+        )));
+    }
+
+    public function isIgnored(string $jobCode): bool
+    {
+        foreach ($this->getIgnoredJobs() as $pattern) {
+            if ($pattern === $jobCode || (str_contains($pattern, '*') && fnmatch($pattern, $jobCode))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function isNotifyEnabled(): bool
     {
         return $this->scopeConfig->isSetFlag('softaware_cron_manager/notify/enabled');

@@ -46,8 +46,15 @@ class Health
             'last_activity' => $last,
             'minutes_since' => $minutes,
             'not_running' => $threshold > 0 && ($minutes === null || $minutes >= $threshold),
-            'failing' => $this->scheduleManager->getFailingJobs($this->config->getFailureThreshold()),
-            'stuck' => $this->scheduleManager->getStuck($this->config->getMaxRuntime()),
+            'failing' => array_filter(
+                $this->scheduleManager->getFailingJobs($this->config->getFailureThreshold()),
+                fn ($code) => !$this->config->isIgnored((string) $code),
+                ARRAY_FILTER_USE_KEY
+            ),
+            'stuck' => array_values(array_filter(
+                $this->scheduleManager->getStuck($this->config->getMaxRuntime()),
+                fn (array $row) => !$this->config->isIgnored((string) $row['job_code'])
+            )),
         ];
         $this->cache->save((string) json_encode($report), self::CACHE_KEY, ['config'], self::CACHE_LIFETIME);
         return $this->report = $report;

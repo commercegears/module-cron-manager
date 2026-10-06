@@ -44,7 +44,10 @@ class ScheduleManager
     /**
      * Mark entries that are still "running" after $maxMinutes as failed.
      */
-    public function markStuck(int $maxMinutes, ?string $jobCode = null): int
+    /**
+     * @param string[] $exceptCodes job codes to leave alone
+     */
+    public function markStuck(int $maxMinutes, ?string $jobCode = null, array $exceptCodes = []): int
     {
         $where = [
             'status = ?' => Schedule::STATUS_RUNNING,
@@ -52,6 +55,9 @@ class ScheduleManager
         ];
         if ($jobCode) {
             $where['job_code = ?'] = $jobCode;
+        }
+        if ($exceptCodes) {
+            $where['job_code NOT IN (?)'] = array_values($exceptCodes);
         }
         return $this->connection()->update(
             $this->table(),
@@ -146,6 +152,38 @@ class ScheduleManager
             ])
         );
         return $value && $value !== '0' ? (string) $value : null;
+    }
+
+    /**
+     * Longest time in minutes without any cron activity (a job queued, started or finished) between two Unix
+     * times. Used to notice that cron itself was not running, independent of how often the caller runs.
+     */
+    public function getLongestGapMinutes(int $from, int $to): int
+    {
+        if ($to <= $from) {
+            return 0;
+        }
+        $connection = $this->connection();
+        $fromUtc = gmdate('Y-m-d H:i:s', $from);
+        $toUtc = gmdate('Y-m-d H:i:s', $to);
+        $minute = static fn (string $column) => new \Zend_Db_Expr("DATE_FORMAT($column, '%Y-%m-%d %H:%i:00')");
+        $parts = [];
+        foreach (['created_at', 'executed_at', 'finished_at'] as $column) {
+            $parts[] = $connection->select()
+                ->from($this->table(), ['t' => $minute($column)])
+                ->where("$column >= ?", $fromUtc)
+                ->where("$column <= ?", $toUtc);
+        }
+        $times = $connection->fetchCol($connection->select()->union($parts));
+        $stamps = array_map(static fn ($t) => (int) strtotime($t . ' UTC'), $times);
+        $stamps[] = $from;
+        $stamps[] = $to;
+        sort($stamps);
+        $longest = 0;
+        for ($i = 1, $n = count($stamps); $i < $n; $i++) {
+            $longest = max($longest, $stamps[$i] - $stamps[$i - 1]);
+        }
+        return intdiv($longest, 60);
     }
 
     /**

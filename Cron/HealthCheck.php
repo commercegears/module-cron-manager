@@ -6,6 +6,7 @@ namespace Softaware\CronManager\Cron;
 use Psr\Log\LoggerInterface;
 use Softaware\CronManager\Model\Config;
 use Softaware\CronManager\Model\Health;
+use Softaware\CronManager\Model\JobConfig;
 use Softaware\CronManager\Model\Notifier;
 use Softaware\CronManager\Model\ScheduleManager;
 
@@ -19,17 +20,24 @@ class HealthCheck
         private readonly ScheduleManager $scheduleManager,
         private readonly Notifier $notifier,
         private readonly Health $health,
-        private readonly LoggerInterface $logger
+        private readonly LoggerInterface $logger,
+        private readonly JobConfig $jobConfig
     ) {
     }
 
     public function execute(): void
     {
         if (!$this->config->isEnabled()) {
+            // Keep the check time current, so switching the module on again is not reported as a cron gap.
+            $this->notifier->recordCheck();
             return;
         }
         if ($this->config->isAutoMarkStuck()) {
-            $count = $this->scheduleManager->markStuck($this->config->getMaxRuntime());
+            $except = array_values(array_filter(
+                array_keys($this->jobConfig->getJobs(false)),
+                fn (string $code) => $this->config->isIgnored($code)
+            ));
+            $count = $this->scheduleManager->markStuck($this->config->getMaxRuntime(), null, $except);
             if ($count) {
                 $this->logger->warning(sprintf('Cron Manager: marked %d stuck job(s) as failed.', $count));
             }
