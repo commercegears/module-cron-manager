@@ -60,6 +60,7 @@
                 <item name="softaware_cron_list" xsi:type="object">Softaware\CronManager\Console\Command\ListCommand</item>
                 <item name="softaware_cron_run" xsi:type="object">Softaware\CronManager\Console\Command\RunCommand</item>
                 <item name="softaware_cron_status" xsi:type="object">Softaware\CronManager\Console\Command\StatusCommand</item>
+                <item name="softaware_cron_set" xsi:type="object">Softaware\CronManager\Console\Command\SetCommand</item>
             </argument>
         </arguments>
     </type>
