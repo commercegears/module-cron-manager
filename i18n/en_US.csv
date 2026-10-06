@@ -149,7 +149,7 @@ Settings,Settings
 General,General
 "When off, disabled jobs and schedule changes made here are ignored (every job runs on its default schedule), and the health checks and e-mails stop. The job and schedule pages stay available.","When off, disabled jobs and schedule changes made here are ignored (every job runs on its default schedule), and the health checks and e-mails stop. The job and schedule pages stay available."
 "PHP Binary for ""Run Now""","PHP Binary for ""Run Now"""
-"Path of the PHP command-line binary used to start jobs in the background, e.g. /usr/bin/php8.3. Leave empty to detect it.","Path of the PHP command-line binary used to start jobs in the background, e.g. /usr/bin/php8.3. Leave empty to detect it."
+"Absolute path of the PHP command-line binary used to start jobs in the background, e.g. /usr/bin/php8.3 (the file name must start with ""php""). Leave empty to detect it.","Absolute path of the PHP command-line binary used to start jobs in the background, e.g. /usr/bin/php8.3 (the file name must start with ""php""). Leave empty to detect it."
 "Stuck Jobs","Stuck Jobs"
 "Maximum Runtime (Minutes)","Maximum Runtime (Minutes)"
 "A job still ""running"" after this long is treated as stuck (its process most likely died).","A job still ""running"" after this long is treated as stuck (its process most likely died)."
@@ -191,3 +191,12 @@ Started,Started
 Finished,Finished
 Duration,Duration
 Queued,Queued
+"Enter an absolute path without spaces, e.g. /usr/bin/php8.3.","Enter an absolute path without spaces, e.g. /usr/bin/php8.3."
+"The file name must start with ""php"", e.g. /usr/bin/php8.3.","The file name must start with ""php"", e.g. /usr/bin/php8.3."
+%1 does not exist or is not executable for the web server user.,%1 does not exist or is not executable for the web server user.
+"PHP Binary for ""Run Now"": %1","PHP Binary for ""Run Now"": %1"
+The PHP binary in the Cron Manager settings cannot be used: %1,The PHP binary in the Cron Manager settings cannot be used: %1
+"The Cron Manager changes are set in app/etc/config.php or app/etc/env.php (%1), so they cannot be changed here. Change them in that file, or remove them from it to manage them here.","The Cron Manager changes are set in app/etc/config.php or app/etc/env.php (%1), so they cannot be changed here. Change them in that file, or remove them from it to manage them here."
+set in app/etc/config.php or env.php: read-only here,set in app/etc/config.php or env.php: read-only here
+Ignore These Jobs,Ignore These Jobs
+"Job codes separated by commas or new lines; * matches any text (e.g. <code>amazon_*</code>). These jobs are left out of the warnings and the failure e-mails, and are not marked as failed when they run longer than the maximum runtime.","Job codes separated by commas or new lines; * matches any text (e.g. <code>amazon_*</code>). These jobs are left out of the warnings and the failure e-mails, and are not marked as failed when they run longer than the maximum runtime."

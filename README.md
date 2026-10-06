@@ -30,13 +30,21 @@ Admin: **Softaware > Cron Manager** — Cron Jobs, Schedule, Timeline, Settings.
   a job failed N times in a row, or a job runs longer than the max runtime. Cached for 3 minutes.
 * **Failure e-mails** (off by default): a cron job (`softaware_cron_manager_health`, every 5 minutes) e-mails new
   failures, at most once per interval (failures in between are collected), and reports gaps when cron itself did
-  not run. It can also mark stuck jobs as failed automatically. Template: "Cron Manager: Failed Cron Jobs".
+  not run (measured from the cron history of the last hour, so rescheduling the health job does not cause false
+  alarms). It can also mark stuck jobs as failed automatically. Template: "Cron Manager: Failed Cron Jobs".
+* **Ignore jobs:** job codes (or patterns such as `amazon_*`) listed in "Ignore These Jobs" are left out of the
+  warnings, the status bar and the e-mails, and are not marked as failed when they run long.
 
 ## Configuration
 
 Stores > Configuration > Softaware > Cron Manager (`softaware_cron_manager/...`): Enabled, PHP binary for "Run now"
-(auto-detected when empty), stuck jobs (max runtime, mark automatically), health warnings (minutes without cron,
-failures in a row), failure e-mails (on/off, recipients, sender, template, minimum interval).
+(auto-detected when empty; only an absolute path to an executable whose name starts with `php` is accepted), stuck
+jobs (max runtime, mark automatically), health warnings (minutes without cron, failures in a row, jobs to ignore),
+failure e-mails (on/off, recipients, sender, template, minimum interval).
+
+Job changes are stored in `softaware_cron_manager/overrides/jobs`. If that value is set in `app/etc/config.php` or
+`env.php` (for example after `app:config:dump`), it wins over the database: the Cron Manager then shows the changes as
+read-only and refuses to change them, instead of saving changes that would have no effect.
 
 When the module is switched off, overrides are not applied (all jobs use their default schedule) and health checks
 and e-mails stop; the pages remain available.
@@ -47,7 +55,12 @@ and e-mails stop; the pages remain available.
 bin/magento softaware:cron:list [--group=] [--search=] [--disabled] [--overridden] [--failed]
 bin/magento softaware:cron:run <job_code> [--trigger=cli] [--user=]
 bin/magento softaware:cron:status
+bin/magento softaware:cron:set <job_code> [<job_code> …] [--enable|--disable] [--schedule="*/15 * * * *"]
+bin/magento softaware:cron:set <job_code> [<job_code> …] --default
 ```
+
+`softaware:cron:set` makes the same changes as the Cron Jobs page (useful in deployment scripts); `--default` removes
+all changes of the jobs.
 
 ## ACL
 
