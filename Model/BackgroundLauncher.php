@@ -30,6 +30,13 @@ class BackgroundLauncher
             throw new LocalizedException(__('There is no cron job "%1".', $jobCode));
         }
         $php = $this->getPhpBinary();
+        if ($this->config->getPhpBinary() !== '') {
+            // The setting can also be changed with config:set or in env.php, past the admin validation.
+            $error = PhpBinary::check($php);
+            if ($error !== null) {
+                throw new LocalizedException(__('The PHP binary in the Cron Manager settings cannot be used: %1', $error));
+            }
+        }
         $arguments = [$php, BP . '/bin/magento', 'softaware:cron:run', $jobCode, '--trigger=admin'];
         $command = '%s %s %s %s %s';
         if ($user !== null && $user !== '') {

@@ -14,7 +14,8 @@
                 </field>
                 <field id="php_binary" translate="label comment" type="text" sortOrder="20" showInDefault="1">
                     <label>PHP Binary for "Run Now"</label>
-                    <comment>Path of the PHP command-line binary used to start jobs in the background, e.g. /usr/bin/php8.3. Leave empty to detect it.</comment>
+                    <backend_model>Softaware\CronManager\Model\Config\Backend\PhpBinary</backend_model>
+                    <comment>Absolute path of the PHP command-line binary used to start jobs in the background, e.g. /usr/bin/php8.3 (the file name must start with "php"). Leave empty to detect it.</comment>
                 </field>
             </group>
             <group id="stuck" translate="label" type="text" sortOrder="20" showInDefault="1">
