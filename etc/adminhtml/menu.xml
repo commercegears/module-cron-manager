@@ -2,7 +2,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
         <add id="Softaware_CronManager::main" title="Cron Manager" translate="title" module="Softaware_CronManager"
-             sortOrder="45" parent="Softaware_Base::base" resource="Softaware_CronManager::main"/>
+             sortOrder="45" parent="Softaware_Core::core" resource="Softaware_CronManager::main"/>
         <add id="Softaware_CronManager::jobs" title="Cron Jobs" translate="title" module="Softaware_CronManager"
              sortOrder="10" parent="Softaware_CronManager::main" action="softaware_cron/job/index"
              resource="Softaware_CronManager::jobs"/>
