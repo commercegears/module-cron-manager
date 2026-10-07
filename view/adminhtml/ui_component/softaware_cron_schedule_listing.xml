@@ -13,7 +13,6 @@
             </button>
             <button name="timeline">
                 <url path="softaware_cron/timeline/index"/>
-                <class>primary</class>
                 <label translate="true">Timeline</label>
             </button>
         </buttons>
@@ -33,7 +32,7 @@
             </filterUrlParams>
         </settings>
         <aclResource>Softaware_CronManager::schedule</aclResource>
-        <dataProvider class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider" name="softaware_cron_schedule_listing_data_source">
+        <dataProvider class="Softaware\CronManager\Ui\DataProvider\ScheduleDataProvider" name="softaware_cron_schedule_listing_data_source">
             <settings>
                 <requestFieldName>id</requestFieldName>
                 <primaryFieldName>schedule_id</primaryFieldName>
@@ -46,13 +45,20 @@
         </settings>
         <bookmark name="bookmarks"/>
         <columnsControls name="columns_controls"/>
+        <filterSearch name="fulltext">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="placeholder" xsi:type="string" translate="true">Search by job code or message</item>
+                </item>
+            </argument>
+        </filterSearch>
         <filters name="listing_filters"/>
         <massaction name="listing_massaction">
             <action name="delete">
                 <settings>
                     <confirm>
                         <message translate="true">Delete the selected schedule entries?</message>
-                        <title translate="true">Delete entries</title>
+                        <title translate="true">Delete Entries</title>
                     </confirm>
                     <url path="softaware_cron/schedule/massDelete"/>
                     <type>delete</type>

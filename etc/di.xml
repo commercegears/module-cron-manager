@@ -72,6 +72,25 @@
             <argument name="resourceModel" xsi:type="string">Magento\Cron\Model\ResourceModel\Schedule</argument>
         </arguments>
     </type>
+    <!-- Keyword search of the schedule grid (job code or message) -->
+    <virtualType name="Softaware\CronManager\Ui\DataProvider\Schedule\FilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Softaware\CronManager\Ui\DataProvider\ScheduleKeywordFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Softaware\CronManager\Ui\DataProvider\Schedule\Reporting" type="Magento\Framework\View\Element\UiComponent\DataProvider\Reporting">
+        <arguments>
+            <argument name="filterPool" xsi:type="object">Softaware\CronManager\Ui\DataProvider\Schedule\FilterPool</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Softaware\CronManager\Ui\DataProvider\ScheduleDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="reporting" xsi:type="object">Softaware\CronManager\Ui\DataProvider\Schedule\Reporting</argument>
+        </arguments>
+    </virtualType>
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <arguments>
             <argument name="collections" xsi:type="array">
