@@ -1,5 +1,31 @@
 # Changelog
 
+## 1.3.0 (2026-10-07)
+
+### Added
+
+- Schedule grid: keyword search (job code or message).
+- Confirmation dialogs before "Run Now" on the job page and before each clean-up action on the Schedule page.
+
+### Changed
+
+- Cron Jobs grid: "Edit" is the first row action (it opens the job page; "Change schedule" is gone); a job whose
+  schedule was changed here is marked "Changed" next to its expression (hover shows the default); "Schedule Changed"
+  and "Module" are hidden by default and long job codes wrap, so the grid fits narrower screens; "Errors in
+  History" is now "Recent Errors".
+- Job page ("Cron Job: <code>"): Back, History, Run Now and Save in the page actions bar; job details as a
+  two-column table; state and schedule as a standard admin form with inline validation; the default expression is
+  shown next to "Use the default schedule"; durations formatted (e.g. "1 min 5 s").
+- Status labels use Magento's grid severity styles (Success / Enabled green, Error / Disabled red, Missed yellow).
+- Status panel: plain-language values (Last 24 Hours: n successful, n failed, n missed), numbers in the admin
+  locale, failing jobs shortened to "a, b and n more" with the full list on hover.
+- Schedule clean-up panel: labelled fields with notes instead of placeholders, title-case headings and buttons.
+- Timeline: labelled filters, "Period" in hours, an "Apply" button, Earlier / Now / Later navigation, the shown
+  period in the admin locale; Cron Jobs and Schedule buttons in the page actions bar.
+- Settings: Health Warnings before Stuck Jobs, the General group always open, every field states its default and can
+  be restored to it, required values validated, e-mail recipients validated.
+- Wording: "Run Now", title case for labels and buttons.
+
 ## 1.2.0 (2026-10-06)
 
 ### Changed

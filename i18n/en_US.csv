@@ -6,9 +6,7 @@ Hourly,Hourly
 "Daily at 03:00","Daily at 03:00"
 "Weekly, Sunday 03:00","Weekly, Sunday 03:00"
 "Scheduled %1, started %2, finished %3","Scheduled %1, started %2, finished %3"
-"Duration: %1 s","Duration: %1 s"
 "There is no cron job ""%1"".","There is no cron job ""%1""."
-"Schedule of %1","Schedule of %1"
 "Cron Jobs","Cron Jobs"
 "Select at least one job.","Select at least one job."
 "%1 job(s) enabled.","%1 job(s) enabled."
@@ -57,78 +55,32 @@ Error,Error
 "Cron jobs failing %1 times in a row: %2.","Cron jobs failing %1 times in a row: %2."
 "Cron jobs running for more than %1 minutes (probably stuck): %2.","Cron jobs running for more than %1 minutes (probably stuck): %2."
 "Open the Cron Manager","Open the Cron Manager"
-"Run now","Run now"
 "Run %1 now?","Run %1 now?"
-"The job starts in the background with bin/magento softaware:cron:run. Its result appears in the schedule.","The job starts in the background with bin/magento softaware:cron:run. Its result appears in the schedule."
 Disable,Disable
 Enable,Enable
 "Disable %1?","Disable %1?"
 "The job is no longer queued and its pending entries are removed. You can enable it again at any time.","The job is no longer queued and its pending entries are removed. You can enable it again at any time."
-"Change schedule","Change schedule"
 History,History
 Cron,Cron
-"never ran","never ran"
-"active now","active now"
-"last active %1 min ago","last active %1 min ago"
-"Last 24 hours","Last 24 hours"
-"success / error / missed (kept history only)","success / error / missed (kept history only)"
 Queue,Queue
 "%1 pending, %2 running","%1 pending, %2 running"
-"%1 stuck (over %2 min)","%1 stuck (over %2 min)"
-"Failing in a row","Failing in a row"
-none,none
-"%1 or more failed runs in a row","%1 or more failed runs in a row"
-"Changed here","Changed here"
 "%1 disabled, %2 rescheduled","%1 disabled, %2 rescheduled"
-applied,applied
-"not applied: module switched off in the settings","not applied: module switched off in the settings"
-"Back to jobs","Back to jobs"
-Code,Code
 Group,Group
-Runs,Runs
 Module,Module
-"Default schedule","Default schedule"
 "from the setting %1","from the setting %1"
-"Current schedule","Current schedule"
-"No schedule: the job only runs when started manually.","No schedule: the job only runs when started manually."
 "changed by %1 on %2","changed by %1 on %2"
-"Next runs","Next runs"
-"Last run","Last run"
-"average %1 s","average %1 s"
-Change,Change
 State,State
 Schedule,Schedule
-"Use the default schedule","Use the default schedule"
-"Cron expression","Cron expression"
-"Minute, hour, day of month, month, day of week. Times are in the store timezone (%1), as Magento schedules them. The change is stored in the configuration and applies on the next cron run.","Minute, hour, day of month, month, day of week. Times are in the store timezone (%1), as Magento schedules them. The change is stored in the configuration and applies on the next cron run."
 Save,Save
 "Showing only entries of %1.","Showing only entries of %1."
 "Show all jobs","Show all jobs"
-"Clean up the schedule","Clean up the schedule"
-"Remove queued entries","Remove queued entries"
 "Deletes waiting (pending) and/or missed entries. Cron queues upcoming runs of enabled jobs again on its next run.","Deletes waiting (pending) and/or missed entries. Cron queues upcoming runs of enabled jobs again on its next run."
-"Job code (empty = all jobs)","Job code (empty = all jobs)"
-Remove,Remove
-"Mark stuck jobs as failed","Mark stuck jobs as failed"
 "Entries still ""running"" after this many minutes are set to error, so the job can run again.","Entries still ""running"" after this many minutes are set to error, so the job can run again."
-"Running longer than","Running longer than"
-minutes,minutes
-"Mark as failed","Mark as failed"
-"Clean history","Clean history"
 "Deletes finished entries. Magento also cleans history itself (Stores > Configuration > Advanced > System > Cron).","Deletes finished entries. Magento also cleans history itself (Stores > Configuration > Advanced > System > Cron)."
-"Older than","Older than"
-"hours (0 = all)","hours (0 = all)"
 Delete,Delete
-"Up to","Up to"
-Show,Show
-"%1 h","%1 h"
-All,All
-"Job code contains","Job code contains"
-"Only jobs with errors, missed or running entries","Only jobs with errors, missed or running entries"
 Earlier,Earlier
 Later,Later
 Now,Now
-"%1 entries; hover a bar for details.","%1 entries; hover a bar for details."
 "Only the most recent entries are shown. Choose a shorter period or a group.","Only the most recent entries are shown. Choose a shorter period or a group."
 "No cron entries in this period. Magento keeps successful runs only for a short time (Stores > Configuration > Advanced > System > Cron, ""Success History Lifetime"").","No cron entries in this period. Magento keeps successful runs only for a short time (Stores > Configuration > Advanced > System > Cron, ""Success History Lifetime"")."
 "Cron timeline","Cron timeline"
@@ -147,43 +99,29 @@ Softaware,Softaware
 Timeline,Timeline
 Settings,Settings
 General,General
-"When off, disabled jobs and schedule changes made here are ignored (every job runs on its default schedule), and the health checks and e-mails stop. The job and schedule pages stay available.","When off, disabled jobs and schedule changes made here are ignored (every job runs on its default schedule), and the health checks and e-mails stop. The job and schedule pages stay available."
-"PHP Binary for ""Run Now""","PHP Binary for ""Run Now"""
-"Absolute path of the PHP command-line binary used to start jobs in the background, e.g. /usr/bin/php8.3 (the file name must start with ""php""). Leave empty to detect it.","Absolute path of the PHP command-line binary used to start jobs in the background, e.g. /usr/bin/php8.3 (the file name must start with ""php""). Leave empty to detect it."
 "Stuck Jobs","Stuck Jobs"
 "Maximum Runtime (Minutes)","Maximum Runtime (Minutes)"
-"A job still ""running"" after this long is treated as stuck (its process most likely died).","A job still ""running"" after this long is treated as stuck (its process most likely died)."
 "Mark Stuck Jobs as Failed Automatically","Mark Stuck Jobs as Failed Automatically"
-"Checked every 5 minutes by the softaware_cron_manager_health job. Magento itself only does this after a day.","Checked every 5 minutes by the softaware_cron_manager_health job. Magento itself only does this after a day."
-"Health Warnings in the Admin","Health Warnings in the Admin"
 "Warn When Cron Has Not Run For (Minutes)","Warn When Cron Has Not Run For (Minutes)"
-"0 turns this warning off.","0 turns this warning off."
 "Warn When a Job Fails This Many Times in a Row","Warn When a Job Fails This Many Times in a Row"
 "Failure E-mails","Failure E-mails"
 "Send E-mails About Failed Jobs","Send E-mails About Failed Jobs"
 "Send To","Send To"
-"One or more addresses, separated by commas.","One or more addresses, separated by commas."
 Sender,Sender
 "E-mail Template","E-mail Template"
 "At Most One E-mail Every (Minutes)","At Most One E-mail Every (Minutes)"
-"Failures in between are collected into the next e-mail.","Failures in between are collected into the next e-mail."
 "Start the selected jobs now, one after the other, in the background?","Start the selected jobs now, one after the other, in the background?"
 "Disable the selected jobs? They are no longer queued and their pending entries are removed.","Disable the selected jobs? They are no longer queued and their pending entries are removed."
-"Disable jobs","Disable jobs"
 "Undo all Cron Manager changes (disabled state and schedule) for the selected jobs?","Undo all Cron Manager changes (disabled state and schedule) for the selected jobs?"
-"Restore defaults","Restore defaults"
-"Restore default schedule","Restore default schedule"
 "Job Code","Job Code"
 "Default Schedule","Default Schedule"
 "Schedule Changed","Schedule Changed"
 "Last Run","Last Run"
 "Last Status","Last Status"
 "Avg. Duration","Avg. Duration"
-"Errors in History","Errors in History"
 Class::Method,Class::Method
 "Last Message","Last Message"
 "Delete the selected schedule entries?","Delete the selected schedule entries?"
-"Delete entries","Delete entries"
 ID,ID
 Status,Status
 Scheduled,Scheduled
@@ -193,10 +131,86 @@ Duration,Duration
 Queued,Queued
 "Enter an absolute path without spaces, e.g. /usr/bin/php8.3.","Enter an absolute path without spaces, e.g. /usr/bin/php8.3."
 "The file name must start with ""php"", e.g. /usr/bin/php8.3.","The file name must start with ""php"", e.g. /usr/bin/php8.3."
-%1 does not exist or is not executable for the web server user.,%1 does not exist or is not executable for the web server user.
+"%1 does not exist or is not executable for the web server user.","%1 does not exist or is not executable for the web server user."
 "PHP Binary for ""Run Now"": %1","PHP Binary for ""Run Now"": %1"
-The PHP binary in the Cron Manager settings cannot be used: %1,The PHP binary in the Cron Manager settings cannot be used: %1
+"The PHP binary in the Cron Manager settings cannot be used: %1","The PHP binary in the Cron Manager settings cannot be used: %1"
 "The Cron Manager changes are set in app/etc/config.php or app/etc/env.php (%1), so they cannot be changed here. Change them in that file, or remove them from it to manage them here.","The Cron Manager changes are set in app/etc/config.php or app/etc/env.php (%1), so they cannot be changed here. Change them in that file, or remove them from it to manage them here."
-set in app/etc/config.php or env.php: read-only here,set in app/etc/config.php or env.php: read-only here
-Ignore These Jobs,Ignore These Jobs
-"Job codes separated by commas or new lines; * matches any text (e.g. <code>amazon_*</code>). These jobs are left out of the warnings and the failure e-mails, and are not marked as failed when they run longer than the maximum runtime.","Job codes separated by commas or new lines; * matches any text (e.g. <code>amazon_*</code>). These jobs are left out of the warnings and the failure e-mails, and are not marked as failed when they run longer than the maximum runtime."
+"Ignore These Jobs","Ignore These Jobs"
+Back,Back
+"Run Now","Run Now"
+"Duration: %1","Duration: %1"
+"Cron Job: %1","Cron Job: %1"
+Edit,Edit
+"The job starts in the background. Its result appears in the schedule.","The job starts in the background. Its result appears in the schedule."
+None,None
+"Default: %1","Default: %1"
+Changed,Changed
+"Cron status","Cron status"
+"Has never run","Has never run"
+"Last active %1 min ago","Last active %1 min ago"
+"Last activity: %1","Last activity: %1"
+"Last 24 Hours","Last 24 Hours"
+"%1 successful","%1 successful"
+"%1 failed, %2 missed (history Magento keeps)","%1 failed, %2 missed (history Magento keeps)"
+"%1 stuck (running over %2 min)","%1 stuck (running over %2 min)"
+"Failing Jobs","Failing Jobs"
+"%1 and %2 more","%1 and %2 more"
+"Failed %1 or more times in a row","Failed %1 or more times in a row"
+"Job Changes","Job Changes"
+"Not applied: Cron Manager is switched off in its settings","Not applied: Cron Manager is switched off in its settings"
+"Read-only: set in app/etc/config.php or env.php","Read-only: set in app/etc/config.php or env.php"
+"Applied to Magento cron","Applied to Magento cron"
+"Job Information","Job Information"
+"Current Schedule","Current Schedule"
+"None: the job is disabled.","None: the job is disabled."
+"None: the job only runs when started manually.","None: the job only runs when started manually."
+"Next Runs","Next Runs"
+"average duration %1","average duration %1"
+"State and Schedule","State and Schedule"
+"A disabled job is no longer queued and its pending entries are removed. It can still be started with Run Now.","A disabled job is no longer queued and its pending entries are removed. It can still be started with Run Now."
+"Common schedules","Common schedules"
+"Use the default schedule (%1)","Use the default schedule (%1)"
+"Cron expression: minute, hour, day of month, month, day of week. Times are in the store timezone (%1), as Magento schedules them. The change applies from the next cron run.","Cron expression: minute, hour, day of month, month, day of week. Times are in the store timezone (%1), as Magento schedules them. The change applies from the next cron run."
+"All jobs","All jobs"
+"Leave empty for all jobs.","Leave empty for all jobs."
+"Clean Up the Schedule","Clean Up the Schedule"
+"Remove the selected queued entries? Cron queues upcoming runs of enabled jobs again on its next run.","Remove the selected queued entries? Cron queues upcoming runs of enabled jobs again on its next run."
+"Remove Queued Entries","Remove Queued Entries"
+"Remove Entries","Remove Entries"
+"Mark the stuck entries as failed? Their processes are not stopped; the jobs can run again.","Mark the stuck entries as failed? Their processes are not stopped; the jobs can run again."
+"Mark Stuck Jobs as Failed","Mark Stuck Jobs as Failed"
+"Running Longer Than (Minutes)","Running Longer Than (Minutes)"
+"Mark as Failed","Mark as Failed"
+"Delete the matching history entries? This cannot be undone.","Delete the matching history entries? This cannot be undone."
+"Clean History","Clean History"
+"Older Than (Hours)","Older Than (Hours)"
+"0 deletes all matching entries.","0 deletes all matching entries."
+"Delete Entries","Delete Entries"
+"Up To","Up To"
+Period,Period
+"1 hour","1 hour"
+"%1 hours","%1 hours"
+"All Groups","All Groups"
+"Job Code Contains","Job Code Contains"
+"Only jobs with problems (error, missed or running)","Only jobs with problems (error, missed or running)"
+Apply,Apply
+"Move the period","Move the period"
+"%1 entries; hover over a bar for details.","%1 entries; hover over a bar for details."
+"Default Yes. When No, jobs disabled or rescheduled in the Cron Manager run on their default schedule again, and the health checks and e-mails stop. The Cron Manager pages stay available.","Default Yes. When No, jobs disabled or rescheduled in the Cron Manager run on their default schedule again, and the health checks and e-mails stop. The Cron Manager pages stay available."
+"PHP Binary for Run Now","PHP Binary for Run Now"
+"Leave empty to detect it (recommended). Otherwise the absolute path of the PHP command-line binary that starts jobs in the background, e.g. /usr/bin/php8.3; the file name must start with ""php"".","Leave empty to detect it (recommended). Otherwise the absolute path of the PHP command-line binary that starts jobs in the background, e.g. /usr/bin/php8.3; the file name must start with ""php""."
+"Health Warnings","Health Warnings"
+"Shows an admin warning when cron has been inactive this long. Default 15; 0 turns this warning off.","Shows an admin warning when cron has been inactive this long. Default 15; 0 turns this warning off."
+"Default 3; 0 turns this warning off.","Default 3; 0 turns this warning off."
+"Job codes separated by commas or new lines; * matches any text, e.g. <code>amazon_*</code>. These jobs are left out of the warnings and the failure e-mails, and are not marked as failed when they run long. Default empty.","Job codes separated by commas or new lines; * matches any text, e.g. <code>amazon_*</code>. These jobs are left out of the warnings and the failure e-mails, and are not marked as failed when they run long. Default empty."
+"A job still ""running"" after this long is treated as stuck (its process most likely died). Default 120.","A job still ""running"" after this long is treated as stuck (its process most likely died). Default 120."
+"Default Yes. Checked every 5 minutes, so the job can run again; Magento itself only does this after a day.","Default Yes. Checked every 5 minutes, so the job can run again; Magento itself only does this after a day."
+"Default No. Checked every 5 minutes; also reports when cron itself stopped running.","Default No. Checked every 5 minutes; also reports when cron itself stopped running."
+"One or more e-mail addresses, separated by commas, e.g. ops@example.com, dev@example.com.","One or more e-mail addresses, separated by commas, e.g. ops@example.com, dev@example.com."
+"Store e-mail address the e-mails are sent from. Default General Contact.","Store e-mail address the e-mails are sent from. Default General Contact."
+"Default ""Cron Manager: Failed Cron Jobs"". Create your own under Marketing > Email Templates.","Default ""Cron Manager: Failed Cron Jobs"". Create your own under Marketing > Email Templates."
+"Failures in between are collected into the next e-mail. Default 60.","Failures in between are collected into the next e-mail. Default 60."
+"Disable Jobs","Disable Jobs"
+"Restore Default Schedule","Restore Default Schedule"
+"Recent Errors","Recent Errors"
+"Search by job code or message","Search by job code or message"
