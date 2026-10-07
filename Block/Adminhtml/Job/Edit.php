@@ -3,13 +3,16 @@ declare(strict_types=1);
 
 namespace Softaware\CronManager\Block\Adminhtml\Job;
 
-use Magento\Backend\Block\Template;
-use Magento\Backend\Block\Template\Context;
+use Magento\Backend\Block\Widget\Container;
+use Magento\Backend\Block\Widget\Context;
 use Magento\Framework\AuthorizationInterface;
 use Softaware\CronManager\Model\CronExpression;
 use Softaware\CronManager\Model\JobConfig;
 
-class Edit extends Template
+/**
+ * Edit page of one cron job (state and schedule), with the standard page action buttons.
+ */
+class Edit extends Container
 {
     protected $_template = 'Softaware_CronManager::job/edit.phtml';
 
@@ -21,6 +24,37 @@ class Edit extends Template
         array $data = []
     ) {
         parent::__construct($context, $data);
+    }
+
+    protected function _prepareLayout()
+    {
+        if ($this->getJob() !== null) {
+            $this->addButton('back', [
+                'label' => __('Back'),
+                'onclick' => sprintf("setLocation('%s')", $this->escapeJs($this->getBackUrl())),
+                'class' => 'back',
+            ], 0, 10);
+            $this->addButton('history', [
+                'label' => __('History'),
+                'onclick' => sprintf("setLocation('%s')", $this->escapeJs($this->getHistoryUrl())),
+                'class' => 'action-secondary',
+            ], 0, 20);
+            if ($this->canRun()) {
+                $this->addButton('softaware_cron_run', [
+                    'id' => 'softaware-cron-run',
+                    'label' => __('Run Now'),
+                    'class' => 'action-secondary',
+                ], 0, 30);
+            }
+            $this->addButton('save', [
+                'label' => __('Save'),
+                'class' => 'save primary',
+                'data_attribute' => [
+                    'mage-init' => ['button' => ['event' => 'submit', 'target' => '#softaware-cron-edit-form']],
+                ],
+            ], 0, 40);
+        }
+        return parent::_prepareLayout();
     }
 
     /**

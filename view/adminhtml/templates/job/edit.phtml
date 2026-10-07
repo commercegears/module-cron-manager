@@ -3,109 +3,152 @@
  * @var \Softaware\CronManager\Block\Adminhtml\Job\Edit $block
  * @var \Magento\Framework\Escaper $escaper
  */
+use Softaware\CronManager\Ui\Component\Listing\Column\Duration;
+use Softaware\CronManager\Ui\Component\Listing\Column\StatusBadge;
+
 $job = $block->getJob();
 if (!$job) {
     return;
 }
 $current = $block->getScheduleInput();
 $nextRuns = $block->getNextRuns((string) $job['schedule']);
+$badge = static fn (string $status): string => '<span class="softaware-cron-status '
+    . $escaper->escapeHtmlAttr(StatusBadge::getCssClass($status)) . '">'
+    . $escaper->escapeHtml(StatusBadge::getLabel($status)) . '</span>';
 ?>
 <div class="softaware-cron-edit">
-    <div class="softaware-cron-edit-actions">
-        <a class="action-secondary" href="<?= $escaper->escapeUrl($block->getBackUrl()) ?>"><?= $escaper->escapeHtml(__('Back to jobs')) ?></a>
-        <a class="action-secondary" href="<?= $escaper->escapeUrl($block->getHistoryUrl()) ?>"><?= $escaper->escapeHtml(__('History')) ?></a>
-        <?php if ($block->canRun()): ?>
-            <form method="post" action="<?= $escaper->escapeUrl($block->getRunUrl()) ?>">
-                <input type="hidden" name="form_key" value="<?= $escaper->escapeHtmlAttr($block->getFormKey()) ?>"/>
-                <button type="submit" class="action-secondary"><?= $escaper->escapeHtml(__('Run now')) ?></button>
-            </form>
-        <?php endif; ?>
-    </div>
-
-    <div class="admin__page-section">
-        <div class="admin__page-section-title"><span class="title"><?= $escaper->escapeHtml(__('Job')) ?></span></div>
-        <dl class="softaware-cron-facts">
-            <dt><?= $escaper->escapeHtml(__('Code')) ?></dt><dd><code><?= $escaper->escapeHtml($job['job_code']) ?></code></dd>
-            <dt><?= $escaper->escapeHtml(__('Group')) ?></dt><dd><?= $escaper->escapeHtml($job['group']) ?></dd>
-            <dt><?= $escaper->escapeHtml(__('Runs')) ?></dt><dd><code><?= $escaper->escapeHtml($job['callback']) ?></code></dd>
-            <dt><?= $escaper->escapeHtml(__('Module')) ?></dt><dd><?= $escaper->escapeHtml($job['module']) ?></dd>
-            <dt><?= $escaper->escapeHtml(__('Default schedule')) ?></dt>
-            <dd>
-                <code><?= $escaper->escapeHtml($job['original_schedule'] ?: '—') ?></code>
-                <?php if ($job['config_path']): ?>
-                    <span class="softaware-cron-muted"><?= $escaper->escapeHtml(__('from the setting %1', $job['config_path'])) ?></span>
-                <?php endif; ?>
-            </dd>
-            <dt><?= $escaper->escapeHtml(__('Current schedule')) ?></dt>
-            <dd>
-                <?php if (!$job['is_enabled']): ?>
-                    <span class="softaware-cron-badge softaware-cron-badge-disabled"><?= $escaper->escapeHtml(__('Disabled')) ?></span>
-                <?php elseif ($job['schedule'] === ''): ?>
-                    <?= $escaper->escapeHtml(__('No schedule: the job only runs when started manually.')) ?>
-                <?php else: ?>
-                    <code><?= $escaper->escapeHtml($job['schedule']) ?></code>
-                    <?php if ($job['is_overridden']): ?>
-                        <span class="softaware-cron-muted"><?= $escaper->escapeHtml(__('changed by %1 on %2', $job['override_by'] ?: '?', $block->formatUtc($job['override_at']))) ?></span>
+    <section class="admin__page-section">
+        <div class="admin__page-section-title"><span class="title"><?= $escaper->escapeHtml(__('Job Information')) ?></span></div>
+        <table class="admin__table-secondary softaware-cron-facts">
+            <tbody>
+            <tr>
+                <th scope="row"><?= $escaper->escapeHtml(__('Job Code')) ?></th>
+                <td><code><?= $escaper->escapeHtml($job['job_code']) ?></code></td>
+            </tr>
+            <tr>
+                <th scope="row"><?= $escaper->escapeHtml(__('Group')) ?></th>
+                <td><?= $escaper->escapeHtml($job['group']) ?></td>
+            </tr>
+            <tr>
+                <th scope="row"><?= $escaper->escapeHtml(__('Module')) ?></th>
+                <td><?= $escaper->escapeHtml($job['module']) ?></td>
+            </tr>
+            <tr>
+                <th scope="row"><?= $escaper->escapeHtml(__('Class::Method')) ?></th>
+                <td><code><?= $escaper->escapeHtml($job['callback']) ?></code></td>
+            </tr>
+            <tr>
+                <th scope="row"><?= $escaper->escapeHtml(__('State')) ?></th>
+                <td><?= /* @noEscape */ $badge($job['is_enabled'] ? 'enabled' : 'disabled') ?></td>
+            </tr>
+            <tr>
+                <th scope="row"><?= $escaper->escapeHtml(__('Default Schedule')) ?></th>
+                <td>
+                    <code><?= $escaper->escapeHtml($job['original_schedule'] ?: '—') ?></code>
+                    <?php if ($job['config_path']): ?>
+                        <span class="softaware-cron-muted"><?= $escaper->escapeHtml(__('from the setting %1', $job['config_path'])) ?></span>
                     <?php endif; ?>
-                <?php endif; ?>
-            </dd>
-            <dt><?= $escaper->escapeHtml(__('Next runs')) ?></dt>
-            <dd><?= $nextRuns ? $escaper->escapeHtml(implode(' · ', $nextRuns)) : '—' ?></dd>
-            <dt><?= $escaper->escapeHtml(__('Last run')) ?></dt>
-            <dd>
-                <?= $escaper->escapeHtml($block->formatUtc($job['last_run'])) ?>
-                <?php if ($job['last_status']): ?>
-                    <span class="softaware-cron-badge softaware-cron-badge-<?= $escaper->escapeHtmlAttr($job['last_status']) ?>"><?= $escaper->escapeHtml($job['last_status']) ?></span>
-                <?php endif; ?>
-                <?php if ($job['avg_duration'] !== null): ?>
-                    <span class="softaware-cron-muted"><?= $escaper->escapeHtml(__('average %1 s', $job['avg_duration'])) ?></span>
-                <?php endif; ?>
-            </dd>
-        </dl>
-    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row"><?= $escaper->escapeHtml(__('Current Schedule')) ?></th>
+                <td>
+                    <?php if (!$job['is_enabled']): ?>
+                        <?= $escaper->escapeHtml(__('None: the job is disabled.')) ?>
+                    <?php elseif ($job['schedule'] === ''): ?>
+                        <?= $escaper->escapeHtml(__('None: the job only runs when started manually.')) ?>
+                    <?php else: ?>
+                        <code><?= $escaper->escapeHtml($job['schedule']) ?></code>
+                        <?php if ($job['is_overridden']): ?>
+                            <span class="softaware-cron-muted"><?= $escaper->escapeHtml(__('changed by %1 on %2', $job['override_by'] ?: '?', $block->formatUtc($job['override_at']))) ?></span>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row"><?= $escaper->escapeHtml(__('Next Runs')) ?></th>
+                <td>
+                    <?php if ($nextRuns): ?>
+                        <ul class="softaware-cron-runs">
+                            <?php foreach ($nextRuns as $run): ?>
+                                <li><?= $escaper->escapeHtml($run) ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php else: ?>
+                        —
+                    <?php endif; ?>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row"><?= $escaper->escapeHtml(__('Last Run')) ?></th>
+                <td>
+                    <?= $escaper->escapeHtml($block->formatUtc($job['last_run'])) ?>
+                    <?php if ($job['last_status']): ?>
+                        <?= /* @noEscape */ $badge((string) $job['last_status']) ?>
+                    <?php endif; ?>
+                    <?php if ($job['avg_duration'] !== null): ?>
+                        <span class="softaware-cron-muted"><?= $escaper->escapeHtml(__('average duration %1', Duration::format((float) $job['avg_duration']))) ?></span>
+                    <?php endif; ?>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
 
-    <div class="admin__page-section">
-        <div class="admin__page-section-title"><span class="title"><?= $escaper->escapeHtml(__('Change')) ?></span></div>
-        <form method="post" action="<?= $escaper->escapeUrl($block->getSaveUrl()) ?>" class="softaware-cron-form" id="softaware-cron-edit-form">
+    <section class="admin__page-section">
+        <div class="admin__page-section-title"><span class="title"><?= $escaper->escapeHtml(__('State and Schedule')) ?></span></div>
+        <form method="post" action="<?= $escaper->escapeUrl($block->getSaveUrl()) ?>" class="softaware-cron-form" id="softaware-cron-edit-form"
+              data-mage-init='{"validation":{}}'>
             <input type="hidden" name="form_key" value="<?= $escaper->escapeHtmlAttr($block->getFormKey()) ?>"/>
-            <div class="admin__field field">
-                <label class="admin__field-label" for="softaware-cron-state"><span><?= $escaper->escapeHtml(__('State')) ?></span></label>
-                <div class="admin__field-control">
-                    <select id="softaware-cron-state" name="is_enabled" class="admin__control-select">
-                        <option value="1"<?= $job['is_enabled'] ? ' selected' : '' ?>><?= $escaper->escapeHtml(__('Enabled')) ?></option>
-                        <option value="0"<?= $job['is_enabled'] ? '' : ' selected' ?>><?= $escaper->escapeHtml(__('Disabled')) ?></option>
-                    </select>
-                </div>
-            </div>
-            <div class="admin__field field">
-                <div class="admin__field-label"><span><?= $escaper->escapeHtml(__('Schedule')) ?></span></div>
-                <div class="admin__field-control">
-                    <div class="admin__field-option">
-                        <input type="checkbox" class="admin__control-checkbox" name="use_default" value="1" id="softaware-cron-default"
-                               <?= $job['is_overridden'] ? '' : 'checked' ?>/>
-                        <label class="admin__field-label" for="softaware-cron-default"><?= $escaper->escapeHtml(__('Use the default schedule')) ?></label>
-                    </div>
-                    <input type="text" name="schedule" id="softaware-cron-schedule" class="admin__control-text softaware-cron-expr"
-                           value="<?= $escaper->escapeHtmlAttr($current) ?>" placeholder="*/5 * * * *"
-                           aria-label="<?= $escaper->escapeHtmlAttr(__('Cron expression')) ?>"/>
-                    <div class="softaware-cron-presets">
-                        <?php foreach ($block->getPresets() as $expression => $label): ?>
-                            <button type="button" class="action-default" data-expr="<?= $escaper->escapeHtmlAttr($expression) ?>"><?= $escaper->escapeHtml($label) ?></button>
-                        <?php endforeach; ?>
-                    </div>
-                    <div class="admin__field-note">
-                        <?= $escaper->escapeHtml(__('Minute, hour, day of month, month, day of week. Times are in the store timezone (%1), as Magento schedules them. The change is stored in the configuration and applies on the next cron run.', $block->getTimezone())) ?>
+            <fieldset class="admin__fieldset">
+                <div class="admin__field">
+                    <label class="admin__field-label" for="softaware-cron-state"><span><?= $escaper->escapeHtml(__('State')) ?></span></label>
+                    <div class="admin__field-control">
+                        <select id="softaware-cron-state" name="is_enabled" class="admin__control-select">
+                            <option value="1"<?= $job['is_enabled'] ? ' selected' : '' ?>><?= $escaper->escapeHtml(__('Enabled')) ?></option>
+                            <option value="0"<?= $job['is_enabled'] ? '' : ' selected' ?>><?= $escaper->escapeHtml(__('Disabled')) ?></option>
+                        </select>
+                        <div class="admin__field-note">
+                            <?= $escaper->escapeHtml(__('A disabled job is no longer queued and its pending entries are removed. It can still be started with Run Now.')) ?>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="admin__field field">
-                <div class="admin__field-control">
-                    <button type="submit" class="action-primary"><?= $escaper->escapeHtml(__('Save')) ?></button>
+                <div class="admin__field">
+                    <label class="admin__field-label" for="softaware-cron-schedule"><span><?= $escaper->escapeHtml(__('Schedule')) ?></span></label>
+                    <div class="admin__field-control">
+                        <input type="text" name="schedule" id="softaware-cron-schedule" class="admin__control-text softaware-cron-expr"
+                               value="<?= $escaper->escapeHtmlAttr($current) ?>" placeholder="*/5 * * * *"
+                               data-validate='{"required":true}' aria-describedby="softaware-cron-schedule-note"/>
+                        <div class="softaware-cron-presets" role="group" aria-label="<?= $escaper->escapeHtmlAttr(__('Common schedules')) ?>">
+                            <?php foreach ($block->getPresets() as $expression => $label): ?>
+                                <button type="button" class="action-default" data-expr="<?= $escaper->escapeHtmlAttr($expression) ?>"
+                                        title="<?= $escaper->escapeHtmlAttr($expression) ?>"><?= $escaper->escapeHtml($label) ?></button>
+                            <?php endforeach; ?>
+                        </div>
+                        <div class="admin__field-option">
+                            <input type="checkbox" class="admin__control-checkbox" name="use_default" value="1" id="softaware-cron-default"
+                                   <?= $job['is_overridden'] ? '' : 'checked' ?>/>
+                            <label class="admin__field-label" for="softaware-cron-default">
+                                <?= $escaper->escapeHtml(__('Use the default schedule (%1)', $job['original_schedule'] ?: '—')) ?>
+                            </label>
+                        </div>
+                        <div class="admin__field-note" id="softaware-cron-schedule-note">
+                            <?= $escaper->escapeHtml(__('Cron expression: minute, hour, day of month, month, day of week. Times are in the store timezone (%1), as Magento schedules them. The change applies from the next cron run.', $block->getTimezone())) ?>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </fieldset>
         </form>
-    </div>
+    </section>
+    <?php if ($block->canRun()): ?>
+        <form method="post" action="<?= $escaper->escapeUrl($block->getRunUrl()) ?>" id="softaware-cron-run-form" class="no-display">
+            <input type="hidden" name="form_key" value="<?= $escaper->escapeHtmlAttr($block->getFormKey()) ?>"/>
+        </form>
+    <?php endif; ?>
 </div>
 <script type="text/x-magento-init">
-    {"#softaware-cron-edit-form": {"Softaware_CronManager/js/schedule-form": {}}}
+    {"#softaware-cron-edit-form": {"Softaware_CronManager/js/schedule-form": {
+        "runTitle": <?= /* @noEscape */ json_encode((string) __('Run %1 now?', $job['job_code']), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>,
+        "runMessage": <?= /* @noEscape */ json_encode((string) __('The job starts in the background. Its result appears in the schedule.'), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>
+    }}}
 </script>

@@ -29,7 +29,7 @@ class Edit extends Action implements HttpGetActionInterface
         /** @var \Magento\Backend\Model\View\Result\Page $page */
         $page = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
         $page->setActiveMenu('Softaware_CronManager::jobs');
-        $page->getConfig()->getTitle()->prepend(__('Schedule of %1', $code));
+        $page->getConfig()->getTitle()->prepend(__('Cron Job: %1', $code));
         return $page;
     }
 }
