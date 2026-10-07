@@ -7,78 +7,83 @@
             <resource>Softaware_CronManager::config</resource>
             <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1">
                 <label>General</label>
-                <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1">
+                <attribute type="expanded">1</attribute>
+                <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" canRestore="1">
                     <label>Enabled</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>When off, disabled jobs and schedule changes made here are ignored (every job runs on its default schedule), and the health checks and e-mails stop. The job and schedule pages stay available.</comment>
+                    <comment>Default Yes. When No, jobs disabled or rescheduled in the Cron Manager run on their default schedule again, and the health checks and e-mails stop. The Cron Manager pages stay available.</comment>
                 </field>
-                <field id="php_binary" translate="label comment" type="text" sortOrder="20" showInDefault="1">
-                    <label>PHP Binary for "Run Now"</label>
+                <field id="php_binary" translate="label comment" type="text" sortOrder="20" showInDefault="1" canRestore="1">
+                    <label>PHP Binary for Run Now</label>
                     <backend_model>Softaware\CronManager\Model\Config\Backend\PhpBinary</backend_model>
-                    <comment>Absolute path of the PHP command-line binary used to start jobs in the background, e.g. /usr/bin/php8.3 (the file name must start with "php"). Leave empty to detect it.</comment>
+                    <comment>Leave empty to detect it (recommended). Otherwise the absolute path of the PHP command-line binary that starts jobs in the background, e.g. /usr/bin/php8.3; the file name must start with "php".</comment>
                 </field>
             </group>
-            <group id="stuck" translate="label" type="text" sortOrder="20" showInDefault="1">
-                <label>Stuck Jobs</label>
-                <field id="max_runtime" translate="label comment" type="text" sortOrder="10" showInDefault="1">
-                    <label>Maximum Runtime (Minutes)</label>
-                    <validate>validate-digits validate-greater-than-zero</validate>
-                    <comment>A job still "running" after this long is treated as stuck (its process most likely died).</comment>
+            <group id="health" translate="label" type="text" sortOrder="20" showInDefault="1">
+                <label>Health Warnings</label>
+                <field id="not_running_minutes" translate="label comment" type="text" sortOrder="10" showInDefault="1" canRestore="1">
+                    <label>Warn When Cron Has Not Run For (Minutes)</label>
+                    <validate>required-entry validate-digits validate-zero-or-greater</validate>
+                    <comment>Shows an admin warning when cron has been inactive this long. Default 15; 0 turns this warning off.</comment>
                 </field>
-                <field id="auto_mark" translate="label comment" type="select" sortOrder="20" showInDefault="1">
+                <field id="failure_threshold" translate="label comment" type="text" sortOrder="20" showInDefault="1" canRestore="1">
+                    <label>Warn When a Job Fails This Many Times in a Row</label>
+                    <validate>required-entry validate-digits validate-zero-or-greater</validate>
+                    <comment>Default 3; 0 turns this warning off.</comment>
+                </field>
+                <field id="ignore_jobs" translate="label comment" type="textarea" sortOrder="30" showInDefault="1" canRestore="1">
+                    <label>Ignore These Jobs</label>
+                    <comment><![CDATA[Job codes separated by commas or new lines; * matches any text, e.g. <code>amazon_*</code>. These jobs are left out of the warnings and the failure e-mails, and are not marked as failed when they run long. Default empty.]]></comment>
+                </field>
+            </group>
+            <group id="stuck" translate="label" type="text" sortOrder="30" showInDefault="1">
+                <label>Stuck Jobs</label>
+                <field id="max_runtime" translate="label comment" type="text" sortOrder="10" showInDefault="1" canRestore="1">
+                    <label>Maximum Runtime (Minutes)</label>
+                    <validate>required-entry validate-digits validate-greater-than-zero</validate>
+                    <comment>A job still "running" after this long is treated as stuck (its process most likely died). Default 120.</comment>
+                </field>
+                <field id="auto_mark" translate="label comment" type="select" sortOrder="20" showInDefault="1" canRestore="1">
                     <label>Mark Stuck Jobs as Failed Automatically</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>Checked every 5 minutes by the softaware_cron_manager_health job. Magento itself only does this after a day.</comment>
-                </field>
-            </group>
-            <group id="health" translate="label" type="text" sortOrder="30" showInDefault="1">
-                <label>Health Warnings in the Admin</label>
-                <field id="not_running_minutes" translate="label comment" type="text" sortOrder="10" showInDefault="1">
-                    <label>Warn When Cron Has Not Run For (Minutes)</label>
-                    <validate>validate-digits validate-zero-or-greater</validate>
-                    <comment>0 turns this warning off.</comment>
-                </field>
-                <field id="failure_threshold" translate="label comment" type="text" sortOrder="20" showInDefault="1">
-                    <label>Warn When a Job Fails This Many Times in a Row</label>
-                    <validate>validate-digits validate-zero-or-greater</validate>
-                    <comment>0 turns this warning off.</comment>
-                </field>
-                <field id="ignore_jobs" translate="label comment" type="textarea" sortOrder="30" showInDefault="1">
-                    <label>Ignore These Jobs</label>
-                    <comment><![CDATA[Job codes separated by commas or new lines; * matches any text (e.g. <code>amazon_*</code>). These jobs are left out of the warnings and the failure e-mails, and are not marked as failed when they run longer than the maximum runtime.]]></comment>
+                    <comment>Default Yes. Checked every 5 minutes, so the job can run again; Magento itself only does this after a day.</comment>
                 </field>
             </group>
             <group id="notify" translate="label" type="text" sortOrder="40" showInDefault="1">
                 <label>Failure E-mails</label>
-                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1">
+                <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" canRestore="1">
                     <label>Send E-mails About Failed Jobs</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Default No. Checked every 5 minutes; also reports when cron itself stopped running.</comment>
                 </field>
                 <field id="recipients" translate="label comment" type="text" sortOrder="20" showInDefault="1">
                     <label>Send To</label>
-                    <comment>One or more addresses, separated by commas.</comment>
+                    <validate>required-entry validate-emails</validate>
+                    <comment>One or more e-mail addresses, separated by commas, e.g. ops@example.com, dev@example.com.</comment>
                     <depends>
                         <field id="enabled">1</field>
                     </depends>
                 </field>
-                <field id="identity" translate="label" type="select" sortOrder="30" showInDefault="1">
+                <field id="identity" translate="label comment" type="select" sortOrder="30" showInDefault="1" canRestore="1">
                     <label>Sender</label>
                     <source_model>Magento\Config\Model\Config\Source\Email\Identity</source_model>
+                    <comment>Store e-mail address the e-mails are sent from. Default General Contact.</comment>
                     <depends>
                         <field id="enabled">1</field>
                     </depends>
                 </field>
-                <field id="template" translate="label" type="select" sortOrder="40" showInDefault="1">
+                <field id="template" translate="label comment" type="select" sortOrder="40" showInDefault="1" canRestore="1">
                     <label>E-mail Template</label>
                     <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                    <comment>Default "Cron Manager: Failed Cron Jobs". Create your own under Marketing > Email Templates.</comment>
                     <depends>
                         <field id="enabled">1</field>
                     </depends>
                 </field>
-                <field id="interval" translate="label comment" type="text" sortOrder="50" showInDefault="1">
+                <field id="interval" translate="label comment" type="text" sortOrder="50" showInDefault="1" canRestore="1">
                     <label>At Most One E-mail Every (Minutes)</label>
-                    <validate>validate-digits validate-greater-than-zero</validate>
-                    <comment>Failures in between are collected into the next e-mail.</comment>
+                    <validate>required-entry validate-digits validate-greater-than-zero</validate>
+                    <comment>Failures in between are collected into the next e-mail. Default 60.</comment>
                     <depends>
                         <field id="enabled">1</field>
                     </depends>
