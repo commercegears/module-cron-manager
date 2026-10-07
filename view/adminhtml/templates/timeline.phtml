@@ -10,52 +10,59 @@ $span = $block->getSpan();
 ?>
 <div class="softaware-cron-timeline">
     <form method="get" action="<?= $escaper->escapeUrl($block->getUrl('*/*/index')) ?>" class="softaware-cron-timeline-filters">
-        <label><?= $escaper->escapeHtml(__('Up to')) ?>
-            <input type="datetime-local" name="end" class="admin__control-text" value="<?= $escaper->escapeHtmlAttr($end->format('Y-m-d\TH:i')) ?>"/>
-        </label>
-        <label><?= $escaper->escapeHtml(__('Show')) ?>
-            <select name="span" class="admin__control-select">
+        <div class="softaware-cron-filter">
+            <label for="softaware-cron-tl-end"><?= $escaper->escapeHtml(__('Up To')) ?></label>
+            <input type="datetime-local" name="end" id="softaware-cron-tl-end" class="admin__control-text" value="<?= $escaper->escapeHtmlAttr($end->format('Y-m-d\TH:i')) ?>"/>
+        </div>
+        <div class="softaware-cron-filter">
+            <label for="softaware-cron-tl-span"><?= $escaper->escapeHtml(__('Period')) ?></label>
+            <select name="span" id="softaware-cron-tl-span" class="admin__control-select">
                 <?php foreach (\Softaware\CronManager\Block\Adminhtml\Timeline::SPANS as $hours): ?>
-                    <option value="<?= (int) $hours ?>"<?= $hours === $span ? ' selected' : '' ?>><?= $escaper->escapeHtml(__('%1 h', $hours)) ?></option>
+                    <option value="<?= (int) $hours ?>"<?= $hours === $span ? ' selected' : '' ?>><?= $escaper->escapeHtml($hours === 1 ? __('1 hour') : __('%1 hours', $hours)) ?></option>
                 <?php endforeach; ?>
             </select>
-        </label>
-        <label><?= $escaper->escapeHtml(__('Group')) ?>
-            <select name="group" class="admin__control-select">
-                <option value=""><?= $escaper->escapeHtml(__('All')) ?></option>
+        </div>
+        <div class="softaware-cron-filter">
+            <label for="softaware-cron-tl-group"><?= $escaper->escapeHtml(__('Group')) ?></label>
+            <select name="group" id="softaware-cron-tl-group" class="admin__control-select">
+                <option value=""><?= $escaper->escapeHtml(__('All Groups')) ?></option>
                 <?php foreach ($block->getGroups() as $group): ?>
                     <option value="<?= $escaper->escapeHtmlAttr($group) ?>"<?= $group === $block->getGroup() ? ' selected' : '' ?>><?= $escaper->escapeHtml($group) ?></option>
                 <?php endforeach; ?>
             </select>
-        </label>
-        <label><?= $escaper->escapeHtml(__('Job code contains')) ?>
-            <input type="text" name="q" class="admin__control-text" value="<?= $escaper->escapeHtmlAttr($block->getSearch()) ?>"/>
-        </label>
-        <label class="softaware-cron-check"><input type="checkbox" name="problems" value="1"<?= $block->onlyProblems() ? ' checked' : '' ?>/> <?= $escaper->escapeHtml(__('Only jobs with errors, missed or running entries')) ?></label>
-        <button type="submit" class="action-primary"><?= $escaper->escapeHtml(__('Show')) ?></button>
-        <span class="softaware-cron-nav">
-            <a class="action-default" href="<?= $escaper->escapeUrl($block->getUrlFor(['end' => $start->format('Y-m-d\TH:i')])) ?>">&larr; <?= $escaper->escapeHtml(__('Earlier')) ?></a>
-            <a class="action-default" href="<?= $escaper->escapeUrl($block->getUrlFor(['end' => $end->modify('+' . $span . ' hours')->format('Y-m-d\TH:i')])) ?>"><?= $escaper->escapeHtml(__('Later')) ?> &rarr;</a>
+        </div>
+        <div class="softaware-cron-filter">
+            <label for="softaware-cron-tl-q"><?= $escaper->escapeHtml(__('Job Code Contains')) ?></label>
+            <input type="text" name="q" id="softaware-cron-tl-q" class="admin__control-text" value="<?= $escaper->escapeHtmlAttr($block->getSearch()) ?>"/>
+        </div>
+        <div class="softaware-cron-filter softaware-cron-filter-check admin__field-option">
+            <input type="checkbox" name="problems" value="1" id="softaware-cron-tl-problems" class="admin__control-checkbox"<?= $block->onlyProblems() ? ' checked' : '' ?>/>
+            <label class="admin__field-label" for="softaware-cron-tl-problems"><?= $escaper->escapeHtml(__('Only jobs with problems (error, missed or running)')) ?></label>
+        </div>
+        <button type="submit" class="action-secondary"><?= $escaper->escapeHtml(__('Apply')) ?></button>
+        <nav class="softaware-cron-nav" aria-label="<?= $escaper->escapeHtmlAttr(__('Move the period')) ?>">
+            <a class="action-default softaware-cron-prev" href="<?= $escaper->escapeUrl($block->getUrlFor(['end' => $start->format('Y-m-d\TH:i')])) ?>"><?= $escaper->escapeHtml(__('Earlier')) ?></a>
             <a class="action-default" href="<?= $escaper->escapeUrl($block->getUrlFor(['end' => null])) ?>"><?= $escaper->escapeHtml(__('Now')) ?></a>
-        </span>
+            <a class="action-default softaware-cron-next" href="<?= $escaper->escapeUrl($block->getUrlFor(['end' => $end->modify('+' . $span . ' hours')->format('Y-m-d\TH:i')])) ?>"><?= $escaper->escapeHtml(__('Later')) ?></a>
+        </nav>
     </form>
 
     <div class="softaware-cron-legend">
-        <strong><?= $escaper->escapeHtml($start->format('D j M Y, H:i')) ?> – <?= $escaper->escapeHtml($end->format('H:i')) ?></strong>
+        <strong><?= $escaper->escapeHtml($block->getPeriodLabel()) ?></strong>
         <span class="softaware-cron-muted">(<?= $escaper->escapeHtml($start->getTimezone()->getName()) ?>)</span>
-        <span class="softaware-cron-legend-item"><i class="softaware-cron-bar-success"></i><?= $escaper->escapeHtml(__('Success')) ?></span>
-        <span class="softaware-cron-legend-item"><i class="softaware-cron-bar-error"></i><?= $escaper->escapeHtml(__('Error')) ?></span>
-        <span class="softaware-cron-legend-item"><i class="softaware-cron-bar-running"></i><?= $escaper->escapeHtml(__('Running')) ?></span>
-        <span class="softaware-cron-legend-item"><i class="softaware-cron-bar-missed"></i><?= $escaper->escapeHtml(__('Missed')) ?></span>
-        <span class="softaware-cron-legend-item"><i class="softaware-cron-bar-pending"></i><?= $escaper->escapeHtml(__('Pending')) ?></span>
-        <span class="softaware-cron-muted"><?= $escaper->escapeHtml(__('%1 entries; hover a bar for details.', $chart['count'])) ?></span>
+        <span class="softaware-cron-legend-item"><i aria-hidden="true" class="softaware-cron-bar-success"></i><?= $escaper->escapeHtml(__('Success')) ?></span>
+        <span class="softaware-cron-legend-item"><i aria-hidden="true" class="softaware-cron-bar-error"></i><?= $escaper->escapeHtml(__('Error')) ?></span>
+        <span class="softaware-cron-legend-item"><i aria-hidden="true" class="softaware-cron-bar-running"></i><?= $escaper->escapeHtml(__('Running')) ?></span>
+        <span class="softaware-cron-legend-item"><i aria-hidden="true" class="softaware-cron-bar-missed"></i><?= $escaper->escapeHtml(__('Missed')) ?></span>
+        <span class="softaware-cron-legend-item"><i aria-hidden="true" class="softaware-cron-bar-pending"></i><?= $escaper->escapeHtml(__('Pending')) ?></span>
+        <span class="softaware-cron-muted"><?= $escaper->escapeHtml(__('%1 entries; hover over a bar for details.', $block->formatNumber((int) $chart['count']))) ?></span>
     </div>
     <?php if ($chart['truncated']): ?>
         <div class="message message-warning"><?= $escaper->escapeHtml(__('Only the most recent entries are shown. Choose a shorter period or a group.')) ?></div>
     <?php endif; ?>
 
     <?php if (!$chart['rows']): ?>
-        <div class="message message-info"><?= $escaper->escapeHtml(__('No cron entries in this period. Magento keeps successful runs only for a short time (Stores > Configuration > Advanced > System > Cron, "Success History Lifetime").')) ?></div>
+        <div class="message message-info softaware-cron-empty"><?= $escaper->escapeHtml(__('No cron entries in this period. Magento keeps successful runs only for a short time (Stores > Configuration > Advanced > System > Cron, "Success History Lifetime").')) ?></div>
     <?php else: ?>
         <div class="softaware-cron-chart" role="img" aria-label="<?= $escaper->escapeHtmlAttr(__('Cron timeline')) ?>">
             <div class="softaware-cron-row softaware-cron-axis">

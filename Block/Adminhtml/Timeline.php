@@ -3,15 +3,18 @@ declare(strict_types=1);
 
 namespace Softaware\CronManager\Block\Adminhtml;
 
-use Magento\Backend\Block\Template;
-use Magento\Backend\Block\Template\Context;
+use Magento\Backend\Block\Widget\Container;
+use Magento\Backend\Block\Widget\Context;
+use Magento\Framework\Locale\ResolverInterface;
 use Softaware\CronManager\Model\JobConfig;
 use Softaware\CronManager\Model\ScheduleManager;
+use Softaware\CronManager\Ui\Component\Listing\Column\Duration;
+use Softaware\CronManager\Ui\Component\Listing\Column\StatusBadge;
 
 /**
  * Gantt-like timeline of cron runs: one row per job, one bar per run, coloured by status.
  */
-class Timeline extends Template
+class Timeline extends Container
 {
     public const SPANS = [1, 3, 6, 12, 24];
     private const MIN_WIDTH = 0.18;
@@ -25,9 +28,48 @@ class Timeline extends Template
         Context $context,
         private readonly ScheduleManager $scheduleManager,
         private readonly JobConfig $jobConfig,
+        private readonly ResolverInterface $localeResolver,
         array $data = []
     ) {
         parent::__construct($context, $data);
+    }
+
+    protected function _prepareLayout()
+    {
+        if ($this->_authorization->isAllowed('Softaware_CronManager::jobs')) {
+            $this->addButton('jobs', [
+                'label' => __('Cron Jobs'),
+                'onclick' => sprintf("setLocation('%s')", $this->escapeJs($this->getUrl('softaware_cron/job/index'))),
+            ], 0, 10);
+        }
+        $this->addButton('schedule', [
+            'label' => __('Schedule'),
+            'onclick' => sprintf("setLocation('%s')", $this->escapeJs($this->getUrl('softaware_cron/schedule/index'))),
+        ], 0, 20);
+        return parent::_prepareLayout();
+    }
+
+    public function formatNumber(int $number): string
+    {
+        $formatter = new \NumberFormatter($this->localeResolver->getLocale(), \NumberFormatter::DECIMAL);
+        $formatted = $formatter->format($number);
+        return $formatted === false ? (string) $number : $formatted;
+    }
+
+    /**
+     * The shown period in the admin locale, e.g. "7 Oct 2026, 01:00 – 04:00".
+     */
+    public function getPeriodLabel(): string
+    {
+        $locale = $this->localeResolver->getLocale();
+        $tz = $this->getTimezone();
+        $start = $this->getStart();
+        $end = $this->getEnd();
+        $full = new \IntlDateFormatter($locale, \IntlDateFormatter::MEDIUM, \IntlDateFormatter::SHORT, $tz);
+        $endFormatter = $start->format('Y-m-d') === $end->format('Y-m-d')
+            ? new \IntlDateFormatter($locale, \IntlDateFormatter::NONE, \IntlDateFormatter::SHORT, $tz)
+            : $full;
+        return $full->format($start) . ' – ' . $endFormatter->format($end);
     }
 
     public function getTimezone(): \DateTimeZone
@@ -196,11 +238,11 @@ class Timeline extends Template
             ? (new \DateTimeImmutable($utc, new \DateTimeZone('UTC')))->setTimezone($tz)->format('H:i:s')
             : '—';
         $lines = [
-            $entry['job_code'] . ' · ' . $entry['status'] . ' · #' . $entry['schedule_id'],
+            $entry['job_code'] . ' · ' . StatusBadge::getLabel((string) $entry['status']) . ' · #' . $entry['schedule_id'],
             __('Scheduled %1, started %2, finished %3', $fmt($entry['scheduled_at']), $fmt($entry['executed_at']), $fmt($entry['finished_at'])),
         ];
         if ($duration !== null) {
-            $lines[] = __('Duration: %1 s', $duration);
+            $lines[] = __('Duration: %1', Duration::format((float) $duration));
         }
         if (!empty($entry['messages'])) {
             $lines[] = mb_strimwidth(preg_replace('/\s+/', ' ', (string) $entry['messages']) ?? '', 0, 300, '…');
