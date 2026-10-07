@@ -32,14 +32,20 @@ class JobActions extends Column
         foreach ($dataSource['data']['items'] as &$item) {
             $code = (string) $item['job_code'];
             $actions = [];
+            if ($canManage) {
+                $actions['edit'] = [
+                    'href' => $this->urlBuilder->getUrl('softaware_cron/job/edit', ['code' => $code]),
+                    'label' => __('Edit'),
+                ];
+            }
             if ($canRun) {
                 $actions['run'] = [
                     'href' => $this->urlBuilder->getUrl('softaware_cron/job/run', ['code' => $code]),
-                    'label' => __('Run now'),
+                    'label' => __('Run Now'),
                     'post' => true,
                     'confirm' => [
                         'title' => __('Run %1 now?', $code),
-                        'message' => __('The job starts in the background with bin/magento softaware:cron:run. Its result appears in the schedule.'),
+                        'message' => __('The job starts in the background. Its result appears in the schedule.'),
                     ],
                 ];
             }
@@ -56,10 +62,6 @@ class JobActions extends Column
                         'message' => __('The job is no longer queued and its pending entries are removed. You can enable it again at any time.'),
                     ];
                 }
-                $actions['edit'] = [
-                    'href' => $this->urlBuilder->getUrl('softaware_cron/job/edit', ['code' => $code]),
-                    'label' => __('Change schedule'),
-                ];
             }
             $actions['history'] = [
                 'href' => $this->urlBuilder->getUrl('softaware_cron/schedule/index', ['job_code' => $code]),

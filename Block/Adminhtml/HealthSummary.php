@@ -5,6 +5,7 @@ namespace Softaware\CronManager\Block\Adminhtml;
 
 use Magento\Backend\Block\Template;
 use Magento\Backend\Block\Template\Context;
+use Magento\Framework\Locale\ResolverInterface;
 use Softaware\CronManager\Model\Config;
 use Softaware\CronManager\Model\Health;
 use Softaware\CronManager\Model\JobConfig;
@@ -25,6 +26,7 @@ class HealthSummary extends Template
         private readonly OverrideStorage $overrides,
         private readonly Config $config,
         private readonly JobConfig $jobConfig,
+        private readonly ResolverInterface $localeResolver,
         array $data = []
     ) {
         parent::__construct($context, $data);
@@ -83,6 +85,16 @@ class HealthSummary extends Template
     public function getConfig(): Config
     {
         return $this->config;
+    }
+
+    /**
+     * Whole number with the admin locale's grouping (1,695).
+     */
+    public function formatNumber(int $number): string
+    {
+        $formatter = new \NumberFormatter($this->localeResolver->getLocale(), \NumberFormatter::DECIMAL);
+        $formatted = $formatter->format($number);
+        return $formatted === false ? (string) $number : $formatted;
     }
 
     public function formatUtc(?string $utc): string

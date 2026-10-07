@@ -13,7 +13,6 @@
             </button>
             <button name="timeline">
                 <url path="softaware_cron/timeline/index"/>
-                <class>primary</class>
                 <label translate="true">Timeline</label>
             </button>
         </buttons>
@@ -50,13 +49,13 @@
                 <settings>
                     <confirm>
                         <message translate="true">Start the selected jobs now, one after the other, in the background?</message>
-                        <title translate="true">Run now</title>
+                        <title translate="true">Run Now</title>
                     </confirm>
                     <url path="softaware_cron/job/massAction">
                         <param name="operation">run</param>
                     </url>
                     <type>run</type>
-                    <label translate="true">Run now</label>
+                    <label translate="true">Run Now</label>
                 </settings>
             </action>
             <action name="enable">
@@ -72,7 +71,7 @@
                 <settings>
                     <confirm>
                         <message translate="true">Disable the selected jobs? They are no longer queued and their pending entries are removed.</message>
-                        <title translate="true">Disable jobs</title>
+                        <title translate="true">Disable Jobs</title>
                     </confirm>
                     <url path="softaware_cron/job/massAction">
                         <param name="operation">disable</param>
@@ -85,13 +84,13 @@
                 <settings>
                     <confirm>
                         <message translate="true">Undo all Cron Manager changes (disabled state and schedule) for the selected jobs?</message>
-                        <title translate="true">Restore defaults</title>
+                        <title translate="true">Restore Default Schedule</title>
                     </confirm>
                     <url path="softaware_cron/job/massAction">
                         <param name="operation">reset</param>
                     </url>
                     <type>reset</type>
-                    <label translate="true">Restore default schedule</label>
+                    <label translate="true">Restore Default Schedule</label>
                 </settings>
             </action>
         </massaction>
@@ -112,6 +111,9 @@
                 <filter>text</filter>
                 <label translate="true">Job Code</label>
                 <sorting>asc</sorting>
+                <fieldClass>
+                    <class name="softaware-cron-col-code">true</class>
+                </fieldClass>
             </settings>
         </column>
         <column name="group" component="Magento_Ui/js/grid/columns/select" sortOrder="20">
@@ -122,10 +124,14 @@
                 <label translate="true">Group</label>
             </settings>
         </column>
-        <column name="schedule" sortOrder="30">
+        <column name="schedule" class="Softaware\CronManager\Ui\Component\Listing\Column\Schedule" sortOrder="30">
             <settings>
                 <filter>text</filter>
+                <bodyTmpl>ui/grid/cells/html</bodyTmpl>
                 <label translate="true">Schedule</label>
+                <fieldClass>
+                    <class name="softaware-cron-col-schedule">true</class>
+                </fieldClass>
             </settings>
         </column>
         <column name="original_schedule" sortOrder="35">
@@ -149,6 +155,7 @@
                 <filter>select</filter>
                 <dataType>select</dataType>
                 <label translate="true">Schedule Changed</label>
+                <visible>false</visible>
             </settings>
         </column>
         <column name="last_run" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date" sortOrder="50">
@@ -174,7 +181,7 @@
         <column name="error_count" sortOrder="80">
             <settings>
                 <filter>textRange</filter>
-                <label translate="true">Errors in History</label>
+                <label translate="true">Recent Errors</label>
             </settings>
         </column>
         <column name="pending_count" sortOrder="85">
@@ -187,6 +194,7 @@
             <settings>
                 <filter>text</filter>
                 <label translate="true">Module</label>
+                <visible>false</visible>
             </settings>
         </column>
         <column name="callback" sortOrder="100">
