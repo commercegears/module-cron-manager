@@ -4,6 +4,8 @@ See and control Magento's cron from the admin: every job with its schedule and r
 (cron_schedule) as a grid and as a timeline, run jobs now, enable/disable and reschedule jobs, clean up the queue,
 and get warned when cron stops or a job keeps failing.
 
+User guide: [docs/user-guide.md](docs/user-guide.md) · FAQ: [docs/faq.md](docs/faq.md)
+
 Admin: **Softaware > Cron Manager** — Cron Jobs, Schedule, Timeline, Settings.
 
 ## Features

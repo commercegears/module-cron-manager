@@ -1,0 +1,113 @@
+{
+    "tagline": "See, run and control every Magento cron job from the admin, and get warned when cron stops or a job keeps failing.",
+    "key_features": [
+        "Grid of every cron job with run statistics",
+        "Run Now in the background, recorded in the schedule",
+        "Enable, disable and reschedule jobs without code",
+        "Schedule grid with clean-up tools",
+        "Timeline of the last 1 to 24 hours",
+        "Status panel and admin warnings",
+        "Optional failure e-mails",
+        "CLI commands for deployment scripts"
+    ],
+    "benefits": [
+        {
+            "icon": "clock",
+            "title": "Know cron is running",
+            "text": "A status panel and admin messages tell you when cron has stopped, a job keeps failing or a job is stuck."
+        },
+        {
+            "icon": "bolt",
+            "title": "Act without SSH",
+            "text": "Run a job now, switch a noisy job off or move it to a quieter time from the admin, with the change applied to Magento's own cron."
+        },
+        {
+            "icon": "shield",
+            "title": "Safe to hand over",
+            "text": "Separate permissions for viewing, running, changing and cleaning up, and every manual run is recorded with who started it."
+        }
+    ],
+    "showcase": [
+        {
+            "label": "Cron Jobs",
+            "title": "Every job on one grid",
+            "text": "Group, schedule, state, last run, last status, average duration and recent errors for every job, with filters, keyword search and row actions.",
+            "image": "docs/images/admin-cron-jobs.png"
+        },
+        {
+            "label": "Job page",
+            "title": "Change a schedule with a preview",
+            "text": "Enable or disable a job, enter a cron expression or pick a preset, and see the next runs in the store timezone before you save.",
+            "image": "docs/images/admin-job-edit.png"
+        },
+        {
+            "label": "Timeline",
+            "title": "See what ran and when",
+            "text": "A chart per job for the last 1 to 24 hours, coloured by status, with details on hover and a filter for jobs with problems.",
+            "image": "docs/images/admin-timeline.png"
+        },
+        {
+            "label": "Clean-up",
+            "title": "Tidy the queue in a few clicks",
+            "text": "Remove pending or missed entries, mark stuck jobs as failed and delete old history, for all jobs or one job, each after a confirmation.",
+            "image": "docs/images/admin-schedule-cleanup.png"
+        },
+        {
+            "label": "Settings",
+            "title": "Warnings tuned to your store",
+            "text": "Set when to warn, how long a job may run, which jobs to ignore and who receives failure e-mails. Every field shows its default.",
+            "image": "docs/images/admin-settings.png"
+        }
+    ],
+    "feature_groups": [
+        {
+            "title": "Jobs",
+            "items": [
+                "All jobs from crontab.xml and config-based schedules",
+                "Run Now for one job or up to 20 at once",
+                "Enable, disable and reschedule, singly or in bulk",
+                "Restore the default schedule at any time",
+                "Changes stored in the configuration, exportable with app:config:dump"
+            ]
+        },
+        {
+            "title": "Schedule and timeline",
+            "items": [
+                "cron_schedule as a grid with keyword search and filters",
+                "Duration column and coloured statuses",
+                "Remove queued entries, mark stuck jobs, clean history",
+                "Timeline of 1, 3, 6, 12 or 24 hours"
+            ]
+        },
+        {
+            "title": "Health",
+            "items": [
+                "Status panel on the Cron Jobs and Schedule pages",
+                "Admin message when cron has not run for N minutes",
+                "Admin message when a job fails N times in a row or runs too long",
+                "Stuck jobs marked as failed automatically",
+                "Failure e-mails with a minimum interval",
+                "Ignore list with * patterns"
+            ]
+        },
+        {
+            "title": "Admin and developers",
+            "items": [
+                "Separate ACL permissions",
+                "CLI: list, run, status and set",
+                "Manual runs logged with trigger and admin user",
+                "Admin only, nothing added to the storefront"
+            ]
+        }
+    ],
+    "demo": {
+        "storefront": [],
+        "admin": [
+            {
+                "label": "Admin panel",
+                "url": "https://demo.softawarecommerce.com/try-admin/cron-manager",
+                "image": "docs/images/admin-cron-jobs.png"
+            }
+        ]
+    }
+}
