@@ -135,6 +135,6 @@ class Edit extends Container
 
     public function formatUtc(?string $utc): string
     {
-        return $utc ? $this->formatDate($utc, \IntlDateFormatter::MEDIUM, true) : '—';
+        return $utc ? $this->formatDate($utc, \IntlDateFormatter::MEDIUM, true) : (string) __('unknown');
     }
 }

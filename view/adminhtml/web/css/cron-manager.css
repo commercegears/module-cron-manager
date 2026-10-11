@@ -5,6 +5,7 @@
 .softaware-cron-status-neutral._running { border-color: #007bdb; background: #e5f2fb; color: #00548f; }
 .softaware-cron-status { display: inline-block; min-width: 7rem; margin-right: .6rem; vertical-align: middle; }
 .softaware-cron-muted { color: #6b6b6b; font-size: 1.2rem; margin-left: .6rem; }
+.softaware-cron-muted.softaware-cron-nomargin { margin-left: 0; }
 
 /* Job grid */
 .data-grid td.softaware-cron-col-code { min-width: 16rem; overflow-wrap: anywhere; }
@@ -87,7 +88,9 @@
 .softaware-cron-bar-running { background: #007bdb; z-index: 2; }
 .softaware-cron-bar-missed { background: #f5a623; }
 .softaware-cron-bar-pending { background: #fff; border: 1px dashed #8a8a8a; box-sizing: border-box; }
-.softaware-cron-bar:hover { outline: 2px solid #303030; z-index: 4; }
+.softaware-cron-bar:hover, .softaware-cron-bar:focus { outline: 2px solid #303030; z-index: 4; }
+.softaware-cron-bar:focus-visible { outline: 3px solid #007bdb; outline-offset: 1px; }
+.softaware-cron-bar-detail { margin: .8rem 0 0; padding: .6rem .8rem; border: 1px solid #d6d6d6; background: #f8f8f8; font-size: 1.2rem; white-space: pre-line; }
 
 @media (max-width: 1280px) {
     .softaware-cron-label { flex-basis: 22rem; }

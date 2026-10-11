@@ -50,18 +50,22 @@ class JobActions extends Column
                 ];
             }
             if ($canManage) {
-                $enabled = (int) $item['is_enabled'] === 1;
+                // Read the raw state: the State column (rendered before this one) replaces is_enabled with HTML.
+                $enabled = ($item['state'] ?? '') === 'enabled';
                 $actions['toggle'] = [
                     'href' => $this->urlBuilder->getUrl('softaware_cron/job/toggle', ['code' => $code, 'enable' => $enabled ? 0 : 1]),
                     'label' => $enabled ? __('Disable') : __('Enable'),
                     'post' => true,
                 ];
-                if ($enabled) {
-                    $actions['toggle']['confirm'] = [
+                $actions['toggle']['confirm'] = $enabled
+                    ? [
                         'title' => __('Disable %1?', $code),
                         'message' => __('The job is no longer queued and its pending entries are removed. You can enable it again at any time.'),
+                    ]
+                    : [
+                        'title' => __('Enable %1?', $code),
+                        'message' => __('Cron queues the job again on its next run.'),
                     ];
-                }
             }
             $actions['history'] = [
                 'href' => $this->urlBuilder->getUrl('softaware_cron/schedule/index', ['job_code' => $code]),

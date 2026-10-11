@@ -60,15 +60,15 @@ are global (default scope). Every field states its default and has a "Use system
 
 | Setting | What it does |
 | --- | --- |
-| Warn When Cron Has Not Run For (Minutes) | Shows an admin warning when cron has been inactive this long. Default 15; 0 turns the warning off. |
-| Warn When a Job Fails This Many Times in a Row | Default 3; 0 turns the warning off. |
+| Warn When Cron Has Not Run For (Minutes) | Shows an admin warning when cron has been inactive this long. Default 15; 0 turns the warning off; at most 10080 (one week). |
+| Warn When a Job Fails This Many Times in a Row | Default 3; 0 turns the warning off; at most 1000. |
 | Ignore These Jobs | Job codes separated by commas or new lines; `*` matches any text, for example `amazon_*`. These jobs are left out of the warnings, the status panel and the failure e-mails, and are not marked as failed when they run long. Default empty. |
 
 ### Stuck Jobs
 
 | Setting | What it does |
 | --- | --- |
-| Maximum Runtime (Minutes) | A job still "running" after this long is treated as stuck (its process most likely died). Default 120. |
+| Maximum Runtime (Minutes) | A job still "running" after this long is treated as stuck (its process most likely died). Default 120; 1 to 10080 (one week). |
 | Mark Stuck Jobs as Failed Automatically | Default Yes. Checked every 5 minutes, so the job can run again; Magento itself only does this after a day. |
 
 ### Failure E-mails
@@ -79,7 +79,7 @@ are global (default scope). Every field states its default and has a "Use system
 | Send To | One or more e-mail addresses, separated by commas. |
 | Sender | The store e-mail identity the e-mails are sent from. Default General Contact. |
 | E-mail Template | Default "Cron Manager: Failed Cron Jobs". Create your own under Marketing > Email Templates. |
-| At Most One E-mail Every (Minutes) | Failures in between are collected into the next e-mail. Default 60. |
+| At Most One E-mail Every (Minutes) | Failures in between are collected into the next e-mail. Default 60; 1 to 10080 (one week). |
 
 ## 4. Cron Jobs
 
@@ -89,9 +89,13 @@ whose schedule comes from the configuration.
 Columns: Job Code, Group, Schedule (the one in use), Default Schedule, State, Schedule Changed, Last Run, Last Status,
 Avg. Duration, Recent Errors, Pending, Module, Class::Method and Last Message. Some columns are hidden by default; show
 them with **Columns**. The grid has filters, keyword search, sorting and saved views. A job whose schedule was changed
-in the Cron Manager is marked "Changed" in the Schedule column; hover over it to see the default.
+in the Cron Manager is marked "Changed" in the Schedule column; hover over it to see the default. A disabled job shows
+"Not queued (job disabled)" there. Filter by **State** (Enabled, Disabled) and **Last Status** (Success, Error, Missed,
+Running, No recent runs). "No recent runs" means the job has no finished entry in the history Magento keeps, which is
+short for successful runs by default.
 
-**Row actions:** Edit, Run Now, Enable or Disable, History (the job's entries in the Schedule grid).
+**Row actions:** Edit, Run Now, Enable or Disable (whichever applies to the job's current state), History (the job's
+entries in the Schedule grid). Run Now, Enable and Disable are sent as POST requests and ask for confirmation first.
 
 **Mass actions:** Run Now (up to 20 jobs at a time), Enable, Disable, Restore Default Schedule.
 
@@ -154,14 +158,15 @@ can be limited to one job code (leave the field empty for all jobs).
 | Action | What it does |
 | --- | --- |
 | Remove Queued Entries | Deletes pending and/or missed entries. Cron queues upcoming runs of enabled jobs again on its next run. |
-| Mark Stuck Jobs as Failed | Entries still "running" after the given number of minutes are set to error, so the job can run again. |
+| Mark Stuck Jobs as Failed | Entries still "running" after the given number of minutes (a whole number, 1 or more) are set to error, so the job can run again. |
 | Clean History | Deletes finished entries (success, error, missed) older than the given number of hours; 0 deletes all matching entries. |
 
 ## 8. Timeline
 
 **Softaware > Cron Manager > Timeline** draws one row per job for a period of 1, 3, 6, 12 or 24 hours. Bars are
 coloured by status (success, error, running, missed, pending), a line marks the current time, and hovering over a bar
-shows its details. Filter by group, by job code or to "Only jobs with problems (error, missed or running)", and move
+shows its details. With the keyboard, tab into the chart and move between bars with the arrow keys (Home and End jump
+to the first and last bar of a row); the details of the focused bar appear below the chart. Filter by group, by job code or to "Only jobs with problems (error, missed or running)", and move
 with **Earlier**, **Now** and **Later**.
 
 ![Cron timeline](images/admin-timeline.png)

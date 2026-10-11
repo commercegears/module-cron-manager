@@ -43,7 +43,7 @@
         {
             "label": "Timeline",
             "title": "See what ran and when",
-            "text": "A chart per job for the last 1 to 24 hours, coloured by status, with details on hover and a filter for jobs with problems.",
+            "text": "A chart per job for the last 1 to 24 hours, coloured by status, with details on hover or keyboard focus and a filter for jobs with problems.",
             "image": "docs/images/admin-timeline.png"
         },
         {

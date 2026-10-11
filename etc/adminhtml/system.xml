@@ -23,13 +23,13 @@
                 <label>Health Warnings</label>
                 <field id="not_running_minutes" translate="label comment" type="text" sortOrder="10" showInDefault="1" canRestore="1">
                     <label>Warn When Cron Has Not Run For (Minutes)</label>
-                    <validate>required-entry validate-digits validate-zero-or-greater</validate>
-                    <comment>Shows an admin warning when cron has been inactive this long. Default 15; 0 turns this warning off.</comment>
+                    <validate>required-entry validate-digits validate-digits-range digits-range-0-10080</validate>
+                    <comment>Shows an admin warning when cron has been inactive this long. Default 15; 0 turns this warning off. At most 10080 (one week).</comment>
                 </field>
                 <field id="failure_threshold" translate="label comment" type="text" sortOrder="20" showInDefault="1" canRestore="1">
                     <label>Warn When a Job Fails This Many Times in a Row</label>
-                    <validate>required-entry validate-digits validate-zero-or-greater</validate>
-                    <comment>Default 3; 0 turns this warning off.</comment>
+                    <validate>required-entry validate-digits validate-digits-range digits-range-0-1000</validate>
+                    <comment>Default 3; 0 turns this warning off. At most 1000.</comment>
                 </field>
                 <field id="ignore_jobs" translate="label comment" type="textarea" sortOrder="30" showInDefault="1" canRestore="1">
                     <label>Ignore These Jobs</label>
@@ -40,8 +40,8 @@
                 <label>Stuck Jobs</label>
                 <field id="max_runtime" translate="label comment" type="text" sortOrder="10" showInDefault="1" canRestore="1">
                     <label>Maximum Runtime (Minutes)</label>
-                    <validate>required-entry validate-digits validate-greater-than-zero</validate>
-                    <comment>A job still "running" after this long is treated as stuck (its process most likely died). Default 120.</comment>
+                    <validate>required-entry validate-digits validate-digits-range digits-range-1-10080</validate>
+                    <comment>A job still "running" after this long is treated as stuck (its process most likely died). Default 120; 1 to 10080 (one week).</comment>
                 </field>
                 <field id="auto_mark" translate="label comment" type="select" sortOrder="20" showInDefault="1" canRestore="1">
                     <label>Mark Stuck Jobs as Failed Automatically</label>
@@ -82,8 +82,8 @@
                 </field>
                 <field id="interval" translate="label comment" type="text" sortOrder="50" showInDefault="1" canRestore="1">
                     <label>At Most One E-mail Every (Minutes)</label>
-                    <validate>required-entry validate-digits validate-greater-than-zero</validate>
-                    <comment>Failures in between are collected into the next e-mail. Default 60.</comment>
+                    <validate>required-entry validate-digits validate-digits-range digits-range-1-10080</validate>
+                    <comment>Failures in between are collected into the next e-mail. Default 60; 1 to 10080 (one week).</comment>
                     <depends>
                         <field id="enabled">1</field>
                     </depends>

@@ -31,12 +31,18 @@ class Schedule extends Column
         $name = (string) $this->getData('name');
         foreach ($dataSource['data']['items'] as &$item) {
             $expression = trim((string) ($item[$name] ?? ''));
+            if (($item['state'] ?? 'enabled') === 'disabled') {
+                // Disabled jobs are not queued: say so instead of "None" plus a "Changed" mark.
+                $item[$name] = '<span class="softaware-cron-muted softaware-cron-nomargin">'
+                    . $this->escaper->escapeHtml(__('Not queued (job disabled)')) . '</span>';
+                continue;
+            }
             $html = $expression === ''
-                ? '<span class="softaware-cron-muted">' . $this->escaper->escapeHtml(__('None')) . '</span>'
+                ? '<span class="softaware-cron-muted softaware-cron-nomargin">' . $this->escaper->escapeHtml(__('None (manual runs only)')) . '</span>'
                 : '<code class="softaware-cron-expr-cell">' . $this->escaper->escapeHtml($expression) . '</code>';
             if (!empty($item['is_overridden'])) {
                 $html .= ' <span class="softaware-cron-changed" title="'
-                    . $this->escaper->escapeHtmlAttr(__('Default: %1', (string) ($item['original_schedule'] ?? '') ?: '—')) . '">'
+                    . $this->escaper->escapeHtmlAttr(__('Default: %1', (string) ($item['original_schedule'] ?? '') ?: (string) __('none'))) . '">'
                     . $this->escaper->escapeHtml(__('Changed')) . '</span>';
             }
             $item[$name] = $html;

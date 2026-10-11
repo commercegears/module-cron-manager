@@ -44,7 +44,7 @@ $badge = static fn (string $status): string => '<span class="softaware-cron-stat
             <tr>
                 <th scope="row"><?= $escaper->escapeHtml(__('Default Schedule')) ?></th>
                 <td>
-                    <code><?= $escaper->escapeHtml($job['original_schedule'] ?: '—') ?></code>
+                    <code><?= $escaper->escapeHtml($job['original_schedule'] ?: (string) __('none')) ?></code>
                     <?php if ($job['config_path']): ?>
                         <span class="softaware-cron-muted"><?= $escaper->escapeHtml(__('from the setting %1', $job['config_path'])) ?></span>
                     <?php endif; ?>
@@ -75,14 +75,18 @@ $badge = static fn (string $status): string => '<span class="softaware-cron-stat
                             <?php endforeach; ?>
                         </ul>
                     <?php else: ?>
-                        —
+                        <?= $escaper->escapeHtml(__('None')) ?>
                     <?php endif; ?>
                 </td>
             </tr>
             <tr>
                 <th scope="row"><?= $escaper->escapeHtml(__('Last Run')) ?></th>
                 <td>
-                    <?= $escaper->escapeHtml($block->formatUtc($job['last_run'])) ?>
+                    <?php if (!$job['last_run'] && !$job['last_status']): ?>
+                        <?= $escaper->escapeHtml(__('No recent runs')) ?>
+                    <?php else: ?>
+                        <?= $escaper->escapeHtml($block->formatUtc($job['last_run'])) ?>
+                    <?php endif; ?>
                     <?php if ($job['last_status']): ?>
                         <?= /* @noEscape */ $badge((string) $job['last_status']) ?>
                     <?php endif; ?>
@@ -129,7 +133,7 @@ $badge = static fn (string $status): string => '<span class="softaware-cron-stat
                             <input type="checkbox" class="admin__control-checkbox" name="use_default" value="1" id="softaware-cron-default"
                                    <?= $job['is_overridden'] ? '' : 'checked' ?>/>
                             <label class="admin__field-label" for="softaware-cron-default">
-                                <?= $escaper->escapeHtml(__('Use the default schedule (%1)', $job['original_schedule'] ?: '—')) ?>
+                                <?= $escaper->escapeHtml(__('Use the default schedule (%1)', $job['original_schedule'] ?: (string) __('none'))) ?>
                             </label>
                         </div>
                         <div class="admin__field-note" id="softaware-cron-schedule-note">

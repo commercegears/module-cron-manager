@@ -57,7 +57,7 @@ class Timeline extends Container
     }
 
     /**
-     * The shown period in the admin locale, e.g. "7 Oct 2026, 01:00 – 04:00".
+     * The shown period in the admin locale, e.g. "7 Oct 2026, 01:00 to 04:00".
      */
     public function getPeriodLabel(): string
     {
@@ -69,7 +69,7 @@ class Timeline extends Container
         $endFormatter = $start->format('Y-m-d') === $end->format('Y-m-d')
             ? new \IntlDateFormatter($locale, \IntlDateFormatter::NONE, \IntlDateFormatter::SHORT, $tz)
             : $full;
-        return $full->format($start) . ' – ' . $endFormatter->format($end);
+        return (string) __('%1 to %2', $full->format($start), $endFormatter->format($end));
     }
 
     public function getTimezone(): \DateTimeZone
@@ -236,7 +236,7 @@ class Timeline extends Container
     {
         $fmt = static fn (?string $utc) => $utc
             ? (new \DateTimeImmutable($utc, new \DateTimeZone('UTC')))->setTimezone($tz)->format('H:i:s')
-            : '—';
+            : (string) __('not yet');
         $lines = [
             $entry['job_code'] . ' · ' . StatusBadge::getLabel((string) $entry['status']) . ' · #' . $entry['schedule_id'],
             __('Scheduled %1, started %2, finished %3', $fmt($entry['scheduled_at']), $fmt($entry['executed_at']), $fmt($entry['finished_at'])),

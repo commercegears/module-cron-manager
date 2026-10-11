@@ -6,14 +6,15 @@ and get warned when cron stops or a job keeps failing.
 
 User guide: [docs/user-guide.md](docs/user-guide.md) · FAQ: [docs/faq.md](docs/faq.md)
 
-Admin: **Softaware > Cron Manager** — Cron Jobs, Schedule, Timeline, Settings.
+Admin: **Softaware > Cron Manager**: Cron Jobs, Schedule, Timeline, Settings.
 
 ## Features
 
-* **Cron Jobs grid:** all jobs from `crontab.xml` and config-based schedules — code, group, effective and default
+* **Cron Jobs grid:** all jobs from `crontab.xml` and config-based schedules: code, group, effective and default
   schedule, enabled/disabled, schedule changed, last run, last status, average duration, errors in history, module,
   class::method. Filters, keyword search, sorting, column chooser, saved views. A job whose schedule was changed here
-  is marked "Changed" in the Schedule column (hover for the default).
+  is marked "Changed" in the Schedule column (hover for the default). Row actions match the job's state; Run Now,
+  Enable and Disable are POST requests with a confirmation.
   Row actions: Edit, Run Now, Enable/Disable, History. Mass actions: Run Now (up to 20), Enable, Disable,
   Restore Default Schedule.
 * **Edit a job:** state (Enabled/Disabled) and cron expression validated with Magento's parser, presets, preview of the next runs (store
@@ -27,8 +28,8 @@ Admin: **Softaware > Cron Manager** — Cron Jobs, Schedule, Timeline, Settings.
 * **Schedule grid:** cron_schedule with keyword search (job code or message), filters (job, status, dates, message),
   duration column, coloured statuses, mass delete, and a clean-up panel (each action asks for confirmation): remove pending/missed entries, mark stuck "running" jobs as failed (configurable
   max runtime), clean history (by status and age, optionally for one job).
-* **Timeline:** Gantt-like chart per job for 1–24 hours (earlier/later/now navigation, group and job filters,
-  "only problems"), bars coloured by status with details on hover, a "now" line.
+* **Timeline:** Gantt-like chart per job for 1 to 24 hours (earlier/later/now navigation, group and job filters,
+  "only problems"), bars coloured by status with details on hover or keyboard focus (arrow keys), a "now" line.
 * **Health:** a status panel on the Cron Jobs and Schedule pages (cron activity, last 24 hours, queue, failing jobs,
   job changes), and admin system messages when cron has not run for N minutes,
   a job failed N times in a row, or a job runs longer than the max runtime. Cached for 3 minutes.
@@ -74,7 +75,7 @@ Settings.
 
 ## Compatibility
 
-Magento Open Source / Adobe Commerce 2.4.x (developed on 2.4.9), PHP 8.2–8.5, MySQL 8 / MariaDB 10.4+ (window
+Magento Open Source / Adobe Commerce 2.4.x (developed on 2.4.9), PHP 8.2 to 8.5, MySQL 8 / MariaDB 10.4+ (window
 functions are used for the "failing in a row" check). Admin only.
 
 ## Limitations

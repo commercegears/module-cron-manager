@@ -145,6 +145,7 @@
             <settings>
                 <options class="Softaware\CronManager\Model\Source\JobState"/>
                 <filter>select</filter>
+                <dataType>select</dataType>
                 <bodyTmpl>ui/grid/cells/html</bodyTmpl>
                 <label translate="true">State</label>
             </settings>
@@ -167,8 +168,9 @@
         </column>
         <column name="last_status" class="Softaware\CronManager\Ui\Component\Listing\Column\StatusBadge" component="Magento_Ui/js/grid/columns/column" sortOrder="60">
             <settings>
-                <options class="Softaware\CronManager\Model\Source\ScheduleStatus"/>
+                <options class="Softaware\CronManager\Model\Source\LastStatus"/>
                 <filter>select</filter>
+                <dataType>select</dataType>
                 <bodyTmpl>ui/grid/cells/html</bodyTmpl>
                 <label translate="true">Last Status</label>
             </settings>

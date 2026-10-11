@@ -55,7 +55,7 @@ $span = $block->getSpan();
         <span class="softaware-cron-legend-item"><i aria-hidden="true" class="softaware-cron-bar-running"></i><?= $escaper->escapeHtml(__('Running')) ?></span>
         <span class="softaware-cron-legend-item"><i aria-hidden="true" class="softaware-cron-bar-missed"></i><?= $escaper->escapeHtml(__('Missed')) ?></span>
         <span class="softaware-cron-legend-item"><i aria-hidden="true" class="softaware-cron-bar-pending"></i><?= $escaper->escapeHtml(__('Pending')) ?></span>
-        <span class="softaware-cron-muted"><?= $escaper->escapeHtml(__('%1 entries; hover over a bar for details.', $block->formatNumber((int) $chart['count']))) ?></span>
+        <span class="softaware-cron-muted"><?= $escaper->escapeHtml(__('%1 entries; hover over a bar for details, or tab into the chart and use the arrow keys.', $block->formatNumber((int) $chart['count']))) ?></span>
     </div>
     <?php if ($chart['truncated']): ?>
         <div class="message message-warning"><?= $escaper->escapeHtml(__('Only the most recent entries are shown. Choose a shorter period or a group.')) ?></div>
@@ -64,7 +64,7 @@ $span = $block->getSpan();
     <?php if (!$chart['rows']): ?>
         <div class="message message-info softaware-cron-empty"><?= $escaper->escapeHtml(__('No cron entries in this period. Magento keeps successful runs only for a short time (Stores > Configuration > Advanced > System > Cron, "Success History Lifetime").')) ?></div>
     <?php else: ?>
-        <div class="softaware-cron-chart" role="img" aria-label="<?= $escaper->escapeHtmlAttr(__('Cron timeline')) ?>">
+        <div class="softaware-cron-chart" role="group" aria-label="<?= $escaper->escapeHtmlAttr(__('Cron timeline')) ?>">
             <div class="softaware-cron-row softaware-cron-axis">
                 <div class="softaware-cron-label"></div>
                 <div class="softaware-cron-track">
@@ -73,6 +73,7 @@ $span = $block->getSpan();
                     <?php endforeach; ?>
                 </div>
             </div>
+            <?php $firstBar = true; ?>
             <?php foreach ($chart['rows'] as $code => $bars): ?>
                 <div class="softaware-cron-row">
                     <div class="softaware-cron-label" title="<?= $escaper->escapeHtmlAttr($code) ?>">
@@ -88,11 +89,18 @@ $span = $block->getSpan();
                         <?php foreach ($bars as $bar): ?>
                             <span class="softaware-cron-bar softaware-cron-bar-<?= $escaper->escapeHtmlAttr($bar['status']) ?>"
                                   style="left: <?= (float) $bar['left'] ?>%; width: <?= (float) $bar['width'] ?>%"
+                                  tabindex="<?= $firstBar ? '0' : '-1' ?>" role="img"
+                                  aria-label="<?= $escaper->escapeHtmlAttr($bar['title']) ?>"
                                   title="<?= $escaper->escapeHtmlAttr($bar['title']) ?>"></span>
+                            <?php $firstBar = false; ?>
                         <?php endforeach; ?>
                     </div>
                 </div>
             <?php endforeach; ?>
         </div>
+        <p class="softaware-cron-bar-detail" id="softaware-cron-bar-detail" hidden></p>
+        <script type="text/x-magento-init">
+            {".softaware-cron-chart": {"Softaware_CronManager/js/timeline-focus": {"detail": "#softaware-cron-bar-detail"}}}
+        </script>
     <?php endif; ?>
 </div>

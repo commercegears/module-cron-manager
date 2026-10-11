@@ -59,6 +59,7 @@ class JobConfig
                     'schedule' => $effective,
                     'is_overridden' => $scheduleOverride !== null ? 1 : 0,
                     'is_enabled' => $disabled ? 0 : 1,
+                    'state' => $disabled ? 'disabled' : 'enabled',
                     'has_schedule' => $effective !== '' ? 1 : 0,
                     'override_by' => (string) ($override['updated_by'] ?? ''),
                     'override_at' => (string) ($override['updated_at'] ?? ''),

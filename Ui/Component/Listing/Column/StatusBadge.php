@@ -66,6 +66,12 @@ class StatusBadge extends Column
             if ($name === 'is_enabled') {
                 $value = $value === '1' ? 'enabled' : 'disabled';
             }
+            if ($value === '' && $name === 'last_status') {
+                $item[$name] = '<span class="softaware-cron-muted softaware-cron-nomargin" title="'
+                    . $this->escaper->escapeHtmlAttr(__('No entry in the cron history. Magento keeps finished entries only for a limited time.')) . '">'
+                    . $this->escaper->escapeHtml(__('No recent runs')) . '</span>';
+                continue;
+            }
             $item[$name] = $value === ''
                 ? ''
                 : '<span class="' . $this->escaper->escapeHtmlAttr(self::getCssClass($value)) . '">'

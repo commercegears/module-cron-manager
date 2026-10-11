@@ -95,6 +95,7 @@
             <settings>
                 <options class="Softaware\CronManager\Model\Source\ScheduleStatus"/>
                 <filter>select</filter>
+                <dataType>select</dataType>
                 <bodyTmpl>ui/grid/cells/html</bodyTmpl>
                 <label translate="true">Status</label>
             </settings>

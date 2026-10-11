@@ -45,12 +45,23 @@ class Maintenance extends Action implements HttpPostActionInterface
                 $this->messageManager->addSuccessMessage(__('%1 queued entries removed. Cron queues upcoming runs of enabled jobs again on its next run.', $count));
                 break;
             case 'mark_stuck':
-                $minutes = (int) $request->getParam('minutes') ?: $this->config->getMaxRuntime();
-                $count = $this->scheduleManager->markStuck(max(1, $minutes), $jobCode);
+                $minutes = trim((string) $request->getParam('minutes'));
+                $minutes = $minutes === '' ? $this->config->getMaxRuntime() : $minutes;
+                if (!ctype_digit((string) $minutes) || (int) $minutes < 1) {
+                    $this->messageManager->addErrorMessage(__('Enter a whole number of minutes of 1 or more.'));
+                    break;
+                }
+                $minutes = (int) $minutes;
+                $count = $this->scheduleManager->markStuck($minutes, $jobCode);
                 $this->messageManager->addSuccessMessage(__('%1 entries running for more than %2 minutes were marked as failed.', $count, $minutes));
                 break;
             case 'clean_history':
-                $hours = max(0, (int) $request->getParam('hours'));
+                $hours = trim((string) $request->getParam('hours'));
+                if (!ctype_digit($hours)) {
+                    $this->messageManager->addErrorMessage(__('Enter a whole number of hours of 0 or more.'));
+                    break;
+                }
+                $hours = (int) $hours;
                 $count = $this->scheduleManager->cleanHistory($statuses, $hours, $jobCode);
                 $this->messageManager->addSuccessMessage(__('%1 history entries deleted.', $count));
                 break;

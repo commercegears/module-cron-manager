@@ -7,6 +7,7 @@ use Magento\Framework\Api\Filter;
 use Magento\Framework\App\RequestInterface;
 use Magento\Ui\DataProvider\AbstractDataProvider;
 use Softaware\CronManager\Model\JobConfig;
+use Softaware\CronManager\Model\Source\LastStatus;
 
 /**
  * Data provider for the cron job grid. Jobs come from configuration, not from a table,
@@ -141,6 +142,9 @@ class JobDataProvider extends AbstractDataProvider
     {
         $value = $row[$filter['field']] ?? null;
         $expected = $filter['value'];
+        if ($filter['field'] === 'last_status' && $expected === LastStatus::NONE) {
+            $expected = '';
+        }
         switch ($filter['type']) {
             case 'like':
                 $needle = mb_strtolower(trim((string) $expected, '%'));
