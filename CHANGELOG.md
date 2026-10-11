@@ -17,11 +17,11 @@
 - New: keyword search on the Schedule grid; confirmations before Run Now and each clean-up action.
 - Improvement: tidier Cron Jobs grid with Edit first, a "Changed" mark on rescheduled jobs, narrower columns.
 - Improvement: job page with action buttons, a details table and a form with inline validation.
-- Improvement: status labels in Magento's grid colours, plain-language status panel, labelled timeline filters.
+- Improvement: status labels in Magento's grid colours, a plain-language status panel and clearer filters.
 - Improvement: settings state their defaults, can be restored and check required values and email recipients.
 
 ## 1.2.0 (2026-10-06)
-- Improvement: requires CommerceGears Core instead of CommerceGears Base; menu and permissions move under "CommerceGears".
+- Improvement: admin menu and permissions moved under "CommerceGears".
 
 ## 1.1.0 (2026-10-06)
 - New: "Ignore These Jobs" setting and a command to enable, disable, reschedule or reset jobs.
