@@ -2,34 +2,34 @@
 <listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
-            <item name="provider" xsi:type="string">softaware_cron_job_listing.softaware_cron_job_listing_data_source</item>
+            <item name="provider" xsi:type="string">commercegears_cron_job_listing.commercegears_cron_job_listing_data_source</item>
         </item>
     </argument>
     <settings>
         <buttons>
             <button name="schedule">
-                <url path="softaware_cron/schedule/index"/>
+                <url path="commercegears_cron/schedule/index"/>
                 <label translate="true">Schedule</label>
             </button>
             <button name="timeline">
-                <url path="softaware_cron/timeline/index"/>
+                <url path="commercegears_cron/timeline/index"/>
                 <label translate="true">Timeline</label>
             </button>
         </buttons>
-        <spinner>softaware_cron_job_columns</spinner>
+        <spinner>commercegears_cron_job_columns</spinner>
         <deps>
-            <dep>softaware_cron_job_listing.softaware_cron_job_listing_data_source</dep>
+            <dep>commercegears_cron_job_listing.commercegears_cron_job_listing_data_source</dep>
         </deps>
     </settings>
-    <dataSource name="softaware_cron_job_listing_data_source" component="Magento_Ui/js/grid/provider">
+    <dataSource name="commercegears_cron_job_listing_data_source" component="Magento_Ui/js/grid/provider">
         <settings>
             <storageConfig>
                 <param name="indexField" xsi:type="string">job_code</param>
             </storageConfig>
             <updateUrl path="mui/index/render"/>
         </settings>
-        <aclResource>Softaware_CronManager::jobs</aclResource>
-        <dataProvider class="Softaware\CronManager\Ui\DataProvider\JobDataProvider" name="softaware_cron_job_listing_data_source">
+        <aclResource>CommerceGears_CronManager::jobs</aclResource>
+        <dataProvider class="CommerceGears\CronManager\Ui\DataProvider\JobDataProvider" name="commercegears_cron_job_listing_data_source">
             <settings>
                 <requestFieldName>code</requestFieldName>
                 <primaryFieldName>job_code</primaryFieldName>
@@ -51,7 +51,7 @@
                         <message translate="true">Start the selected jobs now, one after the other, in the background?</message>
                         <title translate="true">Run Now</title>
                     </confirm>
-                    <url path="softaware_cron/job/massAction">
+                    <url path="commercegears_cron/job/massAction">
                         <param name="operation">run</param>
                     </url>
                     <type>run</type>
@@ -60,7 +60,7 @@
             </action>
             <action name="enable">
                 <settings>
-                    <url path="softaware_cron/job/massAction">
+                    <url path="commercegears_cron/job/massAction">
                         <param name="operation">enable</param>
                     </url>
                     <type>enable</type>
@@ -73,7 +73,7 @@
                         <message translate="true">Disable the selected jobs? They are no longer queued and their pending entries are removed.</message>
                         <title translate="true">Disable Jobs</title>
                     </confirm>
-                    <url path="softaware_cron/job/massAction">
+                    <url path="commercegears_cron/job/massAction">
                         <param name="operation">disable</param>
                     </url>
                     <type>disable</type>
@@ -86,7 +86,7 @@
                         <message translate="true">Undo all Cron Manager changes (disabled state and schedule) for the selected jobs?</message>
                         <title translate="true">Restore Default Schedule</title>
                     </confirm>
-                    <url path="softaware_cron/job/massAction">
+                    <url path="commercegears_cron/job/massAction">
                         <param name="operation">reset</param>
                     </url>
                     <type>reset</type>
@@ -100,7 +100,7 @@
             </settings>
         </paging>
     </listingToolbar>
-    <columns name="softaware_cron_job_columns">
+    <columns name="commercegears_cron_job_columns">
         <selectionsColumn name="ids">
             <settings>
                 <indexField>job_code</indexField>
@@ -112,25 +112,25 @@
                 <label translate="true">Job Code</label>
                 <sorting>asc</sorting>
                 <fieldClass>
-                    <class name="softaware-cron-col-code">true</class>
+                    <class name="commercegears-cron-col-code">true</class>
                 </fieldClass>
             </settings>
         </column>
         <column name="group" component="Magento_Ui/js/grid/columns/select" sortOrder="20">
             <settings>
-                <options class="Softaware\CronManager\Model\Source\JobGroup"/>
+                <options class="CommerceGears\CronManager\Model\Source\JobGroup"/>
                 <filter>select</filter>
                 <dataType>select</dataType>
                 <label translate="true">Group</label>
             </settings>
         </column>
-        <column name="schedule" class="Softaware\CronManager\Ui\Component\Listing\Column\Schedule" sortOrder="30">
+        <column name="schedule" class="CommerceGears\CronManager\Ui\Component\Listing\Column\Schedule" sortOrder="30">
             <settings>
                 <filter>text</filter>
                 <bodyTmpl>ui/grid/cells/html</bodyTmpl>
                 <label translate="true">Schedule</label>
                 <fieldClass>
-                    <class name="softaware-cron-col-schedule">true</class>
+                    <class name="commercegears-cron-col-schedule">true</class>
                 </fieldClass>
             </settings>
         </column>
@@ -141,9 +141,9 @@
                 <visible>false</visible>
             </settings>
         </column>
-        <column name="is_enabled" class="Softaware\CronManager\Ui\Component\Listing\Column\StatusBadge" component="Magento_Ui/js/grid/columns/column" sortOrder="40">
+        <column name="is_enabled" class="CommerceGears\CronManager\Ui\Component\Listing\Column\StatusBadge" component="Magento_Ui/js/grid/columns/column" sortOrder="40">
             <settings>
-                <options class="Softaware\CronManager\Model\Source\JobState"/>
+                <options class="CommerceGears\CronManager\Model\Source\JobState"/>
                 <filter>select</filter>
                 <dataType>select</dataType>
                 <bodyTmpl>ui/grid/cells/html</bodyTmpl>
@@ -166,16 +166,16 @@
                 <label translate="true">Last Run</label>
             </settings>
         </column>
-        <column name="last_status" class="Softaware\CronManager\Ui\Component\Listing\Column\StatusBadge" component="Magento_Ui/js/grid/columns/column" sortOrder="60">
+        <column name="last_status" class="CommerceGears\CronManager\Ui\Component\Listing\Column\StatusBadge" component="Magento_Ui/js/grid/columns/column" sortOrder="60">
             <settings>
-                <options class="Softaware\CronManager\Model\Source\LastStatus"/>
+                <options class="CommerceGears\CronManager\Model\Source\LastStatus"/>
                 <filter>select</filter>
                 <dataType>select</dataType>
                 <bodyTmpl>ui/grid/cells/html</bodyTmpl>
                 <label translate="true">Last Status</label>
             </settings>
         </column>
-        <column name="avg_duration" class="Softaware\CronManager\Ui\Component\Listing\Column\Duration" sortOrder="70">
+        <column name="avg_duration" class="CommerceGears\CronManager\Ui\Component\Listing\Column\Duration" sortOrder="70">
             <settings>
                 <label translate="true">Avg. Duration</label>
             </settings>
@@ -206,14 +206,14 @@
                 <visible>false</visible>
             </settings>
         </column>
-        <column name="last_message" class="Softaware\CronManager\Ui\Component\Listing\Column\Message" sortOrder="110">
+        <column name="last_message" class="CommerceGears\CronManager\Ui\Component\Listing\Column\Message" sortOrder="110">
             <settings>
                 <label translate="true">Last Message</label>
                 <sortable>false</sortable>
                 <visible>false</visible>
             </settings>
         </column>
-        <actionsColumn name="actions" class="Softaware\CronManager\Ui\Component\Listing\Column\JobActions" sortOrder="200">
+        <actionsColumn name="actions" class="CommerceGears\CronManager\Ui\Component\Listing\Column\JobActions" sortOrder="200">
             <settings>
                 <indexField>job_code</indexField>
             </settings>

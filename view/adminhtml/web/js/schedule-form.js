@@ -6,10 +6,10 @@ define(['Magento_Ui/js/modal/confirm'], function (confirm) {
     'use strict';
 
     return function (config, form) {
-        var input = form.querySelector('#softaware-cron-schedule'),
-            useDefault = form.querySelector('#softaware-cron-default'),
-            runButton = document.getElementById('softaware-cron-run'),
-            runForm = document.getElementById('softaware-cron-run-form');
+        var input = form.querySelector('#commercegears-cron-schedule'),
+            useDefault = form.querySelector('#commercegears-cron-default'),
+            runButton = document.getElementById('commercegears-cron-run'),
+            runForm = document.getElementById('commercegears-cron-run-form');
 
         function sync() {
             input.disabled = useDefault.checked;

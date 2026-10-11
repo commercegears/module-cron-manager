@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Softaware\CronManager\Ui\Component\Listing\Column;
+namespace CommerceGears\CronManager\Ui\Component\Listing\Column;
 
 use Magento\Framework\Escaper;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
@@ -33,15 +33,15 @@ class Schedule extends Column
             $expression = trim((string) ($item[$name] ?? ''));
             if (($item['state'] ?? 'enabled') === 'disabled') {
                 // Disabled jobs are not queued: say so instead of "None" plus a "Changed" mark.
-                $item[$name] = '<span class="softaware-cron-muted softaware-cron-nomargin">'
+                $item[$name] = '<span class="commercegears-cron-muted commercegears-cron-nomargin">'
                     . $this->escaper->escapeHtml(__('Not queued (job disabled)')) . '</span>';
                 continue;
             }
             $html = $expression === ''
-                ? '<span class="softaware-cron-muted softaware-cron-nomargin">' . $this->escaper->escapeHtml(__('None (manual runs only)')) . '</span>'
-                : '<code class="softaware-cron-expr-cell">' . $this->escaper->escapeHtml($expression) . '</code>';
+                ? '<span class="commercegears-cron-muted commercegears-cron-nomargin">' . $this->escaper->escapeHtml(__('None (manual runs only)')) . '</span>'
+                : '<code class="commercegears-cron-expr-cell">' . $this->escaper->escapeHtml($expression) . '</code>';
             if (!empty($item['is_overridden'])) {
-                $html .= ' <span class="softaware-cron-changed" title="'
+                $html .= ' <span class="commercegears-cron-changed" title="'
                     . $this->escaper->escapeHtmlAttr(__('Default: %1', (string) ($item['original_schedule'] ?? '') ?: (string) __('none'))) . '">'
                     . $this->escaper->escapeHtml(__('Changed')) . '</span>';
             }

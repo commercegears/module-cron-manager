@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Softaware\CronManager\Model\System\Message;
+namespace CommerceGears\CronManager\Model\System\Message;
 
 /**
  * Admin warning when a job failed several times in a row, or a job is stuck "running".
@@ -11,7 +11,7 @@ class FailingJobs extends AbstractHealthMessage
     public function getIdentity(): string
     {
         $report = $this->health->getReport();
-        return 'softaware_cron_manager_failing_' . md5(implode(',', array_keys($report['failing'])) . '|' . count($report['stuck']));
+        return 'commercegears_cron_manager_failing_' . md5(implode(',', array_keys($report['failing'])) . '|' . count($report['stuck']));
     }
 
     public function isDisplayed(): bool
@@ -44,7 +44,7 @@ class FailingJobs extends AbstractHealthMessage
                 implode(', ', array_slice($codes, 0, 5))
             ));
         }
-        return implode(' ', $parts) . $this->link('softaware_cron/job/index', (string) __('Open the Cron Manager'));
+        return implode(' ', $parts) . $this->link('commercegears_cron/job/index', (string) __('Open the Cron Manager'));
     }
 
     public function getSeverity(): int

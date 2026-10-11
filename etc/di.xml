@@ -2,99 +2,99 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <!-- Disabled jobs and schedule changes made in the Cron Manager -->
     <type name="Magento\Cron\Model\ConfigInterface">
-        <plugin name="softaware_cron_manager_overrides" type="Softaware\CronManager\Plugin\ApplyJobOverrides"/>
+        <plugin name="commercegears_cron_manager_overrides" type="CommerceGears\CronManager\Plugin\ApplyJobOverrides"/>
     </type>
 
-    <!-- Own log file: var/log/softaware_cron_manager.log -->
-    <virtualType name="Softaware\CronManager\Logger\Handler" type="Magento\Framework\Logger\Handler\Base">
+    <!-- Own log file: var/log/commercegears_cron_manager.log -->
+    <virtualType name="CommerceGears\CronManager\Logger\Handler" type="Magento\Framework\Logger\Handler\Base">
         <arguments>
-            <argument name="fileName" xsi:type="string">/var/log/softaware_cron_manager.log</argument>
+            <argument name="fileName" xsi:type="string">/var/log/commercegears_cron_manager.log</argument>
         </arguments>
     </virtualType>
-    <virtualType name="Softaware\CronManager\Logger" type="Magento\Framework\Logger\Monolog">
+    <virtualType name="CommerceGears\CronManager\Logger" type="Magento\Framework\Logger\Monolog">
         <arguments>
-            <argument name="name" xsi:type="string">softaware_cron_manager</argument>
+            <argument name="name" xsi:type="string">commercegears_cron_manager</argument>
             <argument name="handlers" xsi:type="array">
-                <item name="file" xsi:type="object">Softaware\CronManager\Logger\Handler</item>
+                <item name="file" xsi:type="object">CommerceGears\CronManager\Logger\Handler</item>
             </argument>
         </arguments>
     </virtualType>
-    <type name="Softaware\CronManager\Model\Runner">
+    <type name="CommerceGears\CronManager\Model\Runner">
         <arguments>
-            <argument name="logger" xsi:type="object">Softaware\CronManager\Logger</argument>
+            <argument name="logger" xsi:type="object">CommerceGears\CronManager\Logger</argument>
         </arguments>
     </type>
-    <type name="Softaware\CronManager\Model\Notifier">
+    <type name="CommerceGears\CronManager\Model\Notifier">
         <arguments>
-            <argument name="logger" xsi:type="object">Softaware\CronManager\Logger</argument>
+            <argument name="logger" xsi:type="object">CommerceGears\CronManager\Logger</argument>
         </arguments>
     </type>
-    <type name="Softaware\CronManager\Cron\HealthCheck">
+    <type name="CommerceGears\CronManager\Cron\HealthCheck">
         <arguments>
-            <argument name="logger" xsi:type="object">Softaware\CronManager\Logger</argument>
+            <argument name="logger" xsi:type="object">CommerceGears\CronManager\Logger</argument>
         </arguments>
     </type>
 
     <!-- "Run now" starts the CLI command in the background -->
-    <virtualType name="Softaware\CronManager\Shell\Background" type="Magento\Framework\Shell">
+    <virtualType name="CommerceGears\CronManager\Shell\Background" type="Magento\Framework\Shell">
         <arguments>
             <argument name="commandRenderer" xsi:type="object">Magento\Framework\Shell\CommandRendererBackground</argument>
         </arguments>
     </virtualType>
-    <type name="Softaware\CronManager\Model\BackgroundLauncher">
+    <type name="CommerceGears\CronManager\Model\BackgroundLauncher">
         <arguments>
-            <argument name="shell" xsi:type="object">Softaware\CronManager\Shell\Background</argument>
-            <argument name="logger" xsi:type="object">Softaware\CronManager\Logger</argument>
+            <argument name="shell" xsi:type="object">CommerceGears\CronManager\Shell\Background</argument>
+            <argument name="logger" xsi:type="object">CommerceGears\CronManager\Logger</argument>
         </arguments>
     </type>
 
     <!-- CLI -->
-    <type name="Softaware\CronManager\Console\Command\RunCommand">
+    <type name="CommerceGears\CronManager\Console\Command\RunCommand">
         <arguments>
-            <argument name="runner" xsi:type="object">Softaware\CronManager\Model\Runner\Proxy</argument>
+            <argument name="runner" xsi:type="object">CommerceGears\CronManager\Model\Runner\Proxy</argument>
         </arguments>
     </type>
     <type name="Magento\Framework\Console\CommandListInterface">
         <arguments>
             <argument name="commands" xsi:type="array">
-                <item name="softaware_cron_list" xsi:type="object">Softaware\CronManager\Console\Command\ListCommand</item>
-                <item name="softaware_cron_run" xsi:type="object">Softaware\CronManager\Console\Command\RunCommand</item>
-                <item name="softaware_cron_status" xsi:type="object">Softaware\CronManager\Console\Command\StatusCommand</item>
-                <item name="softaware_cron_set" xsi:type="object">Softaware\CronManager\Console\Command\SetCommand</item>
+                <item name="commercegears_cron_list" xsi:type="object">CommerceGears\CronManager\Console\Command\ListCommand</item>
+                <item name="commercegears_cron_run" xsi:type="object">CommerceGears\CronManager\Console\Command\RunCommand</item>
+                <item name="commercegears_cron_status" xsi:type="object">CommerceGears\CronManager\Console\Command\StatusCommand</item>
+                <item name="commercegears_cron_set" xsi:type="object">CommerceGears\CronManager\Console\Command\SetCommand</item>
             </argument>
         </arguments>
     </type>
 
     <!-- Schedule grid -->
-    <type name="Softaware\CronManager\Model\ResourceModel\Schedule\Grid\Collection">
+    <type name="CommerceGears\CronManager\Model\ResourceModel\Schedule\Grid\Collection">
         <arguments>
             <argument name="mainTable" xsi:type="string">cron_schedule</argument>
             <argument name="resourceModel" xsi:type="string">Magento\Cron\Model\ResourceModel\Schedule</argument>
         </arguments>
     </type>
     <!-- Keyword search of the schedule grid (job code or message) -->
-    <virtualType name="Softaware\CronManager\Ui\DataProvider\Schedule\FilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+    <virtualType name="CommerceGears\CronManager\Ui\DataProvider\Schedule\FilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
         <arguments>
             <argument name="appliers" xsi:type="array">
                 <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
-                <item name="fulltext" xsi:type="object">Softaware\CronManager\Ui\DataProvider\ScheduleKeywordFilter</item>
+                <item name="fulltext" xsi:type="object">CommerceGears\CronManager\Ui\DataProvider\ScheduleKeywordFilter</item>
             </argument>
         </arguments>
     </virtualType>
-    <virtualType name="Softaware\CronManager\Ui\DataProvider\Schedule\Reporting" type="Magento\Framework\View\Element\UiComponent\DataProvider\Reporting">
+    <virtualType name="CommerceGears\CronManager\Ui\DataProvider\Schedule\Reporting" type="Magento\Framework\View\Element\UiComponent\DataProvider\Reporting">
         <arguments>
-            <argument name="filterPool" xsi:type="object">Softaware\CronManager\Ui\DataProvider\Schedule\FilterPool</argument>
+            <argument name="filterPool" xsi:type="object">CommerceGears\CronManager\Ui\DataProvider\Schedule\FilterPool</argument>
         </arguments>
     </virtualType>
-    <virtualType name="Softaware\CronManager\Ui\DataProvider\ScheduleDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+    <virtualType name="CommerceGears\CronManager\Ui\DataProvider\ScheduleDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
         <arguments>
-            <argument name="reporting" xsi:type="object">Softaware\CronManager\Ui\DataProvider\Schedule\Reporting</argument>
+            <argument name="reporting" xsi:type="object">CommerceGears\CronManager\Ui\DataProvider\Schedule\Reporting</argument>
         </arguments>
     </virtualType>
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <arguments>
             <argument name="collections" xsi:type="array">
-                <item name="softaware_cron_schedule_listing_data_source" xsi:type="string">Softaware\CronManager\Model\ResourceModel\Schedule\Grid\Collection</item>
+                <item name="commercegears_cron_schedule_listing_data_source" xsi:type="string">CommerceGears\CronManager\Model\ResourceModel\Schedule\Grid\Collection</item>
             </argument>
         </arguments>
     </type>

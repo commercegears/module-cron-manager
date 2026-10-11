@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
-        <css src="Softaware_CronManager::css/cron-manager.css"/>
+        <css src="CommerceGears_CronManager::css/cron-manager.css"/>
     </head>
     <body>
         <referenceContainer name="content">
-            <block class="Softaware\CronManager\Block\Adminhtml\Job\Edit" name="softaware.cron.job.edit"/>
+            <block class="CommerceGears\CronManager\Block\Adminhtml\Timeline" name="commercegears.cron.timeline"/>
         </referenceContainer>
     </body>
 </page>

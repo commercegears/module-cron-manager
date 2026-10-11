@@ -11,10 +11,10 @@ comes from the configuration. The grid shows the group, the schedule in use and 
 run and status, the average duration, recent errors, the module and the class and method.
 
 **How does "Run Now" work?**
-It starts `bin/magento softaware:cron:run <job>` in the background, so the admin page does not wait for the job. The
+It starts `bin/magento commercegears:cron:run <job>` in the background, so the admin page does not wait for the job. The
 run takes the same lock as Magento's cron, so it cannot overlap with a scheduled run of the same job. It is written to
 the cron schedule with its status, start and finish time, a message with who started it, and to
-`var/log/softaware_cron_manager.log`. You can run up to 20 jobs at once from the grid, and a disabled job can still be
+`var/log/commercegears_cron_manager.log`. You can run up to 20 jobs at once from the grid, and a disabled job can still be
 run manually.
 
 **What happens when I disable a job?**
@@ -22,7 +22,7 @@ The job keeps its definition but gets no schedule, so Magento queues nothing new
 removed. Enable it again, or use "Restore Default Schedule", to go back to the original behaviour.
 
 **Where are my changes stored? Are they lost on deployment?**
-They are stored in the configuration (`softaware_cron_manager/overrides/jobs`), so they survive deployments and can
+They are stored in the configuration (`commercegears_cron_manager/overrides/jobs`), so they survive deployments and can
 be exported with `bin/magento app:config:dump`. If that value is set in `app/etc/config.php` or `env.php`, it wins over
 the database: the Cron Manager then shows the changes as read-only and refuses to change them, instead of saving
 changes that would have no effect.

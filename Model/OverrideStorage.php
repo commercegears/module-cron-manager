@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Softaware\CronManager\Model;
+namespace CommerceGears\CronManager\Model;
 
 use Magento\Framework\App\Cache\TypeListInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
@@ -12,12 +12,12 @@ use Magento\Framework\Exception\LocalizedException;
 
 /**
  * Job overrides (disabled flag, schedule) stored in the configuration as one JSON value:
- * softaware_cron_manager/overrides/jobs. Because it is plain config it can also be exported
+ * commercegears_cron_manager/overrides/jobs. Because it is plain config it can also be exported
  * with app:config:dump and deployed with the code.
  */
 class OverrideStorage
 {
-    public const PATH = 'softaware_cron_manager/overrides/jobs';
+    public const PATH = 'commercegears_cron_manager/overrides/jobs';
 
     /** @var array<string, array<string, mixed>>|null */
     private ?array $cache = null;

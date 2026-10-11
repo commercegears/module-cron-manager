@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Softaware\CronManager\Model\Source;
+namespace CommerceGears\CronManager\Model\Source;
 
 use Magento\Framework\Data\OptionSourceInterface;
 

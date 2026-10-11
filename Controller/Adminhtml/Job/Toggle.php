@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Softaware\CronManager\Controller\Adminhtml\Job;
+namespace CommerceGears\CronManager\Controller\Adminhtml\Job;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Controller\ResultInterface;
-use Softaware\CronManager\Model\JobStateManager;
+use CommerceGears\CronManager\Model\JobStateManager;
 
 /**
  * Enable or disable one job.
  */
 class Toggle extends Action implements HttpPostActionInterface
 {
-    public const ADMIN_RESOURCE = 'Softaware_CronManager::jobs_manage';
+    public const ADMIN_RESOURCE = 'CommerceGears_CronManager::jobs_manage';
 
     public function __construct(Context $context, private readonly JobStateManager $stateManager)
     {

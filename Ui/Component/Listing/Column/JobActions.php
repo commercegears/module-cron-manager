@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Softaware\CronManager\Ui\Component\Listing\Column;
+namespace CommerceGears\CronManager\Ui\Component\Listing\Column;
 
 use Magento\Framework\AuthorizationInterface;
 use Magento\Framework\UrlInterface;
@@ -27,20 +27,20 @@ class JobActions extends Column
         if (!isset($dataSource['data']['items'])) {
             return $dataSource;
         }
-        $canRun = $this->authorization->isAllowed('Softaware_CronManager::jobs_run');
-        $canManage = $this->authorization->isAllowed('Softaware_CronManager::jobs_manage');
+        $canRun = $this->authorization->isAllowed('CommerceGears_CronManager::jobs_run');
+        $canManage = $this->authorization->isAllowed('CommerceGears_CronManager::jobs_manage');
         foreach ($dataSource['data']['items'] as &$item) {
             $code = (string) $item['job_code'];
             $actions = [];
             if ($canManage) {
                 $actions['edit'] = [
-                    'href' => $this->urlBuilder->getUrl('softaware_cron/job/edit', ['code' => $code]),
+                    'href' => $this->urlBuilder->getUrl('commercegears_cron/job/edit', ['code' => $code]),
                     'label' => __('Edit'),
                 ];
             }
             if ($canRun) {
                 $actions['run'] = [
-                    'href' => $this->urlBuilder->getUrl('softaware_cron/job/run', ['code' => $code]),
+                    'href' => $this->urlBuilder->getUrl('commercegears_cron/job/run', ['code' => $code]),
                     'label' => __('Run Now'),
                     'post' => true,
                     'confirm' => [
@@ -53,7 +53,7 @@ class JobActions extends Column
                 // Read the raw state: the State column (rendered before this one) replaces is_enabled with HTML.
                 $enabled = ($item['state'] ?? '') === 'enabled';
                 $actions['toggle'] = [
-                    'href' => $this->urlBuilder->getUrl('softaware_cron/job/toggle', ['code' => $code, 'enable' => $enabled ? 0 : 1]),
+                    'href' => $this->urlBuilder->getUrl('commercegears_cron/job/toggle', ['code' => $code, 'enable' => $enabled ? 0 : 1]),
                     'label' => $enabled ? __('Disable') : __('Enable'),
                     'post' => true,
                 ];
@@ -68,7 +68,7 @@ class JobActions extends Column
                     ];
             }
             $actions['history'] = [
-                'href' => $this->urlBuilder->getUrl('softaware_cron/schedule/index', ['job_code' => $code]),
+                'href' => $this->urlBuilder->getUrl('commercegears_cron/schedule/index', ['job_code' => $code]),
                 'label' => __('History'),
             ];
             $item[$this->getData('name')] = $actions;

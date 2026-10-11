@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Softaware\CronManager\Block\Adminhtml;
+namespace CommerceGears\CronManager\Block\Adminhtml;
 
 use Magento\Backend\Block\Widget\Container;
 use Magento\Backend\Block\Widget\Context;
 use Magento\Framework\Locale\ResolverInterface;
-use Softaware\CronManager\Model\JobConfig;
-use Softaware\CronManager\Model\ScheduleManager;
-use Softaware\CronManager\Ui\Component\Listing\Column\Duration;
-use Softaware\CronManager\Ui\Component\Listing\Column\StatusBadge;
+use CommerceGears\CronManager\Model\JobConfig;
+use CommerceGears\CronManager\Model\ScheduleManager;
+use CommerceGears\CronManager\Ui\Component\Listing\Column\Duration;
+use CommerceGears\CronManager\Ui\Component\Listing\Column\StatusBadge;
 
 /**
  * Gantt-like timeline of cron runs: one row per job, one bar per run, coloured by status.
@@ -19,7 +19,7 @@ class Timeline extends Container
     public const SPANS = [1, 3, 6, 12, 24];
     private const MIN_WIDTH = 0.18;
 
-    protected $_template = 'Softaware_CronManager::timeline.phtml';
+    protected $_template = 'CommerceGears_CronManager::timeline.phtml';
 
     /** @var array<string, mixed>|null */
     private ?array $chart = null;
@@ -36,15 +36,15 @@ class Timeline extends Container
 
     protected function _prepareLayout()
     {
-        if ($this->_authorization->isAllowed('Softaware_CronManager::jobs')) {
+        if ($this->_authorization->isAllowed('CommerceGears_CronManager::jobs')) {
             $this->addButton('jobs', [
                 'label' => __('Cron Jobs'),
-                'onclick' => sprintf("setLocation('%s')", $this->escapeJs($this->getUrl('softaware_cron/job/index'))),
+                'onclick' => sprintf("setLocation('%s')", $this->escapeJs($this->getUrl('commercegears_cron/job/index'))),
             ], 0, 10);
         }
         $this->addButton('schedule', [
             'label' => __('Schedule'),
-            'onclick' => sprintf("setLocation('%s')", $this->escapeJs($this->getUrl('softaware_cron/schedule/index'))),
+            'onclick' => sprintf("setLocation('%s')", $this->escapeJs($this->getUrl('commercegears_cron/schedule/index'))),
         ], 0, 20);
         return parent::_prepareLayout();
     }

@@ -1,4 +1,4 @@
-# Softaware Cron Manager
+# CommerceGears Cron Manager
 
 See and control Magento's cron from the admin: every job with its schedule and run statistics, the schedule
 (cron_schedule) as a grid and as a timeline, run jobs now, enable/disable and reschedule jobs, clean up the queue,
@@ -6,7 +6,7 @@ and get warned when cron stops or a job keeps failing.
 
 User guide: [docs/user-guide.md](docs/user-guide.md) · FAQ: [docs/faq.md](docs/faq.md)
 
-Admin: **Softaware > Cron Manager**: Cron Jobs, Schedule, Timeline, Settings.
+Admin: **CommerceGears > Cron Manager**: Cron Jobs, Schedule, Timeline, Settings.
 
 ## Features
 
@@ -18,13 +18,13 @@ Admin: **Softaware > Cron Manager**: Cron Jobs, Schedule, Timeline, Settings.
   Row actions: Edit, Run Now, Enable/Disable, History. Mass actions: Run Now (up to 20), Enable, Disable,
   Restore Default Schedule.
 * **Edit a job:** state (Enabled/Disabled) and cron expression validated with Magento's parser, presets, preview of the next runs (store
-  timezone). Overrides are stored in the configuration (`softaware_cron_manager/overrides/jobs`, JSON), so they can
+  timezone). Overrides are stored in the configuration (`commercegears_cron_manager/overrides/jobs`, JSON), so they can
   be exported with `app:config:dump`. A plugin on `Magento\Cron\Model\ConfigInterface::getJobs()` applies them:
   a disabled job keeps its definition but has no schedule (nothing new is queued; its pending entries are removed);
   a rescheduled job gets the new expression (also replacing a config-path schedule).
-* **Run Now:** starts `bin/magento softaware:cron:run <job>` in the background (no admin request waits for a job).
+* **Run Now:** starts `bin/magento commercegears:cron:run <job>` in the background (no admin request waits for a job).
   The run takes the same lock as Magento's cron, is recorded in `cron_schedule` (status, start/finish, message,
-  who started it) and logged to `var/log/softaware_cron_manager.log`. Disabled jobs can be run manually.
+  who started it) and logged to `var/log/commercegears_cron_manager.log`. Disabled jobs can be run manually.
 * **Schedule grid:** cron_schedule with keyword search (job code or message), filters (job, status, dates, message),
   duration column, coloured statuses, mass delete, and a clean-up panel (each action asks for confirmation): remove pending/missed entries, mark stuck "running" jobs as failed (configurable
   max runtime), clean history (by status and age, optionally for one job).
@@ -33,7 +33,7 @@ Admin: **Softaware > Cron Manager**: Cron Jobs, Schedule, Timeline, Settings.
 * **Health:** a status panel on the Cron Jobs and Schedule pages (cron activity, last 24 hours, queue, failing jobs,
   job changes), and admin system messages when cron has not run for N minutes,
   a job failed N times in a row, or a job runs longer than the max runtime. Cached for 3 minutes.
-* **Failure e-mails** (off by default): a cron job (`softaware_cron_manager_health`, every 5 minutes) e-mails new
+* **Failure e-mails** (off by default): a cron job (`commercegears_cron_manager_health`, every 5 minutes) e-mails new
   failures, at most once per interval (failures in between are collected), and reports gaps when cron itself did
   not run (measured from the cron history of the last hour, so rescheduling the health job does not cause false
   alarms). It can also mark stuck jobs as failed automatically. Template: "Cron Manager: Failed Cron Jobs".
@@ -42,13 +42,13 @@ Admin: **Softaware > Cron Manager**: Cron Jobs, Schedule, Timeline, Settings.
 
 ## Configuration
 
-Stores > Configuration > Softaware > Cron Manager (`softaware_cron_manager/...`): Enabled, PHP Binary for Run Now
+Stores > Configuration > CommerceGears > Cron Manager (`commercegears_cron_manager/...`): Enabled, PHP Binary for Run Now
 (auto-detected when empty; only an absolute path to an executable whose name starts with `php` is accepted), health
 warnings (minutes without cron, failures in a row, jobs to ignore), stuck jobs (max runtime, mark automatically),
 failure e-mails (on/off, recipients, sender, template, minimum interval). Every field shows its default and can be
 restored to it.
 
-Job changes are stored in `softaware_cron_manager/overrides/jobs`. If that value is set in `app/etc/config.php` or
+Job changes are stored in `commercegears_cron_manager/overrides/jobs`. If that value is set in `app/etc/config.php` or
 `env.php` (for example after `app:config:dump`), it wins over the database: the Cron Manager then shows the changes as
 read-only and refuses to change them, instead of saving changes that would have no effect.
 
@@ -58,14 +58,14 @@ and e-mails stop; the pages remain available.
 ## CLI
 
 ```
-bin/magento softaware:cron:list [--group=] [--search=] [--disabled] [--overridden] [--failed]
-bin/magento softaware:cron:run <job_code> [--trigger=cli] [--user=]
-bin/magento softaware:cron:status
-bin/magento softaware:cron:set <job_code> [<job_code> …] [--enable|--disable] [--schedule="*/15 * * * *"]
-bin/magento softaware:cron:set <job_code> [<job_code> …] --default
+bin/magento commercegears:cron:list [--group=] [--search=] [--disabled] [--overridden] [--failed]
+bin/magento commercegears:cron:run <job_code> [--trigger=cli] [--user=]
+bin/magento commercegears:cron:status
+bin/magento commercegears:cron:set <job_code> [<job_code> …] [--enable|--disable] [--schedule="*/15 * * * *"]
+bin/magento commercegears:cron:set <job_code> [<job_code> …] --default
 ```
 
-`softaware:cron:set` makes the same changes as the Cron Jobs page (useful in deployment scripts); `--default` removes
+`commercegears:cron:set` makes the same changes as the Cron Jobs page (useful in deployment scripts); `--default` removes
 all changes of the jobs.
 
 ## ACL

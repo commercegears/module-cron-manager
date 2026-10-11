@@ -1,18 +1,18 @@
 <?php
 declare(strict_types=1);
 
-namespace Softaware\CronManager\Controller\Adminhtml\Job;
+namespace CommerceGears\CronManager\Controller\Adminhtml\Job;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\ResultInterface;
-use Softaware\CronManager\Model\JobConfig;
+use CommerceGears\CronManager\Model\JobConfig;
 
 class Edit extends Action implements HttpGetActionInterface
 {
-    public const ADMIN_RESOURCE = 'Softaware_CronManager::jobs_manage';
+    public const ADMIN_RESOURCE = 'CommerceGears_CronManager::jobs_manage';
 
     public function __construct(Context $context, private readonly JobConfig $jobConfig)
     {
@@ -28,7 +28,7 @@ class Edit extends Action implements HttpGetActionInterface
         }
         /** @var \Magento\Backend\Model\View\Result\Page $page */
         $page = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
-        $page->setActiveMenu('Softaware_CronManager::jobs');
+        $page->setActiveMenu('CommerceGears_CronManager::jobs');
         $page->getConfig()->getTitle()->prepend(__('Cron Job: %1', $code));
         return $page;
     }

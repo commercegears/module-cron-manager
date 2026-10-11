@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Softaware\CronManager\Plugin;
+namespace CommerceGears\CronManager\Plugin;
 
 use Magento\Cron\Model\ConfigInterface;
-use Softaware\CronManager\Model\Config;
-use Softaware\CronManager\Model\OverrideStorage;
+use CommerceGears\CronManager\Model\Config;
+use CommerceGears\CronManager\Model\OverrideStorage;
 
 /**
  * Applies the Cron Manager overrides to the job configuration Magento's cron reads:

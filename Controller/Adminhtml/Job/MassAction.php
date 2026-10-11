@@ -1,24 +1,24 @@
 <?php
 declare(strict_types=1);
 
-namespace Softaware\CronManager\Controller\Adminhtml\Job;
+namespace CommerceGears\CronManager\Controller\Adminhtml\Job;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\LocalizedException;
-use Softaware\CronManager\Model\BackgroundLauncher;
-use Softaware\CronManager\Model\JobConfig;
-use Softaware\CronManager\Model\JobStateManager;
-use Softaware\CronManager\Ui\DataProvider\JobDataProviderFactory;
+use CommerceGears\CronManager\Model\BackgroundLauncher;
+use CommerceGears\CronManager\Model\JobConfig;
+use CommerceGears\CronManager\Model\JobStateManager;
+use CommerceGears\CronManager\Ui\DataProvider\JobDataProviderFactory;
 
 /**
  * Mass actions of the job grid: run, enable, disable, restore defaults.
  */
 class MassAction extends Action implements HttpPostActionInterface
 {
-    public const ADMIN_RESOURCE = 'Softaware_CronManager::jobs';
+    public const ADMIN_RESOURCE = 'CommerceGears_CronManager::jobs';
 
     private const MAX_RUN = 20;
 
@@ -35,7 +35,7 @@ class MassAction extends Action implements HttpPostActionInterface
     protected function _isAllowed(): bool
     {
         $operation = (string) $this->getRequest()->getParam('operation');
-        $resource = $operation === 'run' ? 'Softaware_CronManager::jobs_run' : 'Softaware_CronManager::jobs_manage';
+        $resource = $operation === 'run' ? 'CommerceGears_CronManager::jobs_run' : 'CommerceGears_CronManager::jobs_manage';
         return parent::_isAllowed() && $this->_authorization->isAllowed($resource);
     }
 
@@ -70,7 +70,7 @@ class MassAction extends Action implements HttpPostActionInterface
                         $this->launcher->launch($code, $user);
                     }
                     $this->messageManager->addSuccessMessage(__('Started in the background: %1.', implode(', ', $codes)));
-                    return $redirect->setPath('softaware_cron/schedule/index');
+                    return $redirect->setPath('commercegears_cron/schedule/index');
                 default:
                     throw new LocalizedException(__('Unknown action.'));
             }
@@ -96,7 +96,7 @@ class MassAction extends Action implements HttpPostActionInterface
         $excluded = $request->getParam('excluded');
         if ($excluded === 'false' || is_array($excluded)) {
             $provider = $this->dataProviderFactory->create([
-                'name' => 'softaware_cron_job_listing_data_source',
+                'name' => 'commercegears_cron_job_listing_data_source',
                 'primaryFieldName' => 'job_code',
                 'requestFieldName' => 'code',
             ]);

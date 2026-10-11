@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Softaware\CronManager\Console\Command;
+namespace CommerceGears\CronManager\Console\Command;
 
-use Softaware\CronManager\Model\BackgroundLauncher;
-use Softaware\CronManager\Model\Config;
-use Softaware\CronManager\Model\Health;
-use Softaware\CronManager\Model\JobConfig;
-use Softaware\CronManager\Model\Notifier;
-use Softaware\CronManager\Model\ScheduleManager;
+use CommerceGears\CronManager\Model\BackgroundLauncher;
+use CommerceGears\CronManager\Model\Config;
+use CommerceGears\CronManager\Model\Health;
+use CommerceGears\CronManager\Model\JobConfig;
+use CommerceGears\CronManager\Model\Notifier;
+use CommerceGears\CronManager\Model\ScheduleManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -31,7 +31,7 @@ class StatusCommand extends Command
 
     protected function configure(): void
     {
-        $this->setName('softaware:cron:status')
+        $this->setName('commercegears:cron:status')
             ->setDescription('Show cron health: last activity, failing and stuck jobs, counts, disabled and rescheduled jobs');
     }
 

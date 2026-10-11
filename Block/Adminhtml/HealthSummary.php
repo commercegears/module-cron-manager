@@ -1,23 +1,23 @@
 <?php
 declare(strict_types=1);
 
-namespace Softaware\CronManager\Block\Adminhtml;
+namespace CommerceGears\CronManager\Block\Adminhtml;
 
 use Magento\Backend\Block\Template;
 use Magento\Backend\Block\Template\Context;
 use Magento\Framework\Locale\ResolverInterface;
-use Softaware\CronManager\Model\Config;
-use Softaware\CronManager\Model\Health;
-use Softaware\CronManager\Model\JobConfig;
-use Softaware\CronManager\Model\OverrideStorage;
-use Softaware\CronManager\Model\ScheduleManager;
+use CommerceGears\CronManager\Model\Config;
+use CommerceGears\CronManager\Model\Health;
+use CommerceGears\CronManager\Model\JobConfig;
+use CommerceGears\CronManager\Model\OverrideStorage;
+use CommerceGears\CronManager\Model\ScheduleManager;
 
 /**
  * Health bar at the top of the Cron Manager pages.
  */
 class HealthSummary extends Template
 {
-    protected $_template = 'Softaware_CronManager::health.phtml';
+    protected $_template = 'CommerceGears_CronManager::health.phtml';
 
     public function __construct(
         Context $context,

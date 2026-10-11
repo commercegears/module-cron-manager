@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Softaware\CronManager\Controller\Adminhtml\Job;
+namespace CommerceGears\CronManager\Controller\Adminhtml\Job;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\LocalizedException;
-use Softaware\CronManager\Model\BackgroundLauncher;
+use CommerceGears\CronManager\Model\BackgroundLauncher;
 
 /**
- * Start a job now in the background (bin/magento softaware:cron:run).
+ * Start a job now in the background (bin/magento commercegears:cron:run).
  */
 class Run extends Action implements HttpPostActionInterface
 {
-    public const ADMIN_RESOURCE = 'Softaware_CronManager::jobs_run';
+    public const ADMIN_RESOURCE = 'CommerceGears_CronManager::jobs_run';
 
     public function __construct(Context $context, private readonly BackgroundLauncher $launcher)
     {
@@ -35,6 +35,6 @@ class Run extends Action implements HttpPostActionInterface
         } catch (LocalizedException $e) {
             $this->messageManager->addErrorMessage($e->getMessage());
         }
-        return $this->resultRedirectFactory->create()->setPath('softaware_cron/schedule/index', ['job_code' => $code]);
+        return $this->resultRedirectFactory->create()->setPath('commercegears_cron/schedule/index', ['job_code' => $code]);
     }
 }

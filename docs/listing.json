@@ -105,7 +105,7 @@
         "admin": [
             {
                 "label": "Admin panel",
-                "url": "https://demo.softawarecommerce.com/try-admin/cron-manager",
+                "url": "https://demo.commercegears.com/try-admin/cron-manager",
                 "image": "docs/images/admin-cron-jobs.png"
             }
         ]

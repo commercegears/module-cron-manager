@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Softaware\CronManager\Ui\Component\Listing\Column;
+namespace CommerceGears\CronManager\Ui\Component\Listing\Column;
 
 use Magento\Framework\Escaper;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
@@ -22,8 +22,8 @@ class StatusBadge extends Column
         'error' => 'grid-severity-critical',
         'disabled' => 'grid-severity-critical',
         'missed' => 'grid-severity-minor',
-        'running' => 'softaware-cron-status-neutral _running',
-        'pending' => 'softaware-cron-status-neutral',
+        'running' => 'commercegears-cron-status-neutral _running',
+        'pending' => 'commercegears-cron-status-neutral',
     ];
 
     public function __construct(
@@ -38,7 +38,7 @@ class StatusBadge extends Column
 
     public static function getCssClass(string $status): string
     {
-        return self::CLASSES[$status] ?? 'softaware-cron-status-neutral';
+        return self::CLASSES[$status] ?? 'commercegears-cron-status-neutral';
     }
 
     public static function getLabel(string $status): string
@@ -67,7 +67,7 @@ class StatusBadge extends Column
                 $value = $value === '1' ? 'enabled' : 'disabled';
             }
             if ($value === '' && $name === 'last_status') {
-                $item[$name] = '<span class="softaware-cron-muted softaware-cron-nomargin" title="'
+                $item[$name] = '<span class="commercegears-cron-muted commercegears-cron-nomargin" title="'
                     . $this->escaper->escapeHtmlAttr(__('No entry in the cron history. Magento keeps finished entries only for a limited time.')) . '">'
                     . $this->escaper->escapeHtml(__('No recent runs')) . '</span>';
                 continue;

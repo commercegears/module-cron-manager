@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Softaware\CronManager\Model;
+namespace CommerceGears\CronManager\Model;
 
 use Magento\Cron\Model\Config\Data as CronConfigData;
 use Magento\Framework\App\Config\ScopeConfigInterface;

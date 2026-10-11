@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Softaware\CronManager\Model;
+namespace CommerceGears\CronManager\Model;
 
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\ShellInterface;
 use Psr\Log\LoggerInterface;
 
 /**
- * Starts "bin/magento softaware:cron:run <job>" as a background process, so a long job never
+ * Starts "bin/magento commercegears:cron:run <job>" as a background process, so a long job never
  * blocks the admin request. The run is recorded in cron_schedule by the command itself.
  */
 class BackgroundLauncher
@@ -37,7 +37,7 @@ class BackgroundLauncher
                 throw new LocalizedException(__('The PHP binary in the Cron Manager settings cannot be used: %1', $error));
             }
         }
-        $arguments = [$php, BP . '/bin/magento', 'softaware:cron:run', $jobCode, '--trigger=admin'];
+        $arguments = [$php, BP . '/bin/magento', 'commercegears:cron:run', $jobCode, '--trigger=admin'];
         $command = '%s %s %s %s %s';
         if ($user !== null && $user !== '') {
             $arguments[] = '--user=' . preg_replace('/[^\w.@-]/', '', $user);

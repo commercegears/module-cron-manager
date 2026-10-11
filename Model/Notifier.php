@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Softaware\CronManager\Model;
+namespace CommerceGears\CronManager\Model;
 
 use Magento\Backend\Model\UrlInterface as BackendUrl;
 use Magento\Framework\App\Area;
@@ -18,9 +18,9 @@ use Psr\Log\LoggerInterface;
  */
 class Notifier
 {
-    private const FLAG_NOTIFIED = 'softaware_cron_manager_notified_ids';
-    private const FLAG_LAST_SENT = 'softaware_cron_manager_last_email_at';
-    private const FLAG_LAST_CHECK = 'softaware_cron_manager_last_check_at';
+    private const FLAG_NOTIFIED = 'commercegears_cron_manager_notified_ids';
+    private const FLAG_LAST_SENT = 'commercegears_cron_manager_last_email_at';
+    private const FLAG_LAST_CHECK = 'commercegears_cron_manager_last_check_at';
     private const LOOKBACK = 172800;
     private const GAP_WINDOW = 3300;
 
@@ -97,7 +97,7 @@ class Notifier
             'summary' => $this->getSummary(count($errors), $gap),
             'rows_html' => $this->renderRows($errors),
             // No secret key: it would belong to this (cron) process and be rejected when the link is opened.
-            'url' => $this->backendUrl->getUrl('softaware_cron/schedule/index', ['_nosecret' => true]),
+            'url' => $this->backendUrl->getUrl('commercegears_cron/schedule/index', ['_nosecret' => true]),
         ];
         if ($dryRun) {
             return 'Would send to ' . (implode(', ', $recipients) ?: '(no recipient)') . ': ' . $vars['summary'];

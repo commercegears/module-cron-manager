@@ -1,6 +1,6 @@
 <?php
 /**
- * @var \Softaware\CronManager\Block\Adminhtml\HealthSummary $block
+ * @var \CommerceGears\CronManager\Block\Adminhtml\HealthSummary $block
  * @var \Magento\Framework\Escaper $escaper
  */
 $report = $block->getReport();
@@ -12,10 +12,10 @@ $stuck = count($report['stuck']);
 $failing = array_keys($report['failing']);
 $num = static fn ($value): string => $block->formatNumber((int) $value);
 ?>
-<section class="softaware-cron-health" aria-label="<?= $escaper->escapeHtmlAttr(__('Cron status')) ?>">
-    <div class="softaware-cron-health-item <?= $cronOk ? '_ok' : '_bad' ?>">
-        <span class="softaware-cron-health-label"><?= $escaper->escapeHtml(__('Cron')) ?></span>
-        <strong class="softaware-cron-health-value">
+<section class="commercegears-cron-health" aria-label="<?= $escaper->escapeHtmlAttr(__('Cron status')) ?>">
+    <div class="commercegears-cron-health-item <?= $cronOk ? '_ok' : '_bad' ?>">
+        <span class="commercegears-cron-health-label"><?= $escaper->escapeHtml(__('Cron')) ?></span>
+        <strong class="commercegears-cron-health-value">
             <?php if ($report['minutes_since'] === null): ?>
                 <?= $escaper->escapeHtml(__('Has never run')) ?>
             <?php elseif ($report['minutes_since'] < 1): ?>
@@ -24,31 +24,31 @@ $num = static fn ($value): string => $block->formatNumber((int) $value);
                 <?= $escaper->escapeHtml(__('Last active %1 min ago', $num($report['minutes_since']))) ?>
             <?php endif; ?>
         </strong>
-        <span class="softaware-cron-health-sub">
+        <span class="commercegears-cron-health-sub">
             <?= $escaper->escapeHtml(__('Last activity: %1', $block->formatUtc($report['last_activity']))) ?>
         </span>
     </div>
-    <div class="softaware-cron-health-item <?= ($counts['error'] ?? 0) ? '_warn' : '_ok' ?>">
-        <span class="softaware-cron-health-label"><?= $escaper->escapeHtml(__('Last 24 Hours')) ?></span>
-        <strong class="softaware-cron-health-value">
+    <div class="commercegears-cron-health-item <?= ($counts['error'] ?? 0) ? '_warn' : '_ok' ?>">
+        <span class="commercegears-cron-health-label"><?= $escaper->escapeHtml(__('Last 24 Hours')) ?></span>
+        <strong class="commercegears-cron-health-value">
             <?= $escaper->escapeHtml(__('%1 successful', $num($counts['success'] ?? 0))) ?>
         </strong>
-        <span class="softaware-cron-health-sub">
+        <span class="commercegears-cron-health-sub">
             <?= $escaper->escapeHtml(__('%1 failed, %2 missed (history Magento keeps)', $num($counts['error'] ?? 0), $num($counts['missed'] ?? 0))) ?>
         </span>
     </div>
-    <div class="softaware-cron-health-item <?= $stuck ? '_bad' : '' ?>">
-        <span class="softaware-cron-health-label"><?= $escaper->escapeHtml(__('Queue')) ?></span>
-        <strong class="softaware-cron-health-value">
+    <div class="commercegears-cron-health-item <?= $stuck ? '_bad' : '' ?>">
+        <span class="commercegears-cron-health-label"><?= $escaper->escapeHtml(__('Queue')) ?></span>
+        <strong class="commercegears-cron-health-value">
             <?= $escaper->escapeHtml(__('%1 pending, %2 running', $num($queue['pending'] ?? 0), $num($queue['running'] ?? 0))) ?>
         </strong>
-        <span class="softaware-cron-health-sub">
+        <span class="commercegears-cron-health-sub">
             <?= $escaper->escapeHtml(__('%1 stuck (running over %2 min)', $num($stuck), $num($block->getConfig()->getMaxRuntime()))) ?>
         </span>
     </div>
-    <div class="softaware-cron-health-item <?= $failing ? '_bad' : '_ok' ?>">
-        <span class="softaware-cron-health-label"><?= $escaper->escapeHtml(__('Failing Jobs')) ?></span>
-        <strong class="softaware-cron-health-value" title="<?= $escaper->escapeHtmlAttr(implode(', ', $failing)) ?>">
+    <div class="commercegears-cron-health-item <?= $failing ? '_bad' : '_ok' ?>">
+        <span class="commercegears-cron-health-label"><?= $escaper->escapeHtml(__('Failing Jobs')) ?></span>
+        <strong class="commercegears-cron-health-value" title="<?= $escaper->escapeHtmlAttr(implode(', ', $failing)) ?>">
             <?php if (!$failing): ?>
                 <?= $escaper->escapeHtml(__('None')) ?>
             <?php elseif (count($failing) > 2): ?>
@@ -57,14 +57,14 @@ $num = static fn ($value): string => $block->formatNumber((int) $value);
                 <?= $escaper->escapeHtml(implode(', ', $failing)) ?>
             <?php endif; ?>
         </strong>
-        <span class="softaware-cron-health-sub"><?= $escaper->escapeHtml(__('Failed %1 or more times in a row', $num($block->getConfig()->getFailureThreshold()))) ?></span>
+        <span class="commercegears-cron-health-sub"><?= $escaper->escapeHtml(__('Failed %1 or more times in a row', $num($block->getConfig()->getFailureThreshold()))) ?></span>
     </div>
-    <div class="softaware-cron-health-item <?= !$block->isModuleEnabled() || $block->isReadOnly() ? '_warn' : '' ?>">
-        <span class="softaware-cron-health-label"><?= $escaper->escapeHtml(__('Job Changes')) ?></span>
-        <strong class="softaware-cron-health-value">
+    <div class="commercegears-cron-health-item <?= !$block->isModuleEnabled() || $block->isReadOnly() ? '_warn' : '' ?>">
+        <span class="commercegears-cron-health-label"><?= $escaper->escapeHtml(__('Job Changes')) ?></span>
+        <strong class="commercegears-cron-health-value">
             <?= $escaper->escapeHtml(__('%1 disabled, %2 rescheduled', $num($overrides['disabled']), $num($overrides['rescheduled']))) ?>
         </strong>
-        <span class="softaware-cron-health-sub">
+        <span class="commercegears-cron-health-sub">
             <?php if (!$block->isModuleEnabled()): ?>
                 <?= $escaper->escapeHtml(__('Not applied: Cron Manager is switched off in its settings')) ?>
             <?php elseif ($block->isReadOnly()): ?>

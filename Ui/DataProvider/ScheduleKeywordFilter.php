@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Softaware\CronManager\Ui\DataProvider;
+namespace CommerceGears\CronManager\Ui\DataProvider;
 
 use Magento\Framework\Api\Filter;
 use Magento\Framework\Data\Collection;

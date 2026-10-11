@@ -9,16 +9,16 @@ define([], function () {
     return function (config, chart) {
         var detail = document.querySelector(config.detail),
             rows = Array.prototype.filter.call(
-                chart.querySelectorAll('.softaware-cron-row:not(.softaware-cron-axis)'),
+                chart.querySelectorAll('.commercegears-cron-row:not(.commercegears-cron-axis)'),
                 function (row) {
-                    return row.querySelector('.softaware-cron-bar');
+                    return row.querySelector('.commercegears-cron-bar');
                 }
             ).map(function (row) {
-                return Array.prototype.slice.call(row.querySelectorAll('.softaware-cron-bar'));
+                return Array.prototype.slice.call(row.querySelectorAll('.commercegears-cron-bar'));
             });
 
         function moveTo(bar) {
-            chart.querySelectorAll('.softaware-cron-bar[tabindex="0"]').forEach(function (el) {
+            chart.querySelectorAll('.commercegears-cron-bar[tabindex="0"]').forEach(function (el) {
                 el.setAttribute('tabindex', '-1');
             });
             bar.setAttribute('tabindex', '0');
@@ -70,7 +70,7 @@ define([], function () {
             return;
         }
         chart.addEventListener('focusin', function (event) {
-            if (event.target.classList.contains('softaware-cron-bar')) {
+            if (event.target.classList.contains('commercegears-cron-bar')) {
                 detail.textContent = event.target.getAttribute('title') || '';
                 detail.hidden = false;
             }

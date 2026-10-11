@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Softaware\CronManager\Model;
+namespace CommerceGears\CronManager\Model;
 
 /**
  * Rules for the configurable PHP binary of "Run now". The binary is executed by the web server user, so the

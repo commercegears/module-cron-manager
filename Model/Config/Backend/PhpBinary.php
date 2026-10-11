@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Softaware\CronManager\Model\Config\Backend;
+namespace CommerceGears\CronManager\Model\Config\Backend;
 
 use Magento\Framework\App\Config\Value;
 use Magento\Framework\Exception\LocalizedException;
-use Softaware\CronManager\Model\PhpBinary as PhpBinaryRules;
+use CommerceGears\CronManager\Model\PhpBinary as PhpBinaryRules;
 
 /**
  * Validates "PHP Binary for Run Now" when the settings are saved.

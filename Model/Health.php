@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Softaware\CronManager\Model;
+namespace CommerceGears\CronManager\Model;
 
 use Magento\Framework\App\CacheInterface;
 
@@ -11,7 +11,7 @@ use Magento\Framework\App\CacheInterface;
  */
 class Health
 {
-    private const CACHE_KEY = 'softaware_cron_manager_health';
+    private const CACHE_KEY = 'commercegears_cron_manager_health';
     private const CACHE_LIFETIME = 180;
 
     /** @var array<string, mixed>|null */

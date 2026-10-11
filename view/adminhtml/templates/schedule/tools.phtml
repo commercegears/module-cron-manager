@@ -1,17 +1,17 @@
 <?php
 /**
- * @var \Softaware\CronManager\Block\Adminhtml\Schedule\Tools $block
+ * @var \CommerceGears\CronManager\Block\Adminhtml\Schedule\Tools $block
  * @var \Magento\Framework\Escaper $escaper
  */
 $code = $block->getJobCode();
 $formKey = $escaper->escapeHtmlAttr($block->getFormKey());
 $action = $escaper->escapeUrl($block->getActionUrl());
 $jobField = static function (string $id) use ($escaper, $code): string {
-    return '<div class="softaware-cron-tool-field">'
-        . '<label class="softaware-cron-tool-label" for="' . $id . '">' . $escaper->escapeHtml(__('Job Code')) . '</label>'
+    return '<div class="commercegears-cron-tool-field">'
+        . '<label class="commercegears-cron-tool-label" for="' . $id . '">' . $escaper->escapeHtml(__('Job Code')) . '</label>'
         . '<input type="text" name="job_code" id="' . $id . '" class="admin__control-text" value="' . $escaper->escapeHtmlAttr($code) . '"'
         . ' placeholder="' . $escaper->escapeHtmlAttr(__('All jobs')) . '"/>'
-        . '<span class="softaware-cron-tool-note">' . $escaper->escapeHtml(__('Leave empty for all jobs.')) . '</span>'
+        . '<span class="commercegears-cron-tool-note">' . $escaper->escapeHtml(__('Leave empty for all jobs.')) . '</span>'
         . '</div>';
 };
 $checkbox = static function (string $id, string $value, string $label, bool $checked) use ($escaper): string {
@@ -23,68 +23,68 @@ $checkbox = static function (string $id, string $value, string $label, bool $che
 };
 ?>
 <?php if ($code !== ''): ?>
-    <div class="message message-info softaware-cron-filter-note">
+    <div class="message message-info commercegears-cron-filter-note">
         <?= $escaper->escapeHtml(__('Showing only entries of %1.', $code)) ?>
         <a href="<?= $escaper->escapeUrl($block->getShowAllUrl()) ?>"><?= $escaper->escapeHtml(__('Show all jobs')) ?></a>
     </div>
 <?php endif; ?>
 <?php if ($block->canManage()): ?>
-<details class="softaware-cron-tools">
+<details class="commercegears-cron-tools">
     <summary><?= $escaper->escapeHtml(__('Clean Up the Schedule')) ?></summary>
-    <div class="softaware-cron-tools-grid">
-        <form method="post" action="<?= $action ?>" class="softaware-cron-tool"
+    <div class="commercegears-cron-tools-grid">
+        <form method="post" action="<?= $action ?>" class="commercegears-cron-tool"
               data-confirm="<?= $escaper->escapeHtmlAttr(__('Remove the selected queued entries? Cron queues upcoming runs of enabled jobs again on its next run.')) ?>">
             <input type="hidden" name="form_key" value="<?= $formKey ?>"/>
             <input type="hidden" name="operation" value="remove_queued"/>
             <h3><?= $escaper->escapeHtml(__('Remove Queued Entries')) ?></h3>
             <p><?= $escaper->escapeHtml(__('Deletes waiting (pending) and/or missed entries. Cron queues upcoming runs of enabled jobs again on its next run.')) ?></p>
-            <fieldset class="softaware-cron-tool-statuses">
-                <legend class="softaware-cron-tool-label"><?= $escaper->escapeHtml(__('Status')) ?></legend>
-                <?= /* @noEscape */ $checkbox('softaware-cron-rq-pending', 'pending', (string) __('Pending'), true) ?>
-                <?= /* @noEscape */ $checkbox('softaware-cron-rq-missed', 'missed', (string) __('Missed'), true) ?>
+            <fieldset class="commercegears-cron-tool-statuses">
+                <legend class="commercegears-cron-tool-label"><?= $escaper->escapeHtml(__('Status')) ?></legend>
+                <?= /* @noEscape */ $checkbox('commercegears-cron-rq-pending', 'pending', (string) __('Pending'), true) ?>
+                <?= /* @noEscape */ $checkbox('commercegears-cron-rq-missed', 'missed', (string) __('Missed'), true) ?>
             </fieldset>
-            <?= /* @noEscape */ $jobField('softaware-cron-rq-job') ?>
+            <?= /* @noEscape */ $jobField('commercegears-cron-rq-job') ?>
             <button type="submit" class="action-secondary"><?= $escaper->escapeHtml(__('Remove Entries')) ?></button>
         </form>
-        <form method="post" action="<?= $action ?>" class="softaware-cron-tool"
+        <form method="post" action="<?= $action ?>" class="commercegears-cron-tool"
               data-confirm="<?= $escaper->escapeHtmlAttr(__('Mark the stuck entries as failed? Their processes are not stopped; the jobs can run again.')) ?>">
             <input type="hidden" name="form_key" value="<?= $formKey ?>"/>
             <input type="hidden" name="operation" value="mark_stuck"/>
             <h3><?= $escaper->escapeHtml(__('Mark Stuck Jobs as Failed')) ?></h3>
             <p><?= $escaper->escapeHtml(__('Entries still "running" after this many minutes are set to error, so the job can run again.')) ?></p>
-            <div class="softaware-cron-tool-field">
-                <label class="softaware-cron-tool-label" for="softaware-cron-ms-minutes"><?= $escaper->escapeHtml(__('Running Longer Than (Minutes)')) ?></label>
-                <input type="number" name="minutes" id="softaware-cron-ms-minutes" min="1" required
-                       class="admin__control-text softaware-cron-small" value="<?= (int) $block->getMaxRuntime() ?>"/>
+            <div class="commercegears-cron-tool-field">
+                <label class="commercegears-cron-tool-label" for="commercegears-cron-ms-minutes"><?= $escaper->escapeHtml(__('Running Longer Than (Minutes)')) ?></label>
+                <input type="number" name="minutes" id="commercegears-cron-ms-minutes" min="1" required
+                       class="admin__control-text commercegears-cron-small" value="<?= (int) $block->getMaxRuntime() ?>"/>
             </div>
-            <?= /* @noEscape */ $jobField('softaware-cron-ms-job') ?>
+            <?= /* @noEscape */ $jobField('commercegears-cron-ms-job') ?>
             <button type="submit" class="action-secondary"><?= $escaper->escapeHtml(__('Mark as Failed')) ?></button>
         </form>
-        <form method="post" action="<?= $action ?>" class="softaware-cron-tool"
+        <form method="post" action="<?= $action ?>" class="commercegears-cron-tool"
               data-confirm="<?= $escaper->escapeHtmlAttr(__('Delete the matching history entries? This cannot be undone.')) ?>">
             <input type="hidden" name="form_key" value="<?= $formKey ?>"/>
             <input type="hidden" name="operation" value="clean_history"/>
             <h3><?= $escaper->escapeHtml(__('Clean History')) ?></h3>
             <p><?= $escaper->escapeHtml(__('Deletes finished entries. Magento also cleans history itself (Stores > Configuration > Advanced > System > Cron).')) ?></p>
-            <fieldset class="softaware-cron-tool-statuses">
-                <legend class="softaware-cron-tool-label"><?= $escaper->escapeHtml(__('Status')) ?></legend>
-                <?= /* @noEscape */ $checkbox('softaware-cron-ch-success', 'success', (string) __('Success'), true) ?>
-                <?= /* @noEscape */ $checkbox('softaware-cron-ch-error', 'error', (string) __('Error'), false) ?>
-                <?= /* @noEscape */ $checkbox('softaware-cron-ch-missed', 'missed', (string) __('Missed'), true) ?>
+            <fieldset class="commercegears-cron-tool-statuses">
+                <legend class="commercegears-cron-tool-label"><?= $escaper->escapeHtml(__('Status')) ?></legend>
+                <?= /* @noEscape */ $checkbox('commercegears-cron-ch-success', 'success', (string) __('Success'), true) ?>
+                <?= /* @noEscape */ $checkbox('commercegears-cron-ch-error', 'error', (string) __('Error'), false) ?>
+                <?= /* @noEscape */ $checkbox('commercegears-cron-ch-missed', 'missed', (string) __('Missed'), true) ?>
             </fieldset>
-            <div class="softaware-cron-tool-field">
-                <label class="softaware-cron-tool-label" for="softaware-cron-ch-hours"><?= $escaper->escapeHtml(__('Older Than (Hours)')) ?></label>
-                <input type="number" name="hours" id="softaware-cron-ch-hours" min="0" required
-                       class="admin__control-text softaware-cron-small" value="24"/>
-                <span class="softaware-cron-tool-note"><?= $escaper->escapeHtml(__('0 deletes all matching entries.')) ?></span>
+            <div class="commercegears-cron-tool-field">
+                <label class="commercegears-cron-tool-label" for="commercegears-cron-ch-hours"><?= $escaper->escapeHtml(__('Older Than (Hours)')) ?></label>
+                <input type="number" name="hours" id="commercegears-cron-ch-hours" min="0" required
+                       class="admin__control-text commercegears-cron-small" value="24"/>
+                <span class="commercegears-cron-tool-note"><?= $escaper->escapeHtml(__('0 deletes all matching entries.')) ?></span>
             </div>
-            <?= /* @noEscape */ $jobField('softaware-cron-ch-job') ?>
+            <?= /* @noEscape */ $jobField('commercegears-cron-ch-job') ?>
             <button type="submit" class="action-secondary"><?= $escaper->escapeHtml(__('Delete Entries')) ?></button>
         </form>
     </div>
 </details>
 <script type="text/x-magento-init">
-    {".softaware-cron-tool": {"Softaware_CronManager/js/confirm-form": {
+    {".commercegears-cron-tool": {"CommerceGears_CronManager/js/confirm-form": {
         "title": <?= /* @noEscape */ json_encode((string) __('Clean Up the Schedule'), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>
     }}}
 </script>

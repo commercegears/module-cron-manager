@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.0 (2026-10-11)
+- Improvement: renamed to CommerceGears (new Composer package, admin menu and settings paths)
+
 ## 1.3.2 (2026-10-11)
 - Fix: the State and Last Status filters list their options; jobs without a recent run show "No recent runs".
 - Improvement: the row menu offers Disable or Enable to match the job, both with a confirmation.
@@ -18,7 +21,7 @@
 - Improvement: settings state their defaults, can be restored and check required values and email recipients.
 
 ## 1.2.0 (2026-10-06)
-- Improvement: requires Softaware Core instead of Softaware Base; menu and permissions move under "Softaware".
+- Improvement: requires CommerceGears Core instead of CommerceGears Base; menu and permissions move under "CommerceGears".
 
 ## 1.1.0 (2026-10-06)
 - New: "Ignore These Jobs" setting and a command to enable, disable, reschedule or reset jobs.

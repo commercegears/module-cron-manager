@@ -1,20 +1,20 @@
 <?php
 declare(strict_types=1);
 
-namespace Softaware\CronManager\Block\Adminhtml\Job;
+namespace CommerceGears\CronManager\Block\Adminhtml\Job;
 
 use Magento\Backend\Block\Widget\Container;
 use Magento\Backend\Block\Widget\Context;
 use Magento\Framework\AuthorizationInterface;
-use Softaware\CronManager\Model\CronExpression;
-use Softaware\CronManager\Model\JobConfig;
+use CommerceGears\CronManager\Model\CronExpression;
+use CommerceGears\CronManager\Model\JobConfig;
 
 /**
  * Edit page of one cron job (state and schedule), with the standard page action buttons.
  */
 class Edit extends Container
 {
-    protected $_template = 'Softaware_CronManager::job/edit.phtml';
+    protected $_template = 'CommerceGears_CronManager::job/edit.phtml';
 
     public function __construct(
         Context $context,
@@ -40,8 +40,8 @@ class Edit extends Container
                 'class' => 'action-secondary',
             ], 0, 20);
             if ($this->canRun()) {
-                $this->addButton('softaware_cron_run', [
-                    'id' => 'softaware-cron-run',
+                $this->addButton('commercegears_cron_run', [
+                    'id' => 'commercegears-cron-run',
                     'label' => __('Run Now'),
                     'class' => 'action-secondary',
                 ], 0, 30);
@@ -50,7 +50,7 @@ class Edit extends Container
                 'label' => __('Save'),
                 'class' => 'save primary',
                 'data_attribute' => [
-                    'mage-init' => ['button' => ['event' => 'submit', 'target' => '#softaware-cron-edit-form']],
+                    'mage-init' => ['button' => ['event' => 'submit', 'target' => '#commercegears-cron-edit-form']],
                 ],
             ], 0, 40);
         }
@@ -68,7 +68,7 @@ class Edit extends Container
     public function getScheduleInput(): string
     {
         $job = $this->getJob();
-        $posted = $this->_backendSession->getData('softaware_cron_schedule_input', true);
+        $posted = $this->_backendSession->getData('commercegears_cron_schedule_input', true);
         if (is_string($posted) && $posted !== '') {
             return $posted;
         }
@@ -125,12 +125,12 @@ class Edit extends Container
 
     public function getHistoryUrl(): string
     {
-        return $this->getUrl('softaware_cron/schedule/index', ['job_code' => $this->getJob()['job_code']]);
+        return $this->getUrl('commercegears_cron/schedule/index', ['job_code' => $this->getJob()['job_code']]);
     }
 
     public function canRun(): bool
     {
-        return $this->authorization->isAllowed('Softaware_CronManager::jobs_run');
+        return $this->authorization->isAllowed('CommerceGears_CronManager::jobs_run');
     }
 
     public function formatUtc(?string $utc): string

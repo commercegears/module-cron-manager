@@ -1,25 +1,25 @@
 <?php
 declare(strict_types=1);
 
-namespace Softaware\CronManager\Controller\Adminhtml\Job;
+namespace CommerceGears\CronManager\Controller\Adminhtml\Job;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\LocalizedException;
-use Softaware\CronManager\Model\CronExpression;
-use Softaware\CronManager\Model\Health;
-use Softaware\CronManager\Model\JobConfig;
-use Softaware\CronManager\Model\OverrideStorage;
-use Softaware\CronManager\Model\ScheduleManager;
+use CommerceGears\CronManager\Model\CronExpression;
+use CommerceGears\CronManager\Model\Health;
+use CommerceGears\CronManager\Model\JobConfig;
+use CommerceGears\CronManager\Model\OverrideStorage;
+use CommerceGears\CronManager\Model\ScheduleManager;
 
 /**
  * Save a schedule override (or remove it) and the enabled state of one job.
  */
 class Save extends Action implements HttpPostActionInterface
 {
-    public const ADMIN_RESOURCE = 'Softaware_CronManager::jobs_manage';
+    public const ADMIN_RESOURCE = 'CommerceGears_CronManager::jobs_manage';
 
     public function __construct(
         Context $context,
@@ -70,7 +70,7 @@ class Save extends Action implements HttpPostActionInterface
             return $redirect->setPath('*/*/index');
         } catch (LocalizedException $e) {
             $this->messageManager->addErrorMessage($e->getMessage());
-            $this->_getSession()->setData('softaware_cron_schedule_input', (string) $this->getRequest()->getParam('schedule'));
+            $this->_getSession()->setData('commercegears_cron_schedule_input', (string) $this->getRequest()->getParam('schedule'));
         }
         return $redirect;
     }

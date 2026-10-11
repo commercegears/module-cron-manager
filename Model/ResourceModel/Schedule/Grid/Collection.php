@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Softaware\CronManager\Model\ResourceModel\Schedule\Grid;
+namespace CommerceGears\CronManager\Model\ResourceModel\Schedule\Grid;
 
 use Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult;
 

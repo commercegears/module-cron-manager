@@ -1,20 +1,20 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
-        <add id="Softaware_CronManager::main" title="Cron Manager" translate="title" module="Softaware_CronManager"
-             sortOrder="45" parent="Softaware_Core::core" resource="Softaware_CronManager::main"/>
-        <add id="Softaware_CronManager::jobs" title="Cron Jobs" translate="title" module="Softaware_CronManager"
-             sortOrder="10" parent="Softaware_CronManager::main" action="softaware_cron/job/index"
-             resource="Softaware_CronManager::jobs"/>
-        <add id="Softaware_CronManager::schedule" title="Schedule" translate="title" module="Softaware_CronManager"
-             sortOrder="20" parent="Softaware_CronManager::main" action="softaware_cron/schedule/index"
-             resource="Softaware_CronManager::schedule"/>
-        <add id="Softaware_CronManager::timeline" title="Timeline" translate="title" module="Softaware_CronManager"
-             sortOrder="30" parent="Softaware_CronManager::main" action="softaware_cron/timeline/index"
-             resource="Softaware_CronManager::schedule"/>
-        <add id="Softaware_CronManager::config" title="Settings" translate="title" module="Softaware_CronManager"
-             sortOrder="40" parent="Softaware_CronManager::main"
-             action="adminhtml/system_config/edit/section/softaware_cron_manager"
-             resource="Softaware_CronManager::config"/>
+        <add id="CommerceGears_CronManager::main" title="Cron Manager" translate="title" module="CommerceGears_CronManager"
+             sortOrder="45" parent="CommerceGears_Core::core" resource="CommerceGears_CronManager::main"/>
+        <add id="CommerceGears_CronManager::jobs" title="Cron Jobs" translate="title" module="CommerceGears_CronManager"
+             sortOrder="10" parent="CommerceGears_CronManager::main" action="commercegears_cron/job/index"
+             resource="CommerceGears_CronManager::jobs"/>
+        <add id="CommerceGears_CronManager::schedule" title="Schedule" translate="title" module="CommerceGears_CronManager"
+             sortOrder="20" parent="CommerceGears_CronManager::main" action="commercegears_cron/schedule/index"
+             resource="CommerceGears_CronManager::schedule"/>
+        <add id="CommerceGears_CronManager::timeline" title="Timeline" translate="title" module="CommerceGears_CronManager"
+             sortOrder="30" parent="CommerceGears_CronManager::main" action="commercegears_cron/timeline/index"
+             resource="CommerceGears_CronManager::schedule"/>
+        <add id="CommerceGears_CronManager::config" title="Settings" translate="title" module="CommerceGears_CronManager"
+             sortOrder="40" parent="CommerceGears_CronManager::main"
+             action="adminhtml/system_config/edit/section/commercegears_cron_manager"
+             resource="CommerceGears_CronManager::config"/>
     </menu>
 </config>

@@ -3,8 +3,8 @@
     <type name="Magento\Framework\Notification\MessageList">
         <arguments>
             <argument name="messages" xsi:type="array">
-                <item name="softaware_cron_not_running" xsi:type="string">Softaware\CronManager\Model\System\Message\CronNotRunning</item>
-                <item name="softaware_cron_failing_jobs" xsi:type="string">Softaware\CronManager\Model\System\Message\FailingJobs</item>
+                <item name="commercegears_cron_not_running" xsi:type="string">CommerceGears\CronManager\Model\System\Message\CronNotRunning</item>
+                <item name="commercegears_cron_failing_jobs" xsi:type="string">CommerceGears\CronManager\Model\System\Message\FailingJobs</item>
             </argument>
         </arguments>
     </type>

@@ -1,23 +1,23 @@
 <?php
 declare(strict_types=1);
 
-namespace Softaware\CronManager\Controller\Adminhtml\Schedule;
+namespace CommerceGears\CronManager\Controller\Adminhtml\Schedule;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\Controller\ResultInterface;
-use Softaware\CronManager\Model\Config;
-use Softaware\CronManager\Model\Health;
-use Softaware\CronManager\Model\JobConfig;
-use Softaware\CronManager\Model\ScheduleManager;
+use CommerceGears\CronManager\Model\Config;
+use CommerceGears\CronManager\Model\Health;
+use CommerceGears\CronManager\Model\JobConfig;
+use CommerceGears\CronManager\Model\ScheduleManager;
 
 /**
  * Schedule clean-up: remove pending/missed entries, mark stuck jobs as failed, clean history.
  */
 class Maintenance extends Action implements HttpPostActionInterface
 {
-    public const ADMIN_RESOURCE = 'Softaware_CronManager::schedule_manage';
+    public const ADMIN_RESOURCE = 'CommerceGears_CronManager::schedule_manage';
 
     public function __construct(
         Context $context,

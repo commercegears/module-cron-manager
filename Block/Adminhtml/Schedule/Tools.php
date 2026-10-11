@@ -1,19 +1,19 @@
 <?php
 declare(strict_types=1);
 
-namespace Softaware\CronManager\Block\Adminhtml\Schedule;
+namespace CommerceGears\CronManager\Block\Adminhtml\Schedule;
 
 use Magento\Backend\Block\Template;
 use Magento\Backend\Block\Template\Context;
 use Magento\Framework\AuthorizationInterface;
-use Softaware\CronManager\Model\Config;
+use CommerceGears\CronManager\Model\Config;
 
 /**
  * Clean-up forms above the schedule grid.
  */
 class Tools extends Template
 {
-    protected $_template = 'Softaware_CronManager::schedule/tools.phtml';
+    protected $_template = 'CommerceGears_CronManager::schedule/tools.phtml';
 
     public function __construct(
         Context $context,
@@ -26,7 +26,7 @@ class Tools extends Template
 
     public function canManage(): bool
     {
-        return $this->authorization->isAllowed('Softaware_CronManager::schedule_manage');
+        return $this->authorization->isAllowed('CommerceGears_CronManager::schedule_manage');
     }
 
     public function getJobCode(): string
@@ -36,12 +36,12 @@ class Tools extends Template
 
     public function getActionUrl(): string
     {
-        return $this->getUrl('softaware_cron/schedule/maintenance');
+        return $this->getUrl('commercegears_cron/schedule/maintenance');
     }
 
     public function getShowAllUrl(): string
     {
-        return $this->getUrl('softaware_cron/schedule/index');
+        return $this->getUrl('commercegears_cron/schedule/index');
     }
 
     public function getMaxRuntime(): int

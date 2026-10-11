@@ -1,98 +1,98 @@
-/* Softaware Cron Manager (admin). Colours from the Magento admin palette; icons from the Admin Icons font. */
+/* CommerceGears Cron Manager (admin). Colours from the Magento admin palette; icons from the Admin Icons font. */
 
 /* Status labels: Magento's grid severity classes, plus a neutral variant for pending/running (not a severity). */
-.softaware-cron-status-neutral { display: block; padding: 0 3px; border: 1px solid #adadad; background: #f8f8f8; color: #514943; font-weight: 700; line-height: 17px; text-align: center; text-transform: uppercase; }
-.softaware-cron-status-neutral._running { border-color: #007bdb; background: #e5f2fb; color: #00548f; }
-.softaware-cron-status { display: inline-block; min-width: 7rem; margin-right: .6rem; vertical-align: middle; }
-.softaware-cron-muted { color: #6b6b6b; font-size: 1.2rem; margin-left: .6rem; }
-.softaware-cron-muted.softaware-cron-nomargin { margin-left: 0; }
+.commercegears-cron-status-neutral { display: block; padding: 0 3px; border: 1px solid #adadad; background: #f8f8f8; color: #514943; font-weight: 700; line-height: 17px; text-align: center; text-transform: uppercase; }
+.commercegears-cron-status-neutral._running { border-color: #007bdb; background: #e5f2fb; color: #00548f; }
+.commercegears-cron-status { display: inline-block; min-width: 7rem; margin-right: .6rem; vertical-align: middle; }
+.commercegears-cron-muted { color: #6b6b6b; font-size: 1.2rem; margin-left: .6rem; }
+.commercegears-cron-muted.commercegears-cron-nomargin { margin-left: 0; }
 
 /* Job grid */
-.data-grid td.softaware-cron-col-code { min-width: 16rem; overflow-wrap: anywhere; }
-.softaware-cron-col-schedule { white-space: nowrap; }
-.softaware-cron-expr-cell { font-family: 'Courier New', Courier, monospace; font-size: 1.3rem; background: none; padding: 0; }
-.softaware-cron-changed { display: inline-block; margin-left: .4rem; padding: 0 .4rem; border: 1px solid #eb5202; color: #eb5202; font-size: 1.1rem; font-weight: 600; line-height: 1.6rem; text-transform: uppercase; cursor: help; }
+.data-grid td.commercegears-cron-col-code { min-width: 16rem; overflow-wrap: anywhere; }
+.commercegears-cron-col-schedule { white-space: nowrap; }
+.commercegears-cron-expr-cell { font-family: 'Courier New', Courier, monospace; font-size: 1.3rem; background: none; padding: 0; }
+.commercegears-cron-changed { display: inline-block; margin-left: .4rem; padding: 0 .4rem; border: 1px solid #eb5202; color: #eb5202; font-size: 1.1rem; font-weight: 600; line-height: 1.6rem; text-transform: uppercase; cursor: help; }
 
 /* Status panel */
-.softaware-cron-health { display: grid; grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr)); gap: 1rem; margin-bottom: 2rem; }
-.softaware-cron-health-item { min-width: 0; border: 1px solid #e3e3e3; border-left: 4px solid #adadad; background: #fff; padding: 1rem 1.4rem; }
-.softaware-cron-health-item._ok { border-left-color: #79a22e; }
-.softaware-cron-health-item._warn { border-left-color: #eb5202; }
-.softaware-cron-health-item._bad { border-left-color: #e22626; background: #fffbfb; }
-.softaware-cron-health-label { display: block; color: #6b6b6b; font-size: 1.1rem; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; }
-.softaware-cron-health-value { display: block; margin: .3rem 0 .2rem; font-size: 1.5rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.softaware-cron-health-sub { display: block; color: #6b6b6b; font-size: 1.2rem; }
+.commercegears-cron-health { display: grid; grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+.commercegears-cron-health-item { min-width: 0; border: 1px solid #e3e3e3; border-left: 4px solid #adadad; background: #fff; padding: 1rem 1.4rem; }
+.commercegears-cron-health-item._ok { border-left-color: #79a22e; }
+.commercegears-cron-health-item._warn { border-left-color: #eb5202; }
+.commercegears-cron-health-item._bad { border-left-color: #e22626; background: #fffbfb; }
+.commercegears-cron-health-label { display: block; color: #6b6b6b; font-size: 1.1rem; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; }
+.commercegears-cron-health-value { display: block; margin: .3rem 0 .2rem; font-size: 1.5rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.commercegears-cron-health-sub { display: block; color: #6b6b6b; font-size: 1.2rem; }
 
 /* Schedule: clean-up panel */
-.softaware-cron-filter-note { margin-bottom: 1.6rem; }
-.softaware-cron-tools { margin-bottom: 2rem; border: 1px solid #e3e3e3; background: #fafafa; }
-.softaware-cron-tools > summary { display: block; padding: 1.2rem 1.4rem; cursor: pointer; font-weight: 600; list-style: none; }
-.softaware-cron-tools > summary::-webkit-details-marker { display: none; }
-.softaware-cron-tools > summary::before { content: '\e62a'; display: inline-block; width: 1.6rem; margin-right: .4rem; font-family: 'Admin Icons'; font-size: 1.2rem; font-weight: 400; vertical-align: middle; speak: none; }
-.softaware-cron-tools[open] > summary::before { content: '\e628'; }
-.softaware-cron-tools > summary:focus-visible { outline: 2px solid #007bdb; outline-offset: -2px; }
-.softaware-cron-tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(26rem, 1fr)); gap: 1.4rem; padding: 0 1.4rem 1.4rem; }
-.softaware-cron-tool { display: flex; flex-direction: column; gap: 1rem; align-items: flex-start; min-width: 0; padding: 1.4rem; border: 1px solid #e3e3e3; background: #fff; }
-.softaware-cron-tool h3 { margin: 0; font-size: 1.5rem; font-weight: 600; }
-.softaware-cron-tool p { margin: 0; color: #6b6b6b; font-size: 1.2rem; }
-.softaware-cron-tool .admin__control-text { box-sizing: border-box; width: 100%; }
-.softaware-cron-tool .softaware-cron-small { width: 9rem; }
-.softaware-cron-tool-field { display: flex; flex-direction: column; gap: .4rem; width: 100%; }
-.softaware-cron-tool-label { padding: 0; font-size: 1.2rem; font-weight: 600; }
-.softaware-cron-tool-note { color: #6b6b6b; font-size: 1.2rem; }
-.softaware-cron-tool-statuses { display: flex; flex-wrap: wrap; gap: .4rem 1.6rem; margin: 0; padding: 0; border: 0; }
-.softaware-cron-tool-statuses legend { float: left; width: 100%; margin-bottom: .4rem; }
-.softaware-cron-tool .action-secondary { margin-top: auto; }
+.commercegears-cron-filter-note { margin-bottom: 1.6rem; }
+.commercegears-cron-tools { margin-bottom: 2rem; border: 1px solid #e3e3e3; background: #fafafa; }
+.commercegears-cron-tools > summary { display: block; padding: 1.2rem 1.4rem; cursor: pointer; font-weight: 600; list-style: none; }
+.commercegears-cron-tools > summary::-webkit-details-marker { display: none; }
+.commercegears-cron-tools > summary::before { content: '\e62a'; display: inline-block; width: 1.6rem; margin-right: .4rem; font-family: 'Admin Icons'; font-size: 1.2rem; font-weight: 400; vertical-align: middle; speak: none; }
+.commercegears-cron-tools[open] > summary::before { content: '\e628'; }
+.commercegears-cron-tools > summary:focus-visible { outline: 2px solid #007bdb; outline-offset: -2px; }
+.commercegears-cron-tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(26rem, 1fr)); gap: 1.4rem; padding: 0 1.4rem 1.4rem; }
+.commercegears-cron-tool { display: flex; flex-direction: column; gap: 1rem; align-items: flex-start; min-width: 0; padding: 1.4rem; border: 1px solid #e3e3e3; background: #fff; }
+.commercegears-cron-tool h3 { margin: 0; font-size: 1.5rem; font-weight: 600; }
+.commercegears-cron-tool p { margin: 0; color: #6b6b6b; font-size: 1.2rem; }
+.commercegears-cron-tool .admin__control-text { box-sizing: border-box; width: 100%; }
+.commercegears-cron-tool .commercegears-cron-small { width: 9rem; }
+.commercegears-cron-tool-field { display: flex; flex-direction: column; gap: .4rem; width: 100%; }
+.commercegears-cron-tool-label { padding: 0; font-size: 1.2rem; font-weight: 600; }
+.commercegears-cron-tool-note { color: #6b6b6b; font-size: 1.2rem; }
+.commercegears-cron-tool-statuses { display: flex; flex-wrap: wrap; gap: .4rem 1.6rem; margin: 0; padding: 0; border: 0; }
+.commercegears-cron-tool-statuses legend { float: left; width: 100%; margin-bottom: .4rem; }
+.commercegears-cron-tool .action-secondary { margin-top: auto; }
 
 /* Job edit page */
-.softaware-cron-facts { max-width: 100rem; }
-.softaware-cron-facts th { width: 20rem; }
-.softaware-cron-facts code { font-family: 'Courier New', Courier, monospace; font-size: 1.3rem; background: none; padding: 0; word-break: break-all; }
-.softaware-cron-runs { display: flex; flex-wrap: wrap; gap: .2rem 2rem; margin: 0; padding: 0; list-style: none; }
-.softaware-cron-runs li { margin: 0; }
-.softaware-cron-form .admin__fieldset { padding-top: 1rem; }
-.softaware-cron-expr { max-width: 26rem; font-family: 'Courier New', Courier, monospace; }
-.softaware-cron-presets { display: flex; flex-wrap: wrap; gap: .6rem; margin: 1rem 0; }
-.softaware-cron-presets .action-default { padding: .5rem 1rem; font-size: 1.2rem; }
+.commercegears-cron-facts { max-width: 100rem; }
+.commercegears-cron-facts th { width: 20rem; }
+.commercegears-cron-facts code { font-family: 'Courier New', Courier, monospace; font-size: 1.3rem; background: none; padding: 0; word-break: break-all; }
+.commercegears-cron-runs { display: flex; flex-wrap: wrap; gap: .2rem 2rem; margin: 0; padding: 0; list-style: none; }
+.commercegears-cron-runs li { margin: 0; }
+.commercegears-cron-form .admin__fieldset { padding-top: 1rem; }
+.commercegears-cron-expr { max-width: 26rem; font-family: 'Courier New', Courier, monospace; }
+.commercegears-cron-presets { display: flex; flex-wrap: wrap; gap: .6rem; margin: 1rem 0; }
+.commercegears-cron-presets .action-default { padding: .5rem 1rem; font-size: 1.2rem; }
 
 /* Timeline */
-.softaware-cron-timeline-filters { display: flex; flex-wrap: wrap; gap: 1.2rem 1.6rem; align-items: flex-end; margin-bottom: 2rem; }
-.softaware-cron-filter { display: flex; flex-direction: column; gap: .4rem; }
-.softaware-cron-filter > label { font-size: 1.2rem; font-weight: 600; }
-.softaware-cron-filter-check { flex-direction: row; align-items: center; min-height: 3.3rem; }
-.softaware-cron-filter-check > label.admin__field-label { font-weight: 400; font-size: 1.3rem; }
-.softaware-cron-nav { display: flex; gap: .6rem; margin-left: auto; }
-.softaware-cron-prev::before, .softaware-cron-next::after { display: inline-block; font-family: 'Admin Icons'; font-size: 1rem; vertical-align: middle; speak: none; }
-.softaware-cron-prev::before { content: '\e629'; margin-right: .6rem; }
-.softaware-cron-next::after { content: '\e62a'; margin-left: .6rem; }
-.softaware-cron-legend { display: flex; flex-wrap: wrap; gap: .8rem 1.4rem; align-items: center; margin-bottom: 1rem; }
-.softaware-cron-legend .softaware-cron-muted { margin-left: 0; }
-.softaware-cron-legend-item { display: inline-flex; align-items: center; gap: .4rem; font-size: 1.2rem; }
-.softaware-cron-legend-item i { display: inline-block; width: 1.6rem; height: 1rem; border-radius: 2px; }
-.softaware-cron-chart { border: 1px solid #d6d6d6; background: #fff; overflow-x: auto; }
-.softaware-cron-row { display: flex; min-width: 80rem; border-bottom: 1px solid #f0f0f0; }
-.softaware-cron-row:hover { background: #f8f8f8; }
-.softaware-cron-label { flex: 0 0 30rem; padding: .3rem .8rem; font-size: 1.2rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border-right: 1px solid #e3e3e3; }
-.softaware-cron-track { position: relative; flex: 1 1 auto; height: 2.2rem; }
-.softaware-cron-axis { position: sticky; top: 0; background: #f5f5f5; z-index: 2; }
-.softaware-cron-axis .softaware-cron-track { height: 2.6rem; }
-.softaware-cron-tick { position: absolute; top: .5rem; transform: translateX(-50%); font-size: 1.1rem; color: #6b6b6b; }
-.softaware-cron-tick._major { color: #303030; font-weight: 600; }
-.softaware-cron-tick._end { transform: translateX(-100%); }
-.softaware-cron-grid { position: absolute; top: 0; bottom: 0; border-left: 1px dotted #e6e6e6; }
-.softaware-cron-grid._major { border-left: 1px solid #dcdcdc; }
-.softaware-cron-now { position: absolute; top: 0; bottom: 0; border-left: 2px solid #eb5202; z-index: 1; }
-.softaware-cron-bar { position: absolute; top: .45rem; height: 1.3rem; min-width: 3px; border-radius: 2px; z-index: 1; }
-.softaware-cron-bar-success { background: #79a22e; }
-.softaware-cron-bar-error { background: #e22626; z-index: 3; }
-.softaware-cron-bar-running { background: #007bdb; z-index: 2; }
-.softaware-cron-bar-missed { background: #f5a623; }
-.softaware-cron-bar-pending { background: #fff; border: 1px dashed #8a8a8a; box-sizing: border-box; }
-.softaware-cron-bar:hover, .softaware-cron-bar:focus { outline: 2px solid #303030; z-index: 4; }
-.softaware-cron-bar:focus-visible { outline: 3px solid #007bdb; outline-offset: 1px; }
-.softaware-cron-bar-detail { margin: .8rem 0 0; padding: .6rem .8rem; border: 1px solid #d6d6d6; background: #f8f8f8; font-size: 1.2rem; white-space: pre-line; }
+.commercegears-cron-timeline-filters { display: flex; flex-wrap: wrap; gap: 1.2rem 1.6rem; align-items: flex-end; margin-bottom: 2rem; }
+.commercegears-cron-filter { display: flex; flex-direction: column; gap: .4rem; }
+.commercegears-cron-filter > label { font-size: 1.2rem; font-weight: 600; }
+.commercegears-cron-filter-check { flex-direction: row; align-items: center; min-height: 3.3rem; }
+.commercegears-cron-filter-check > label.admin__field-label { font-weight: 400; font-size: 1.3rem; }
+.commercegears-cron-nav { display: flex; gap: .6rem; margin-left: auto; }
+.commercegears-cron-prev::before, .commercegears-cron-next::after { display: inline-block; font-family: 'Admin Icons'; font-size: 1rem; vertical-align: middle; speak: none; }
+.commercegears-cron-prev::before { content: '\e629'; margin-right: .6rem; }
+.commercegears-cron-next::after { content: '\e62a'; margin-left: .6rem; }
+.commercegears-cron-legend { display: flex; flex-wrap: wrap; gap: .8rem 1.4rem; align-items: center; margin-bottom: 1rem; }
+.commercegears-cron-legend .commercegears-cron-muted { margin-left: 0; }
+.commercegears-cron-legend-item { display: inline-flex; align-items: center; gap: .4rem; font-size: 1.2rem; }
+.commercegears-cron-legend-item i { display: inline-block; width: 1.6rem; height: 1rem; border-radius: 2px; }
+.commercegears-cron-chart { border: 1px solid #d6d6d6; background: #fff; overflow-x: auto; }
+.commercegears-cron-row { display: flex; min-width: 80rem; border-bottom: 1px solid #f0f0f0; }
+.commercegears-cron-row:hover { background: #f8f8f8; }
+.commercegears-cron-label { flex: 0 0 30rem; padding: .3rem .8rem; font-size: 1.2rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border-right: 1px solid #e3e3e3; }
+.commercegears-cron-track { position: relative; flex: 1 1 auto; height: 2.2rem; }
+.commercegears-cron-axis { position: sticky; top: 0; background: #f5f5f5; z-index: 2; }
+.commercegears-cron-axis .commercegears-cron-track { height: 2.6rem; }
+.commercegears-cron-tick { position: absolute; top: .5rem; transform: translateX(-50%); font-size: 1.1rem; color: #6b6b6b; }
+.commercegears-cron-tick._major { color: #303030; font-weight: 600; }
+.commercegears-cron-tick._end { transform: translateX(-100%); }
+.commercegears-cron-grid { position: absolute; top: 0; bottom: 0; border-left: 1px dotted #e6e6e6; }
+.commercegears-cron-grid._major { border-left: 1px solid #dcdcdc; }
+.commercegears-cron-now { position: absolute; top: 0; bottom: 0; border-left: 2px solid #eb5202; z-index: 1; }
+.commercegears-cron-bar { position: absolute; top: .45rem; height: 1.3rem; min-width: 3px; border-radius: 2px; z-index: 1; }
+.commercegears-cron-bar-success { background: #79a22e; }
+.commercegears-cron-bar-error { background: #e22626; z-index: 3; }
+.commercegears-cron-bar-running { background: #007bdb; z-index: 2; }
+.commercegears-cron-bar-missed { background: #f5a623; }
+.commercegears-cron-bar-pending { background: #fff; border: 1px dashed #8a8a8a; box-sizing: border-box; }
+.commercegears-cron-bar:hover, .commercegears-cron-bar:focus { outline: 2px solid #303030; z-index: 4; }
+.commercegears-cron-bar:focus-visible { outline: 3px solid #007bdb; outline-offset: 1px; }
+.commercegears-cron-bar-detail { margin: .8rem 0 0; padding: .6rem .8rem; border: 1px solid #d6d6d6; background: #f8f8f8; font-size: 1.2rem; white-space: pre-line; }
 
 @media (max-width: 1280px) {
-    .softaware-cron-label { flex-basis: 22rem; }
-    .softaware-cron-nav { margin-left: 0; }
+    .commercegears-cron-label { flex-basis: 22rem; }
+    .commercegears-cron-nav { margin-left: 0; }
 }

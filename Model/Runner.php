@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Softaware\CronManager\Model;
+namespace CommerceGears\CronManager\Model;
 
 use Magento\Cron\Model\Schedule;
 use Magento\Cron\Model\ScheduleFactory;
@@ -44,7 +44,7 @@ class Runner
             ->setCreatedAt($now)
             ->setScheduledAt($now)
             ->setExecutedAt($now)
-            ->setMessages((string) __('Started manually (%1%2) by Softaware Cron Manager.', $trigger, $user ? ', ' . $user : ''));
+            ->setMessages((string) __('Started manually (%1%2) by CommerceGears Cron Manager.', $trigger, $user ? ', ' . $user : ''));
         $schedule->save();
 
         $lockName = ProcessCronQueueObserver::LOCK_PREFIX . md5($definition['group'] . '_' . $jobCode);

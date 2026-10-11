@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Softaware\CronManager\Ui\DataProvider;
+namespace CommerceGears\CronManager\Ui\DataProvider;
 
 use Magento\Framework\Api\Filter;
 use Magento\Framework\App\RequestInterface;
 use Magento\Ui\DataProvider\AbstractDataProvider;
-use Softaware\CronManager\Model\JobConfig;
-use Softaware\CronManager\Model\Source\LastStatus;
+use CommerceGears\CronManager\Model\JobConfig;
+use CommerceGears\CronManager\Model\Source\LastStatus;
 
 /**
  * Data provider for the cron job grid. Jobs come from configuration, not from a table,

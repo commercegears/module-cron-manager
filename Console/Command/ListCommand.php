@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Softaware\CronManager\Console\Command;
+namespace CommerceGears\CronManager\Console\Command;
 
-use Softaware\CronManager\Model\JobConfig;
+use CommerceGears\CronManager\Model\JobConfig;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,7 +19,7 @@ class ListCommand extends Command
 
     protected function configure(): void
     {
-        $this->setName('softaware:cron:list')
+        $this->setName('commercegears:cron:list')
             ->setDescription('List all cron jobs with schedule, state, last run and average duration')
             ->addOption('group', 'g', InputOption::VALUE_REQUIRED, 'Only jobs of this cron group')
             ->addOption('search', 's', InputOption::VALUE_REQUIRED, 'Only jobs whose code, class or module contains this text')

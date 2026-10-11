@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Softaware\CronManager\Cron;
+namespace CommerceGears\CronManager\Cron;
 
 use Psr\Log\LoggerInterface;
-use Softaware\CronManager\Model\Config;
-use Softaware\CronManager\Model\Health;
-use Softaware\CronManager\Model\JobConfig;
-use Softaware\CronManager\Model\Notifier;
-use Softaware\CronManager\Model\ScheduleManager;
+use CommerceGears\CronManager\Model\Config;
+use CommerceGears\CronManager\Model\Health;
+use CommerceGears\CronManager\Model\JobConfig;
+use CommerceGears\CronManager\Model\Notifier;
+use CommerceGears\CronManager\Model\ScheduleManager;
 
 /**
  * Every 5 minutes: mark stuck jobs as failed (if configured) and send failure e-mails.

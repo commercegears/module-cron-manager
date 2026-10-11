@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="CommerceGears_CronManager::css/cron-manager.css"/>
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <block class="CommerceGears\CronManager\Block\Adminhtml\HealthSummary" name="commercegears.cron.health"/>
+            <block class="CommerceGears\CronManager\Block\Adminhtml\Schedule\Tools" name="commercegears.cron.schedule.tools"/>
+            <uiComponent name="commercegears_cron_schedule_listing"/>
+        </referenceContainer>
+    </body>
+</page>

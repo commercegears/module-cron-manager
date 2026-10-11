@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Softaware\CronManager\Console\Command;
+namespace CommerceGears\CronManager\Console\Command;
 
 use Magento\Framework\App\Area;
 use Magento\Framework\App\AreaList;
 use Magento\Framework\App\State;
 use Magento\Framework\ObjectManager\ConfigLoaderInterface;
 use Magento\Framework\ObjectManagerInterface;
-use Softaware\CronManager\Model\Runner;
+use CommerceGears\CronManager\Model\Runner;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -33,9 +33,9 @@ class RunCommand extends Command
 
     protected function configure(): void
     {
-        $this->setName('softaware:cron:run')
+        $this->setName('commercegears:cron:run')
             ->setDescription('Run a cron job now (also runs disabled jobs); the run is recorded in the cron schedule')
-            ->addArgument('job_code', InputArgument::REQUIRED, 'Cron job code, see softaware:cron:list')
+            ->addArgument('job_code', InputArgument::REQUIRED, 'Cron job code, see commercegears:cron:list')
             ->addOption('trigger', null, InputOption::VALUE_REQUIRED, 'Who started the run (shown in the schedule)', 'cli')
             ->addOption('user', null, InputOption::VALUE_REQUIRED, 'Admin user who started the run');
     }

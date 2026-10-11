@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Softaware\CronManager\Console\Command;
+namespace CommerceGears\CronManager\Console\Command;
 
 use Magento\Framework\Exception\LocalizedException;
-use Softaware\CronManager\Model\CronExpression;
-use Softaware\CronManager\Model\Health;
-use Softaware\CronManager\Model\JobConfig;
-use Softaware\CronManager\Model\JobStateManager;
-use Softaware\CronManager\Model\OverrideStorage;
-use Softaware\CronManager\Model\ScheduleManager;
+use CommerceGears\CronManager\Model\CronExpression;
+use CommerceGears\CronManager\Model\Health;
+use CommerceGears\CronManager\Model\JobConfig;
+use CommerceGears\CronManager\Model\JobStateManager;
+use CommerceGears\CronManager\Model\OverrideStorage;
+use CommerceGears\CronManager\Model\ScheduleManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -35,9 +35,9 @@ class SetCommand extends Command
 
     protected function configure(): void
     {
-        $this->setName('softaware:cron:set')
+        $this->setName('commercegears:cron:set')
             ->setDescription('Enable, disable or reschedule cron jobs (same as the Cron Jobs page)')
-            ->addArgument('job_codes', InputArgument::REQUIRED | InputArgument::IS_ARRAY, 'Cron job codes, see softaware:cron:list')
+            ->addArgument('job_codes', InputArgument::REQUIRED | InputArgument::IS_ARRAY, 'Cron job codes, see commercegears:cron:list')
             ->addOption('disable', null, InputOption::VALUE_NONE, 'Disable the jobs')
             ->addOption('enable', null, InputOption::VALUE_NONE, 'Enable the jobs')
             ->addOption('schedule', null, InputOption::VALUE_REQUIRED, 'Run the jobs on this cron expression, e.g. "*/15 * * * *"')

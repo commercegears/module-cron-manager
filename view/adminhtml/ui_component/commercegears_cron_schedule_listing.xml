@@ -2,26 +2,26 @@
 <listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
-            <item name="provider" xsi:type="string">softaware_cron_schedule_listing.softaware_cron_schedule_listing_data_source</item>
+            <item name="provider" xsi:type="string">commercegears_cron_schedule_listing.commercegears_cron_schedule_listing_data_source</item>
         </item>
     </argument>
     <settings>
         <buttons>
             <button name="jobs">
-                <url path="softaware_cron/job/index"/>
+                <url path="commercegears_cron/job/index"/>
                 <label translate="true">Cron Jobs</label>
             </button>
             <button name="timeline">
-                <url path="softaware_cron/timeline/index"/>
+                <url path="commercegears_cron/timeline/index"/>
                 <label translate="true">Timeline</label>
             </button>
         </buttons>
-        <spinner>softaware_cron_schedule_columns</spinner>
+        <spinner>commercegears_cron_schedule_columns</spinner>
         <deps>
-            <dep>softaware_cron_schedule_listing.softaware_cron_schedule_listing_data_source</dep>
+            <dep>commercegears_cron_schedule_listing.commercegears_cron_schedule_listing_data_source</dep>
         </deps>
     </settings>
-    <dataSource name="softaware_cron_schedule_listing_data_source" component="Magento_Ui/js/grid/provider">
+    <dataSource name="commercegears_cron_schedule_listing_data_source" component="Magento_Ui/js/grid/provider">
         <settings>
             <storageConfig>
                 <param name="indexField" xsi:type="string">schedule_id</param>
@@ -31,8 +31,8 @@
                 <param name="job_code">*</param>
             </filterUrlParams>
         </settings>
-        <aclResource>Softaware_CronManager::schedule</aclResource>
-        <dataProvider class="Softaware\CronManager\Ui\DataProvider\ScheduleDataProvider" name="softaware_cron_schedule_listing_data_source">
+        <aclResource>CommerceGears_CronManager::schedule</aclResource>
+        <dataProvider class="CommerceGears\CronManager\Ui\DataProvider\ScheduleDataProvider" name="commercegears_cron_schedule_listing_data_source">
             <settings>
                 <requestFieldName>id</requestFieldName>
                 <primaryFieldName>schedule_id</primaryFieldName>
@@ -60,7 +60,7 @@
                         <message translate="true">Delete the selected schedule entries?</message>
                         <title translate="true">Delete Entries</title>
                     </confirm>
-                    <url path="softaware_cron/schedule/massDelete"/>
+                    <url path="commercegears_cron/schedule/massDelete"/>
                     <type>delete</type>
                     <label translate="true">Delete</label>
                 </settings>
@@ -72,7 +72,7 @@
             </settings>
         </paging>
     </listingToolbar>
-    <columns name="softaware_cron_schedule_columns">
+    <columns name="commercegears_cron_schedule_columns">
         <selectionsColumn name="ids">
             <settings>
                 <indexField>schedule_id</indexField>
@@ -91,9 +91,9 @@
                 <label translate="true">Job Code</label>
             </settings>
         </column>
-        <column name="status" class="Softaware\CronManager\Ui\Component\Listing\Column\StatusBadge" component="Magento_Ui/js/grid/columns/column" sortOrder="30">
+        <column name="status" class="CommerceGears\CronManager\Ui\Component\Listing\Column\StatusBadge" component="Magento_Ui/js/grid/columns/column" sortOrder="30">
             <settings>
-                <options class="Softaware\CronManager\Model\Source\ScheduleStatus"/>
+                <options class="CommerceGears\CronManager\Model\Source\ScheduleStatus"/>
                 <filter>select</filter>
                 <dataType>select</dataType>
                 <bodyTmpl>ui/grid/cells/html</bodyTmpl>
@@ -121,12 +121,12 @@
                 <label translate="true">Finished</label>
             </settings>
         </column>
-        <column name="duration" class="Softaware\CronManager\Ui\Component\Listing\Column\Duration" sortOrder="70">
+        <column name="duration" class="CommerceGears\CronManager\Ui\Component\Listing\Column\Duration" sortOrder="70">
             <settings>
                 <label translate="true">Duration</label>
             </settings>
         </column>
-        <column name="messages" class="Softaware\CronManager\Ui\Component\Listing\Column\Message" sortOrder="80">
+        <column name="messages" class="CommerceGears\CronManager\Ui\Component\Listing\Column\Message" sortOrder="80">
             <settings>
                 <filter>text</filter>
                 <label translate="true">Message</label>
