@@ -59,4 +59,4 @@ Your job changes are no longer applied, so all jobs use their default schedule, 
 stop. The Cron Manager pages stay available, and your changes come back when you switch it on again.
 
 **Which Magento and PHP versions are supported?**
-Magento Open Source and Adobe Commerce 2.4.7 to 2.4.9, PHP 8.2 to 8.5, with MySQL 8 or MariaDB 10.4 or later.
+Magento Open Source and Adobe Commerce 2.4.6 to 2.4.9, PHP 8.2 to 8.5 (Magento 2.4.6: PHP 8.2), with MySQL 8 or MariaDB 10.4 or later.

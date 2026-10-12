@@ -75,7 +75,7 @@ Settings.
 
 ## Compatibility
 
-Magento Open Source / Adobe Commerce 2.4.x (developed on 2.4.9), PHP 8.2 to 8.5, MySQL 8 / MariaDB 10.4+ (window
+Magento Open Source / Adobe Commerce 2.4.6 to 2.4.9 (developed on 2.4.9), PHP 8.2 to 8.5 (Magento 2.4.6: PHP 8.2), MySQL 8 / MariaDB 10.4+ (window
 functions are used for the "failing in a row" check). Admin only.
 
 ## Limitations

@@ -13,8 +13,8 @@ stops or a job keeps failing. This guide covers installation, configuration and 
 
 | | |
 | --- | --- |
-| Magento | Open Source or Adobe Commerce 2.4.7 to 2.4.9 |
-| PHP | 8.2 to 8.5, with a PHP command-line binary for Run Now |
+| Magento | Open Source or Adobe Commerce 2.4.6 to 2.4.9 |
+| PHP | 8.2 to 8.5, with a PHP command-line binary for Run Now (Magento 2.4.6: PHP 8.2) |
 | Database | MySQL 8 or MariaDB 10.4 or later (window functions are used) |
 | Storefront | None: the module is admin only |
 | Other | `commercegears/module-core` (installed automatically) |
