@@ -60,3 +60,7 @@ stop. The Cron Manager pages stay available, and your changes come back when you
 
 **Which Magento and PHP versions are supported?**
 Magento Open Source and Adobe Commerce 2.4.6 to 2.4.9, PHP 8.2 to 8.5 (Magento 2.4.6: PHP 8.2), with MySQL 8 or MariaDB 10.4 or later.
+
+**Is Cron Manager free?**
+Yes. Cron Manager is free to download from commercegears.com and is installed with Composer like our other modules.
+It needs `commercegears/module-core`, which Composer installs automatically.
